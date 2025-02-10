@@ -1,0 +1,20 @@
+.add-sign-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+}
+
+.add-sign {
+  font-size: 150px;
+  color: black;
+  background: none;
+  border: none;
+}
+
+.add-ingredient-container {
+  height: 200px;
+  width: 200px;
+  border: 2px solid black;
+}
