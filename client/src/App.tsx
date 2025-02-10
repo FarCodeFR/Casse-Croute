@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
 import AddIngredient from "./components/AddIngredient";
 import Footer from "./components/globals/Footer";
 import Header from "./components/globals/Header";
@@ -17,6 +18,7 @@ function App() {
         <Link to="/login">Login</Link>
         <Link to="/view-profile">Voir Profile</Link>
       </nav>
+      <ToastContainer />
       <main>
         <Outlet />
       </main>
