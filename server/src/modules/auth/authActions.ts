@@ -72,7 +72,7 @@ const verifyToken: RequestHandler = (req, res, next) => {
 
     if (isTokenValid) {
       const decodedToken = jwt.decode(token);
-      req.user = decodedToken;
+      res.locals = { decodedToken };
     }
 
     next();
@@ -82,7 +82,7 @@ const verifyToken: RequestHandler = (req, res, next) => {
 };
 
 const isLogged: RequestHandler = (req, res) => {
-  if (req.user) {
+  if (res.locals.decodedToken) {
     res.status(200).send("Vous êtes connecté");
     return;
   }
@@ -91,7 +91,7 @@ const isLogged: RequestHandler = (req, res) => {
 };
 
 const isAdmin: RequestHandler = (req, res) => {
-  if (!req.user.role) {
+  if (!res.locals.role) {
     res.sendStatus(403);
   }
 
