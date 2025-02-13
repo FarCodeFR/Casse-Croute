@@ -1,0 +1,48 @@
+/* <------ Nav ----->*/
+
+.main-nav {
+  background-color: var(--primary-color);
+  color: var(--secondary-color-2);
+  max-height: 194px;
+}
+
+.logo-header {
+  width: 100px;
+}
+
+/* * User isLogged True */
+
+.isLogged-header-true {
+  border: none;
+  border-radius: 10px;
+  background: none;
+}
+
+.isLogged-header-true > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* * User isLogged False */
+
+.isLogged-header-false {
+  height: 40px;
+  font-size: 16px;
+  background: var(--secondary-color-2);
+  width: 100%;
+  border-radius: 10px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 1em;
+}
+
+.search-container {
+  margin-top: 10px;
+}

@@ -1,0 +1,47 @@
+/* Police */
+
+.menu-container {
+  font-family: var(--font-secondary);
+  font-size: large;
+}
+
+/* Menu cliqué */
+
+.menu-container > div {
+  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 23vh;
+  height: 40vh;
+  color: aliceblue;
+  background-color: var(--primary-color);
+  border-radius: 0 0 20px;
+  z-index: 1;
+}
+
+/* croix */
+
+.menu-container > div > header {
+  margin-left: 40px;
+  margin-top: 32px;
+}
+
+/* Liste */
+
+.menu-container > div > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.menu-container > div > ul > li > a {
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-container > div > ul > li:first-child {
+  margin-top: 20px;
+}
