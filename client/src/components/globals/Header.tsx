@@ -28,9 +28,9 @@ function Header() {
           </li>
 
           <li>
-            <button className="identify nav-button" type="button">
-              <Link to="/login">S'identifier</Link>
-            </button>
+            <Link to="/login" className="identify nav-button">
+              S'identifier
+            </Link>
           </li>
         </ul>
         <div className="search-container1 bar1">

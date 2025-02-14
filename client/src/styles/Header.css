@@ -16,6 +16,7 @@
 .nav-button {
   padding: 5px 15px;
   border-radius: 10px;
+  background-color: aliceblue;
 }
 
 .about {
@@ -39,6 +40,10 @@ header nav ul li:first-child {
 .search-container1 {
   display: flex;
   margin-top: 10px;
+}
+
+.identify {
+  text-decoration: none;
 }
 
 .logo-header {
