@@ -1,61 +1,71 @@
+import { useEffect, useState } from "react";
 import ModifyProfile from "../../components/ModifyProfile";
 import SeeProfile from "../../components/SeeProfile";
 import "./ViewProfile.css";
-import { useState } from "react";
+import MyProfileRecipes from "../../components/MyProfilRecipes";
+import type { userData } from "../../types/UserData";
 
 function ViewProfile() {
-  const [activeSection, setActiveSection] = useState("");
+  // Onglet actif : "viewProfile" | "modifyProfile" | "recipes"
+  const [activeSection, setActiveSection] = useState("viewProfile");
 
-  const handleProfileClick = () => {
-    setActiveSection("profile");
-  };
+  // Stockage des données utilisateur
+  const [user, setUser] = useState<userData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleRecipeClick = () => {
-    setActiveSection("recipes");
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch("http://localhost:3310/api/user/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok)
+          throw new Error("Erreur lors de la récupération du profil");
+
+        const data: userData = await response.json();
+        setUser(data);
+      } catch (err) {
+        setError("Impossible de charger le profil.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   return (
-    <main className="profile-view">
-      <nav>
-        <button type="button" onClick={handleProfileClick}>
-          Modifier mon profil
+    <main className="view-profile">
+      <nav className="view-profile__nav">
+        <button type="button" onClick={() => setActiveSection("viewProfile")}>
+          Profil
         </button>
-        <button type="button" onClick={handleRecipeClick}>
-          Recettes
+        <button type="button" onClick={() => setActiveSection("modifyProfile")}>
+          Modifier le profil
+        </button>
+        <button type="button" onClick={() => setActiveSection("recipes")}>
+          Mes recettes
         </button>
       </nav>
-      <header>
-        <SeeProfile />
-      </header>
 
-      <section>
-        {activeSection === "profile" && (
-          <div>
-            <h2>Modifier mon profil</h2>
-            <ModifyProfile />
-          </div>
+      <section className="view-profile__content">
+        {loading && <p>Chargement du profil...</p>}
+        {error && <p>{error}</p>}
+        {user && activeSection === "viewProfile" && <SeeProfile user={user} />}
+        {user && activeSection === "modifyProfile" && (
+          <ModifyProfile user={user} setUser={setUser} />
         )}
-      </section>
-
-      <section>
-        {activeSection === "recipes" && (
-          <article>
-            <h2>Mes recettes</h2>
-            <ul>
-              <li>
-                <h3>Recette 1</h3>
-                <p>description de la recette</p>
-              </li>
-              <li>
-                <h3>Recette 2</h3>
-                <p>description de la recette</p>
-              </li>
-              <li>
-                <h3>Recette 3</h3>
-                <p>description de la recette</p>
-              </li>
-            </ul>
-          </article>
+        {user?.id !== undefined && activeSection === "recipes" && (
+          <MyProfileRecipes userId={user.id} />
         )}
       </section>
     </main>

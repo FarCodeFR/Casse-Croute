@@ -23,6 +23,12 @@ const routes = [
     path: "/catalogue",
     element: <Catalogue />,
   },
+
+  // {
+  //   path: "/recipe/:id",
+  //   element: <Recipe />,
+  // },
+
   {
     path: "/create-recipe",
     element: <CreateRecipe />,

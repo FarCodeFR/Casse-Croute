@@ -1,109 +1,74 @@
 import { useState } from "react";
-import type { userDataTypes } from "../types/UserData";
+import type { userData } from "../types/UserData";
 
-function ModifyProfile() {
-  const forbiddenCharacters = /[^a-zA-Z0-9]/g;
-  const [userData, setUserData] = useState<userDataTypes | null>(null);
-  ({
-    email: "",
-    pseudo: "",
-    password: "",
-    passwordConfirm: "",
+function ModifyProfile({
+  user,
+  setUser,
+}: {
+  user: userData;
+  setUser: (user: userData) => void;
+}) {
+  const [formData, setFormData] = useState<userData>({
+    id: user.id,
+    email: user.email,
+    pseudo: user.pseudo,
+    est_admin: user.est_admin,
+    photo_profil: user.photo_profil,
   });
 
-  const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      [name]: value.replace(forbiddenCharacters, ""),
-    });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch("http://localhost:3310/api/user/profile", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok)
+        throw new Error("Erreur lors de la mise à jour du profil");
+
+      const updatedUser: userData = await response.json();
+      setUser(updatedUser);
+    } catch (err) {
+      console.error("Erreur:", err);
+    }
   };
 
   return (
-    <>
-      <form className="login-form">
-        <label htmlFor="email" className="login-label">
-          Email:
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
+    <form className="modify-profile" onSubmit={handleSubmit}>
+      <label htmlFor="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
 
-        <label htmlFor="pseudo" className="login-label">
-          Identifiant:
-        </label>
-        <input
-          type="text"
-          id="pseudo"
-          name="pseudo"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
+      <label htmlFor="pseudo">Identifiant:</label>
+      <input
+        type="text"
+        id="pseudo"
+        name="pseudo"
+        value={formData.pseudo}
+        onChange={handleInputChange}
+      />
 
-        <label htmlFor="password" className="login-label">
-          Mot de passe:
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <label htmlFor="passwordConfirm" className="login-label">
-          Confirmer le mot de passe:
-        </label>
-        <input
-          type="passwordConfirm"
-          id="passwordConfirm"
-          name="passwordConfirm"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <fieldset>
-          <input
-            type="radio"
-            id="cuisiner"
-            name="gender"
-            value="male"
-            onChange={handleInputUserData}
-            className="login-radio"
-          />
-          <label htmlFor="cuisiner" className="login-label">
-            Cuisiner
-          </label>
-
-          <input
-            type="radio"
-            id="cuisinere"
-            name="gender"
-            value="female"
-            onChange={handleInputUserData}
-            className="login-radio"
-          />
-          <label htmlFor="cuisinere" className="login-label">
-            Cuisinère
-          </label>
-        </fieldset>
-
-        <fieldset className="login-fieldset">
-          <button
-            type="submit"
-            id="login"
-            aria-label="login"
-            className="submit-button"
-          >
-            Sauvegarder les modifications
-          </button>
-        </fieldset>
-      </form>
-    </>
+      <button type="submit">Sauvegarder</button>
+    </form>
   );
 }
+
 export default ModifyProfile;
