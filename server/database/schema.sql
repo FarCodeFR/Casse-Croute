@@ -43,7 +43,6 @@ CREATE TABLE ingredient (
 -- Table recette
 CREATE TABLE recette (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    recette_ref VARCHAR(100),
     titre VARCHAR(100) NOT NULL,
     description VARCHAR(200) NOT NULL,
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -52,16 +51,16 @@ CREATE TABLE recette (
     type_id VARCHAR (10),
     difficulte_id VARCHAR (20),
     temps_id VARCHAR (4),
-    utilisateur_id INT ON DELETE CASCADE
+    utilisateur_id INT
 );
 
 -- Table ingredient_recette
 CREATE TABLE ingredient_recette (
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id int NOT NULL,
     ingredient_id INT NOT NULL,
     quantite FLOAT NOT NULL,
     unite VARCHAR(15) NOT NULL,
-    PRIMARY KEY (recette_ref, ingredient_id)
+    PRIMARY KEY (recette_id, ingredient_id)
     -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
     -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
 );
@@ -69,10 +68,10 @@ CREATE TABLE ingredient_recette (
 -- Table etape_preparation
 CREATE TABLE etape_preparation (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id int NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE
+    -- FOREIGN KEY (recette_id) REFERENCES recette(recette_id) ON DELETE CASCADE
 );
 
 -- Table avis
@@ -262,7 +261,7 @@ VALUES
 
 
 -- Table ingredient_recette
-INSERT INTO ingredient_recette (recette_ref, ingredient_id, quantite, unite)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
 VALUES
 (1, 1, 300, "g"),
 (1, 2, 150, "g"),
@@ -270,7 +269,7 @@ VALUES
 (2, 3, 200, "g");
 
 -- Table etape_preparation
-INSERT INTO etape_preparation (recette_ref, ordre, description)
+INSERT INTO etape_preparation (recette_id, ordre, description)
 VALUES
 (1, 1, "Épluchez et coupez les carottes."),
 (1, 2, "Faites cuire les carottes dans l'eau bouillante pendant 20 minutes."),

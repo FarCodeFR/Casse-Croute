@@ -25,16 +25,13 @@ export interface Ingredient {
   unite: string;
 }
 
-export interface IngredientData {
-  nom: string;
-  id: string;
+export interface IngredientData extends Ingredient {
   quantite: number;
-  unite: string;
-  icone_categorie: string;
   recette_ref: string;
 }
 
 function AddRecipe() {
+  const token = localStorage.getItem("jwtToken");
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
     titre: "",
@@ -118,8 +115,7 @@ function AddRecipe() {
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
     setLetters(e.target.value.toLowerCase());
   }
-  console.warn("recipeData:", recipeData);
-  console.warn("ingredientData", ingredientData);
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`)
       .then((response) => response.json())
@@ -230,75 +226,93 @@ function AddRecipe() {
         {
           method: "POST",
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(recipeData),
         },
       );
-      if (recipeResponse.ok) {
-        console.warn("Recette crée ! 👨‍🍳");
-        try {
-          const ingredientResponse = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/ingredientsAdded`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(ingredientData),
-            },
-          );
 
-          if (ingredientResponse.ok) {
-            console.warn("Ingredients ajouté ! 🍲");
-            // navigate(/seeProfile);
-            try {
-              const stepResponse = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/stepsAdded`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(recipeData),
+      if (recipeResponse.ok) {
+        // Start of the if block
+        toast.success("Recette crée ! 👨‍🍳");
+        const recipeDataFromServer = await recipeResponse.json();
+
+        const updatedIngredientData = ingredientData.map((ingredient) => ({
+          ...ingredient,
+          recette_ref: recipeDataFromServer,
+        }));
+
+        const updatedPreparation = recipeData.preparation.map((step) => ({
+          ...step,
+          recette_ref: recipeDataFromServer, // Or remove if not needed on backend
+        }));
+        setIngredientData(updatedIngredientData);
+        setRecipeData((prevRecipeData) => ({
+          ...prevRecipeData,
+          preparation: updatedPreparation,
+        }));
+
+        const ingredientResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/ingredientsAdded`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedIngredientData),
+          },
+        );
+
+        if (ingredientResponse.ok) {
+          toast.success("Ingredients ajouté ! 🍲");
+          try {
+            const stepResponse = await fetch(
+              `${import.meta.env.VITE_API_URL}/api/stepsAdded`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
                 },
-              );
-              if (stepResponse.ok) {
-                console.warn("Etapes de préparation ajoutées ! 🥦🔪");
-              } else {
-                console.warn("pas reussi");
-              }
-            } catch {
-              console.error("Erreur ajout etapes de preparation");
+                body: JSON.stringify(updatedPreparation),
+              },
+            );
+            if (stepResponse.ok) {
+              toast.success("Etapes de préparation ajoutées ! 🥦🔪");
+            } else {
+              toast.error("pas reussi");
             }
-          } else {
-            const ingredientErrorText = await ingredientResponse.text(); // Get ingredient error details!
-            console.error(
-              "Erreur ajout ingrédients:",
-              ingredientResponse.status,
-              ingredientErrorText, // Log the details!
-            );
-            toast.error(
-              "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
-            );
-            // Consider deleting the recipe here if needed.
+          } catch {
+            toast.error("Erreur ajout etapes de preparation");
           }
-        } catch (ingredientError) {
-          console.error("Fetch error (ingrédients):", ingredientError);
-          toast.error("Erreur lors de l'ajout des ingrédients.");
-          // Consider deleting the recipe here as well.
+        } else {
+          const ingredientErrorText = await ingredientResponse.text();
+          toast.error(
+            `Erreur ajout ingrédients:
+            ${ingredientErrorText}`,
+          );
+          toast.error(
+            "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
+          );
         }
-      } else if (recipeResponse.status === 409) {
-        const errorText = await recipeResponse.text(); // Get error details
-        console.error(
-          "Erreur création recette:",
-          recipeResponse.status,
-          errorText,
+        // } catch (ingredientError) {
+        //   console.error("Fetch error (ingrédients):", ingredientError);
+        //   toast.error("Erreur lors de l'ajout des ingrédients.");
+        // }
+      } // End of the if (recipeResponse.ok) block  <--- This was missing
+      else if (recipeResponse.status === 409) {
+        const errorText = await recipeResponse.text();
+        toast.error(
+          `Erreur création recette:
+          ${recipeResponse.status},
+          ${errorText}`,
         );
         toast.error("Erreur lors de la création de la recette.");
       }
     } catch (error) {
-      console.error("Fetch error (global):", error);
+      toast.error(`Fetch error (global): ${error}`);
       toast.error("Une erreur s'est produite lors de la requête.");
     }
   }

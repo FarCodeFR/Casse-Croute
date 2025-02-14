@@ -66,6 +66,7 @@ router.get("/api/recette", recetteActions.browse);
 router.get("/api/date-recette", recetteActions.browseLatestArrival);
 router.get("/api/recette-saison", recetteActions.browseSeason);
 router.get("/api/recette/:id", recetteActions.read);
+router.get("/api/stepsAdded", stepActions.browse);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
@@ -83,7 +84,6 @@ router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/ingredientsAdded", ingToRecActions.add);
 
 //Routes pour ajouter des étapes aux recettes
-router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
