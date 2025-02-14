@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
-import AddIngredient from "./components/AddIngredient";
 import Footer from "./components/globals/Footer";
 import Header from "./components/globals/Header";
 
@@ -9,7 +8,6 @@ function App() {
   return (
     <>
       <Header />
-      <AddIngredient />
       <nav>
         <NavLink to="/">Accueil</NavLink>
         <NavLink to="/account">Compte</NavLink>

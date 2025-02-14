@@ -77,7 +77,6 @@ router.post("/api/recette", recetteActions.add);
 router.put("/api/recette/:id", recetteActions.edit);
 router.delete("/api/recette/:id", recetteActions.del);
 
-
 router.put("/api/ingredient/:id", ingredientActions.edit);
 //Routes pour ajouter une ingredient à une recette
 router.get("/api/ingredientsAdded", ingToRecActions.browse);

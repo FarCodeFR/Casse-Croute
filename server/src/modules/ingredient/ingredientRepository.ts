@@ -23,13 +23,9 @@ class IngredientRepository {
   async create(ingredient: Ingredient) {
     const [result] = await databaseClient.query<Result>(
       "INSERT INTO ingredient (nom, categorie, saison) VALUES (?, ?, ?)",
-      [
-        ingredient.nom,
-        ingredient.categorie,
-        ingredient.saison,
-      ],
+      [ingredient.nom, ingredient.categorie, ingredient.saison],
     );
-    
+
     return result.insertId;
   }
 

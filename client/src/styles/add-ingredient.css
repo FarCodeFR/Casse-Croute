@@ -1,4 +1,3 @@
-
 .add-ingredient-container {
   width: 200px;
   height: 200px;
@@ -14,7 +13,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-
 .add-sign-container {
   width: 100%;
   height: 100%;
@@ -26,7 +24,6 @@
   left: 0;
   transition: opacity 0.3s ease-in-out;
 }
-
 
 .add-sign {
   font-size: 50px;
@@ -40,7 +37,6 @@
 .add-sign:hover {
   transform: scale(1.1);
 }
-
 
 .form-container {
   width: 100%;
@@ -57,9 +53,6 @@
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-
-
-
 .add-ingredient-container.expanded .add-sign-container {
   opacity: 0;
 }
@@ -68,9 +61,6 @@
   opacity: 1;
   transform: translateY(0);
 }
-
-
-
 
 .add-ingredient-container form {
   display: flex;
@@ -106,7 +96,6 @@
   padding: 5px;
   font-size: 14px;
 }
-
 
 .add-ingredient-container input:focus {
   outline: none;
@@ -145,6 +134,10 @@ button:disabled {
 }
 
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

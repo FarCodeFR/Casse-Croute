@@ -1,5 +1,5 @@
 import "../styles/add-ingredient.css";
-import { useState, type FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 function AddIngredient() {
@@ -17,7 +17,6 @@ function AddIngredient() {
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    
 
     fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`, {
       method: "POST",
@@ -29,8 +28,8 @@ function AddIngredient() {
       .then((response) => {
         if (response.ok) {
           toast.success("Ingrédient ajouté avec succès.");
-        setTimeout(() => setMessage(""), 3000);
-        setVisible(false);
+          setTimeout(() => setMessage(""), 3000);
+          setVisible(false);
         }
       })
       .catch(() => {

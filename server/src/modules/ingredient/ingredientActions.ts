@@ -9,7 +9,7 @@ const browse: RequestHandler = async (req, res) => {
     console.error(err);
     res.status(500).send("Erreur serveur.");
   }
-}
+};
 
 const browseSeason: RequestHandler = async (req, res) => {
   try {
@@ -21,39 +21,26 @@ const browseSeason: RequestHandler = async (req, res) => {
   }
 };
 
-
-
-const add: RequestHandler = async (req,res) => {
-
-   try { 
+const add: RequestHandler = async (req, res) => {
+  try {
     const { nom, categorie, saison } = req.body;
-  
+
     const addIngredient = await ingredientRepository.create({
       nom,
       categorie,
       saison,
     });
-   
+
     if (addIngredient) {
-      res
-        .status(201)
-        .send(`L'ingrédient : ${req.body.nom}, à bien été ajouté`);
-        
+      res.status(201).send(`L'ingrédient : ${req.body.nom}, à bien été ajouté`);
     } else {
       res.status(404).send("Une erreur a été rencontré");
     }
-} catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send("Erreur serveur.");
-}
-}
-
-
-
-
-
-
-
+  }
+};
 
 const edit: RequestHandler = async (req, res) => {
   try {
