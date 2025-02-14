@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import type { LoginFormProps } from "../types/LoginData";
 import type { userDataTypes } from "../types/UserData";
 
-function CreateAccount() {
+function CreateAccount({ toggleForm }: LoginFormProps) {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
@@ -42,7 +43,7 @@ function CreateAccount() {
       );
       if (response.ok) {
         toast.success("Inscription réussie 👨‍🍳");
-        navigate("/view-profile");
+        navigate("/login");
       } else if (response.status === 409) {
         toast.error("Email déjà utilisé");
       } else {
@@ -51,8 +52,9 @@ function CreateAccount() {
     }
   }
   return (
-    <>
-      <form className="login-form" onSubmit={handleSubmit}>
+    <form className="container-form-auth" onSubmit={handleSubmit}>
+      <h2>Rejoignez la communauté Casse-croûte !</h2>
+      <section>
         <label htmlFor="email" className="login-label">
           Email:
         </label>
@@ -60,8 +62,8 @@ function CreateAccount() {
           type="email"
           id="email"
           name="email"
+          placeholder="thomas-42@email.fr"
           onChange={handleInputUserData}
-          className="generic-input"
         />
 
         <label htmlFor="password" className="login-label">
@@ -71,33 +73,38 @@ function CreateAccount() {
           type="password"
           id="password"
           name="password"
+          placeholder="***********"
           onChange={handleInputUserData}
-          className="generic-input"
         />
 
         <label htmlFor="passwordConfirm" className="login-label">
           Confirmer le mot de passe:
+          {userData.password === userData.passwordConfirm ? "✅" : "❌"}
         </label>
         <input
           type="password"
           id="passwordConfirm"
           name="passwordConfirm"
+          placeholder="***********"
           onChange={handleInputUserData}
-          className="generic-input"
         />
-
-        <fieldset className="login-fieldset">
-          <button
-            type="submit"
-            id="register"
-            aria-label="register"
-            className="submit-button"
-          >
-            S'inscrire
-          </button>
-        </fieldset>
-      </form>
-    </>
+      </section>
+      <section>
+        <button type="submit" id="register" aria-label="register">
+          S'inscrire
+        </button>
+        <p>Ou</p>
+        <button
+          type="button"
+          id="register"
+          aria-label="register"
+          className="registerHere"
+          onClick={toggleForm}
+        >
+          Se connecter
+        </button>
+      </section>
+    </form>
   );
 }
 
