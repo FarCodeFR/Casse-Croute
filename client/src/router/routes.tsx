@@ -1,4 +1,6 @@
 import { Navigate } from "react-router-dom";
+import UserRecipes from "../components/UserRecipes";
+import UserRecipesDelete from "../components/UserRecipesDelete";
 import UserRecipesModify from "../components/admin-user-recipes/UserRecipesModify";
 import ProtectedRoutes from "../components/protect-context/ProtectedRoutes";
 import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
@@ -45,6 +47,20 @@ const routes = [
         <ViewProfile />
       </ProtectedRoutes>
     ),
+  },
+  {
+    path: "/user-recipes",
+    element: <UserRecipes />,
+    children: [
+      {
+        path: "modify",
+        element: <UserRecipesModify />,
+      },
+      {
+        path: "delete",
+        element: <UserRecipesDelete />,
+      },
+    ],
   },
   {
     path: "/dashboard-admin",
