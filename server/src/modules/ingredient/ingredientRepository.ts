@@ -22,20 +22,20 @@ class IngredientRepository {
 
   async create(ingredient: Ingredient) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO ingredient (nom, categorie, saison, icone_categorie) VALUES (?, ?, ?, ?)",
+      "INSERT INTO ingredient (nom, categorie, saison) VALUES (?, ?, ?)",
       [
         ingredient.nom,
         ingredient.categorie,
         ingredient.saison,
-        ingredient.icone_categorie,
       ],
     );
+    
     return result.insertId;
   }
 
   async update(ingredient: Ingredient) {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE ingredient SET nom = ?, categorie = ?, saison = ?, icone_categorie = ?) WHERE id = ?",
+      "UPDATE ingredient SET nom = ?, categorie = ?, saison = ?, icone_categorie = ? WHERE id = ?",
       [
         ingredient.nom,
         ingredient.categorie,
