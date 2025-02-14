@@ -3,6 +3,7 @@ import ScrollRecipes from "../../components/ScrollRecipes";
 import VerticalRecipeCard from "../../components/VerticalRecipeCard";
 import type { RecipeI } from "../../types/RecipeValues";
 import "./dashboard-recipes.css";
+import { toast } from "react-toastify";
 
 function DashboardRecipes() {
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
@@ -17,7 +18,7 @@ function DashboardRecipes() {
         setRecipes(filteredData);
       })
       .catch((err) => {
-        alert(`Erreur lors de la récupération des recettes ${err}`);
+        toast.error(`Erreur lors de la récupération des recettes ${err}`);
       });
   }, []);
 
