@@ -11,7 +11,7 @@ function App() {
       <nav>
         <NavLink to="/">Accueil</NavLink>
         <NavLink to="/account">Compte</NavLink>
-        <NavLink to="/catalogue">Catalogue</NavLink>
+        <NavLink to="/recipe-page">Catalogue</NavLink>
         <NavLink to="/create-recipe">Create Recipe</NavLink>
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/view-profile">Voir Profile</NavLink>
