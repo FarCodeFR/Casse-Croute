@@ -62,8 +62,6 @@ CREATE TABLE ingredient_recette (
     quantite FLOAT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_ref, ingredient_id)
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE,
-    -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id) ON DELETE CASCADE
 );
 
 -- Table etape_preparation
@@ -72,7 +70,6 @@ CREATE TABLE etape_preparation (
     recette_ref VARCHAR(100) NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE
 );
 
 -- Table avis
