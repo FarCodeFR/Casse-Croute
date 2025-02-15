@@ -23,13 +23,13 @@ CREATE TABLE difficulte (
     image VARCHAR(255) NOT NULL
 );
 
--- Table temps_preparation
-CREATE TABLE temps_preparation (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    heure INT NOT NULL CHECK (heure BETWEEN 0 AND 72),
-    minute INT NOT NULL CHECK (minute BETWEEN 0 AND 59),
-    image VARCHAR(255) NOT NULL
-);
+-- -- Table temps_preparation
+-- CREATE TABLE temps_preparation (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     heure INT NOT NULL CHECK (heure BETWEEN 0 AND 72),
+--     minute INT NOT NULL CHECK (minute BETWEEN 0 AND 59),
+--     image VARCHAR(255) NOT NULL
+-- );
 
 -- Table ingredient
 CREATE TABLE ingredient (
@@ -57,11 +57,11 @@ CREATE TABLE recette (
 
 -- Table ingredient_recette
 CREATE TABLE ingredient_recette (
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id VARCHAR(100) NOT NULL,
     ingredient_id INT NOT NULL,
     quantite FLOAT NOT NULL,
     unite VARCHAR(15) NOT NULL,
-    PRIMARY KEY (recette_ref, ingredient_id)
+    PRIMARY KEY (recette_id, ingredient_id)
     -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
     -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
 );
@@ -69,10 +69,10 @@ CREATE TABLE ingredient_recette (
 -- Table etape_preparation
 CREATE TABLE etape_preparation (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id VARCHAR(100) NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE
+    -- FOREIGN KEY (recette_id) REFERENCES recette(recette_id) ON DELETE CASCADE
 );
 
 -- Table avis
@@ -92,7 +92,7 @@ CREATE TABLE avis (
 -- Insertion des données initiales
 -- Utilisateurs
 INSERT INTO utilisateur (pseudo, email, mot_de_passe, date_inscription, est_admin) VALUES
-("admin", "admin@example.com", "adminpasswordhash", CURDATE(), TRUE),
+("admin", "admin@example.com", "$argon2id$v=19$m=16,t=2,p=1$eHlkbFJacERSWTdzdTl6Wg$al1iGNFEtgjALTTqN2BqIg", CURDATE(), TRUE),
 ("user1", "user1@example.com", "user1passwordhash", CURDATE(), FALSE),
 ("user3", "user3@example.com", "user3passwordhash", CURDATE(), FALSE),
 ("user4", "user4@example.com", "user4passwordhash", CURDATE(), FALSE),
@@ -115,12 +115,12 @@ INSERT INTO difficulte (nom, image) VALUES
 ("Moyen", "/images/difficulte/niveau.jpg"),
 ("Difficile", "/images/difficulte/niveau.jpg");
 
--- Temps de préparation
-INSERT INTO temps_preparation (heure, minute, image) VALUES
-(0, 30, "/images/temps/icone.jpg"),
-(1, 0, "/images/temps/icone.jpg"),
-(1, 30, "/images/temps/icone.jpg"),
-(2, 0, "/images/temps/icone.jpg");
+-- -- Temps de préparation
+-- INSERT INTO temps_preparation (heure, minute, image) VALUES
+-- (0, 30, "/images/temps/icone.jpg"),
+-- (1, 0, "/images/temps/icone.jpg"),
+-- (1, 30, "/images/temps/icone.jpg"),
+-- (2, 0, "/images/temps/icone.jpg");
 
 -- Table ingredient
 INSERT INTO ingredient (nom, categorie, icone_categorie, saison) VALUES
@@ -262,7 +262,7 @@ VALUES
 
 
 -- Table ingredient_recette
-INSERT INTO ingredient_recette (recette_ref, ingredient_id, quantite, unite)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
 VALUES
 (1, 1, 300, "g"),
 (1, 2, 150, "g"),
@@ -270,7 +270,7 @@ VALUES
 (2, 3, 200, "g");
 
 -- Table etape_preparation
-INSERT INTO etape_preparation (recette_ref, ordre, description)
+INSERT INTO etape_preparation (recette_id, ordre, description)
 VALUES
 (1, 1, "Épluchez et coupez les carottes."),
 (1, 2, "Faites cuire les carottes dans l'eau bouillante pendant 20 minutes."),
