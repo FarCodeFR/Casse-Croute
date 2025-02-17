@@ -40,7 +40,7 @@ function SearchFilter() {
       <div className="input-wrapper">
         <input
           type="text"
-          placeholder="Search for a recipe..."
+          placeholder="Recherche ta recette..."
           id="search-bar"
           className="input-header"
           onChange={handleChange}

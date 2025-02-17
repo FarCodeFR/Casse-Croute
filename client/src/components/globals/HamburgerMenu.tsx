@@ -1,10 +1,18 @@
 import Hamburger from "hamburger-react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../../styles/HamburgerMenu.css";
+import useAuth from "../../pages/context/useAuth";
 
 function HamburgerMenu() {
   const [open, setOpen] = useState(false);
+  const { setIsLogged, isLogged } = useAuth();
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+    setIsLogged(false);
+    navigate("/");
+  };
 
   return (
     <div className="menu-container">
@@ -17,6 +25,15 @@ function HamburgerMenu() {
           <ul>
             <li>
               <NavLink to="/legal-notices">Mentions l'égales</NavLink>
+            </li>
+            <li>
+              {isLogged === true ? (
+                <Link to="/" onClick={logout} type="button">
+                  Déconnexion
+                </Link>
+              ) : (
+                ""
+              )}
             </li>
           </ul>
         </div>
