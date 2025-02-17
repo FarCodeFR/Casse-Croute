@@ -18,6 +18,26 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getProfile: RequestHandler = async (req, res, next) => {
+  const decodedToken = res.locals.decodedToken;
+  try {
+    const userId = decodedToken.id;
+
+    if (!userId) {
+      res.status(401).json({ message: "Utilisateur non authentifié" });
+    }
+    const user = await userRepository.getUserById(userId);
+    if (!user) {
+      res.status(404).json({ message: "Utilisateur introuvable" });
+      return;
+    }
+
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     // Create a new user object
@@ -133,4 +153,5 @@ export default {
   imageUpload,
   edit,
   destroy,
+  getProfile,
 };

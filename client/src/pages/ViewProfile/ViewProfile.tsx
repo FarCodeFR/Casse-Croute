@@ -15,9 +15,14 @@ function ViewProfile() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     const fetchUserProfile = async () => {
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        setError("Aucun token trouvé. Veuillez vous reconnecter.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch("http://localhost:3310/api/user/profile", {
           method: "GET",
@@ -27,11 +32,13 @@ function ViewProfile() {
           },
         });
 
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error("Erreur lors de la récupération du profil");
+        }
 
         const data: userData = await response.json();
         setUser(data);
+        console.info(data);
       } catch (err) {
         setError("Impossible de charger le profil.");
         console.error(err);

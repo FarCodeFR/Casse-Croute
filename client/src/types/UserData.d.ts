@@ -12,6 +12,7 @@ export interface userData {
   pseudo: string;
   est_admin: string;
   photo_profil: string;
+  message?: string;
 }
 
 export type UserScrollI = {

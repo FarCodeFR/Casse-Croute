@@ -6,12 +6,12 @@ function SeeProfile({ user }: { user: userData }) {
       <div className="profile-header">
         <figure>
           <img
-            src={user.photo_profil}
+            src={user.photo_profil || "public/assets/images/profil.png"}
             alt="Avatar de profil"
             className="profile-avatar"
           />
           <figcaption>
-            <h2>{user.pseudo}</h2>
+            <h2>{user.pseudo || user.email}</h2>
           </figcaption>
         </figure>
       </div>
@@ -19,7 +19,9 @@ function SeeProfile({ user }: { user: userData }) {
       <p className="profile-message-title">Petit message</p>
       <hr />
       <p className="profile-description">
-        Je suis passionné de cuisine et j’aime partager mes recettes.
+        {/* ✅ Ajout d'un message par défaut */}
+        {user.message ||
+          "Je suis passionné de cuisine et j’aime partager mes recettes."}
       </p>
     </section>
   );

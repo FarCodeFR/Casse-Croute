@@ -24,6 +24,14 @@ class userRepository {
     return rows[0] as User;
   }
 
+  async getUserById(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, pseudo, email, photo_profil, est_admin FROM utilisateur WHERE id = ?",
+      [id],
+    );
+    return rows[0] || null;
+  }
+
   async updateAdmin(user: User) {
     const [result] = await databaseClient.query<Result>(
       "update utilisateur set est_admin = ? WHERE id = ?",
