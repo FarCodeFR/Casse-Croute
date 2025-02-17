@@ -18,15 +18,16 @@ function Footer() {
                 Vos choix concernant l'utilisation des cookies
               </Link>
             </li>
-            <li>
-              <Link to="/mentions-legales">Mentions légales</Link>
-            </li>
-            <li>
-              <Link to="/recrutement">Recrutement</Link>
-            </li>
           </ul>
         </div>
         <div className="footer-center">
+          <Link to="/">
+            <img
+              className="logo-footer"
+              src="/assets/images/logo.svg"
+              alt="logo"
+            />
+          </Link>
           <nav className="footer-links">
             <li>
               <Link to="https://www.facebook.com/">
@@ -67,27 +68,19 @@ function Footer() {
           </nav>
         </div>
         <div className="footer-right">
-          <Link to="/">
-            <img
-              className="logo-footer"
-              src="/assets/images/logo.svg"
-              alt="logo"
-            />
-          </Link>
+          <ul className="footer-menu">
+            <li>
+              <Link to="/mentions-legales">Mentions légales</Link>
+            </li>
+            <li>
+              <Link to="/recrutement">Recrutement</Link>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="footer-copyright">
         <p>Contacte-nous 👋 par Discord Gratuit</p>
         <p>© 2024 Casse Croûte. Tous droits réservés</p>
-        <p>
-          Les photos utilisées sur ce site proviennent avec autorisation de
-          Phubarb,
-        </p>
-        <p>
-          sont l'exclusivité par nos Alliées en fortune. Merci à elles pour leur
-          talent et
-        </p>
-        <p>leur générosité.</p>
       </div>
     </footer>
   );
