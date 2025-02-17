@@ -1,29 +1,45 @@
-.view-profile {
-  max-width: 800px;
+.view-profile__nav {
+  display: flex;
+  background-color: var(--primary-color);
+  padding: 10px 10px 0px 10px;
+  border-radius: 0px 0px 10px 10px;
   margin: auto;
-  padding: 20px;
+  width: 85%;
 }
 
 .view-profile__nav button {
-  margin: 5px;
-  padding: 10px;
-  font-size: 1rem;
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--secondary-color-3);
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.modify-profile input {
-  display: block;
-  margin-bottom: 10px;
+/* Style de l'onglet actif */
+.view-profile__nav button.active {
+  background-color: var(--secondary-color-3);
+  color: var(--primary-color);
+  border-radius: 10px 10px 0 0;
+}
+
+.view-profile__nav button:hover {
+  opacity: 0.8;
+}
+
+/*  Cache "Mes recettes" sur mobile */
+.recipes-btn {
+  display: none;
+}
+
+.view-profile__nav button.active::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
   width: 100%;
-  padding: 5px;
-}
-
-.my-profile-recipes ul {
-  list-style: none;
-  padding: 0;
-}
-
-.my-profile-recipes li {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  height: 5px;
+  background: var(var(--secondary-color-3));
+  transform: translateX(-50%);
 }

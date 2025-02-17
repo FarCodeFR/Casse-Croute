@@ -53,13 +53,25 @@ function ViewProfile() {
   return (
     <main className="view-profile">
       <nav className="view-profile__nav">
-        <button type="button" onClick={() => setActiveSection("viewProfile")}>
+        <button
+          type="button"
+          className={activeSection === "viewProfile" ? "active" : ""}
+          onClick={() => setActiveSection("viewProfile")}
+        >
           Profil
         </button>
-        <button type="button" onClick={() => setActiveSection("modifyProfile")}>
-          Modifier le profil
+        <button
+          type="button"
+          className={activeSection === "modifyProfile" ? "active" : ""}
+          onClick={() => setActiveSection("modifyProfile")}
+        >
+          Éditer le profil
         </button>
-        <button type="button" onClick={() => setActiveSection("recipes")}>
+        <button
+          type="button"
+          className={`recipes-btn ${activeSection === "recipes" ? "active" : ""}`}
+          onClick={() => setActiveSection("recipes")}
+        >
           Mes recettes
         </button>
       </nav>
