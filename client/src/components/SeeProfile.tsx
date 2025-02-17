@@ -1,27 +1,28 @@
 import type { userData } from "../types/UserData";
+import "../styles/see-user.css";
 
 function SeeProfile({ user }: { user: userData }) {
   return (
-    <section className="profile-container">
-      <div className="profile-header">
-        <figure>
-          <img
-            src={user.photo_profil || "public/assets/images/profil.png"}
-            alt="Avatar de profil"
-            className="profile-avatar"
-          />
-          <figcaption>
-            <h2>{user.pseudo || user.email}</h2>
-          </figcaption>
-        </figure>
+    <section className="profile">
+      <div>
+        <img
+          src={user.photo_profil || "/assets/images/profil.png"}
+          alt="Avatar de profil"
+        />
+        <div>
+          <h2>{user.pseudo || user.email}</h2>
+        </div>
       </div>
 
-      <p className="profile-message-title">Petit message</p>
-      <hr />
+      <div className="profile-message">
+        <div className="message-line" />
+        <p>Petit message</p>
+        <div className="message-line" /> {/* ✅ Auto-fermante */}
+      </div>
+
       <p className="profile-description">
-        {/* ✅ Ajout d'un message par défaut */}
         {user.message ||
-          "Je suis passionné de cuisine et j’aime partager mes recettes."}
+          "Je suis passionné de cuisine et j’aime partager mes recettes et découvrir de nouvelles spécialités."}
       </p>
     </section>
   );

@@ -1,0 +1,79 @@
+.profile {
+  background: var(--secondary-color-2);
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 98%;
+  margin: auto;
+  box-shadow: 5px 4px 22.3px 0px rgba(0, 0, 0, 0.09);
+}
+
+.profile > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 5px 4px 22.3px 0px rgba(0, 0, 0, 0.09);
+}
+
+.profile div div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 16px;
+}
+
+.profile-message {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.message-line {
+  flex-grow: 1;
+  height: 1px;
+  background: black;
+}
+
+/* ✅ Texte descriptif */
+.profile-description {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin-top: 1px;
+}
+
+/* ✅ Version Desktop : On ajuste les espacements */
+@media (min-width: 768px) {
+  .profile {
+    padding: 25px;
+  }
+
+  .profile img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .profile h2 {
+    font-size: 24px;
+    margin-left: 32px;
+  }
+
+  .profile-message {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .profile-description {
+    font-size: 16px;
+  }
+}
