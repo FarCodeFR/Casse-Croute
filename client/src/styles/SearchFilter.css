@@ -42,7 +42,6 @@
   background-color: white;
   border: solid var(--primary-color);
   color: black;
-  margin: 10% auto;
   border-radius: 10px;
   padding: 5px 0;
   margin: 10% auto;
@@ -61,4 +60,14 @@
 .recipe-results:hover {
   background-color: #f0f0f0;
   cursor: pointer;
+}
+
+@media screen and (min-width: 440px) {
+  .input-wrapper {
+    width: 30%;
+  }
+  .results-section {
+    margin: 3% auto;
+    padding: 0;
+  }
 }

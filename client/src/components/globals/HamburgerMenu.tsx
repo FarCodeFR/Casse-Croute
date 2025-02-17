@@ -24,6 +24,16 @@ function HamburgerMenu() {
           </header>
           <ul>
             <li>
+              <NavLink to="/catalogue">Catalogue</NavLink>
+            </li>
+            <li>
+              {isLogged === true ? (
+                <NavLink to="/create-recipe">Create Recipe</NavLink>
+              ) : (
+                ""
+              )}
+            </li>
+            <li>
               <NavLink to="/legal-notices">Mentions l'égales</NavLink>
             </li>
             <li>
