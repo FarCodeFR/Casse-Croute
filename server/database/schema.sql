@@ -23,13 +23,13 @@ CREATE TABLE difficulte (
     image VARCHAR(255) NOT NULL
 );
 
--- -- Table temps_preparation
--- CREATE TABLE temps_preparation (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     heure INT NOT NULL CHECK (heure BETWEEN 0 AND 72),
---     minute INT NOT NULL CHECK (minute BETWEEN 0 AND 59),
---     image VARCHAR(255) NOT NULL
--- );
+-- Table temps_preparation
+CREATE TABLE temps_preparation (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    heure INT NOT NULL CHECK (heure BETWEEN 0 AND 72),
+    minute INT NOT NULL CHECK (minute BETWEEN 0 AND 59),
+    image VARCHAR(255) NOT NULL
+);
 
 -- Table ingredient
 CREATE TABLE ingredient (

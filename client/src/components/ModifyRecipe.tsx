@@ -8,31 +8,32 @@ import "../pages/CreateRecipe/CreateRecipe.css";
 
 export interface RecipeData {
   titre: string;
-  recette_ref: string;
+  recette_ref: number;
   image_url: string;
   description: string;
   temps_id: number;
   difficulte_id: number;
   type_id: number;
-  preparation: { id: string; ordre: number; description: string }[];
+  preparation: { id: number | undefined; ordre: number; description: string }[];
   saison: string;
   utilisateur_id: number;
 }
 
 export interface Ingredient {
   nom: string;
-  id: string;
+  ingredientId: number;
   icone_categorie: string;
   unite: string;
 }
 
 export interface IngredientData {
   nom: string;
-  id: string;
+  id?: number;
+  ingredientId: number;
   quantite: number;
   unite: string;
   icone_categorie: string;
-  recette_ref: string;
+  recette_ref: number;
   saison?: string;
 }
 
@@ -43,6 +44,7 @@ export interface Preparation {
 }
 
 function ModifyRecipe() {
+  const token = localStorage.getItem("jwtToken");
   //normally const recetteId = useParams();
   const recetteId = 1;
   const recipeIdNumber = Number(recetteId);
@@ -51,13 +53,13 @@ function ModifyRecipe() {
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
     titre: "",
-    recette_ref: "",
+    recette_ref: 0,
     image_url: "",
     description: "",
     temps_id: 1,
     difficulte_id: 1,
     type_id: 0,
-    preparation: [{ id: `${Date.now()}`, ordre: 1, description: "" }],
+    preparation: [{ id: undefined, ordre: 1, description: "" }],
     saison: "",
     utilisateur_id: 1,
   });
@@ -80,7 +82,8 @@ function ModifyRecipe() {
       [name]: value,
     });
   };
-
+  console.warn("recipeData", recipeData);
+  console.warn("ingredientData", ingredientData);
   const handleInputIngredients = (ingredient: Ingredient) => {
     const foundIngredientInData = ingredientData.find(
       (existingIngredient) => existingIngredient.nom === ingredient.nom,
@@ -137,7 +140,15 @@ function ModifyRecipe() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`)
       .then((response) => response.json())
-      .then((data) => setIngredients(data));
+      .then((data) => {
+        const ingredientsWithId = data.map((ingredient: IngredientData) => ({
+          ingredientId: ingredient.id, // Add ingredientId here
+          nom: ingredient.nom,
+          icone_categorie: ingredient.icone_categorie,
+          unite: ingredient.unite,
+        }));
+        setIngredients(ingredientsWithId); // Update the state with the new array
+      });
 
     const fetchRecipe = async () => {
       // setLoading(true);
@@ -185,7 +196,7 @@ function ModifyRecipe() {
         const initialIngredients = data.ingredients
           ? data.ingredients.map((ingredient: IngredientData) => ({
               nom: ingredient.nom,
-              id: ingredient.id,
+              ingredientId: ingredient.id,
               quantite: ingredient.quantite || 1, // Default quantity if not provided
               unite: ingredient.unite || "00 g", // Default unit if not provided
               icone_categorie: ingredient.icone_categorie,
@@ -238,7 +249,7 @@ function ModifyRecipe() {
       preparation: [
         ...prevRecipeData.preparation,
         {
-          id: `${Date.now()}`,
+          id: undefined,
           ordre: prevRecipeData.preparation.length + 1,
           description: "",
         },
@@ -279,7 +290,6 @@ function ModifyRecipe() {
     });
   };
 
-  //submit the form
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -308,75 +318,101 @@ function ModifyRecipe() {
         {
           method: "PUT",
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(recipeData),
         },
       );
-      if (recipeResponse.ok) {
-        console.warn("Recette crée ! 👨‍🍳");
-        try {
-          const ingredientResponse = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/ingredientsAdded/${recipeIdNumber}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(ingredientData),
-            },
-          );
 
-          if (ingredientResponse.ok) {
-            console.warn("Ingredients ajouté ! 🍲");
-            // navigate(/seeProfile);
-            try {
-              const stepResponse = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/stepsAdded/${recipeIdNumber}`,
-                {
-                  method: "PUT",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(recipeData),
+      if (recipeResponse.ok) {
+        // Start of the if block
+        toast.success("Recette modifiée ! 👨‍🍳");
+
+        const updatedIngredientData = ingredientData.map((ingredient) => ({
+          ingredientId: ingredient.ingredientId,
+          quantite: ingredient.quantite,
+          unite: ingredient.unite,
+          nom: ingredient.nom,
+          icone_categorie: ingredient.icone_categorie,
+          recette_ref: ingredient.recette_ref,
+        }));
+
+        const ingredientsToSend = {
+          recipeId: recipeIdNumber, // Use recipeIdNumber
+          ingredients: updatedIngredientData,
+        };
+
+        const updatedPreparation = recipeData.preparation.map((step) => ({
+          ...step,
+          recette_ref: recipeData.recette_ref, // Or remove if not needed on backend
+        }));
+        setIngredientData(updatedIngredientData);
+        setRecipeData((prevRecipeData) => ({
+          ...prevRecipeData,
+          preparation: updatedPreparation,
+        }));
+        const ingredientResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/ingredientsAdded`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(ingredientsToSend),
+          },
+        );
+
+        if (ingredientResponse.ok) {
+          toast.success("Ingredients modifiés ! 🍲");
+          try {
+            const stepResponse = await fetch(
+              `${import.meta.env.VITE_API_URL}/api/stepsAdded/${recipeIdNumber}`,
+              {
+                method: "PUT",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
                 },
-              );
-              if (stepResponse.ok) {
-                console.warn("Etapes de préparation ajoutées ! 🥦🔪");
-              } else {
-                console.warn("pas reussi");
-              }
-            } catch {
-              console.error("Erreur ajout etapes de preparation");
+                body: JSON.stringify(updatedPreparation),
+              },
+            );
+            if (stepResponse.ok) {
+              toast.success("Etapes de préparation modifiées ! 🥦🔪");
+            } else {
+              toast.error("pas reussi");
             }
-          } else {
-            const ingredientErrorText = await ingredientResponse.text(); // Get ingredient error details!
-            console.error(
-              "Erreur ajout ingrédients:",
-              ingredientResponse.status,
-              ingredientErrorText, // Log the details!
-            );
-            toast.error(
-              "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
-            );
-            // Consider deleting the recipe here if needed.
+          } catch {
+            toast.error("Erreur ajout etapes de preparation");
           }
-        } catch (ingredientError) {
-          console.error("Fetch error (ingrédients):", ingredientError);
-          toast.error("Erreur lors de l'ajout des ingrédients.");
-          // Consider deleting the recipe here as well.
+        } else {
+          const ingredientErrorText = await ingredientResponse.text();
+          console.error(
+            `Erreur ajout ingrédients:
+            ${ingredientErrorText}`,
+          );
+          toast.error(
+            "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
+          );
         }
-      } else if (recipeResponse.status === 409) {
-        const errorText = await recipeResponse.text(); // Get error details
-        console.error(
-          "Erreur création recette:",
-          recipeResponse.status,
-          errorText,
+        // } catch (ingredientError) {
+        //   console.error("Fetch error (ingrédients):", ingredientError);
+        //   toast.error("Erreur lors de l'ajout des ingrédients.");
+        // }
+      } // End of the if (recipeResponse.ok) block  <--- This was missing
+      else if (recipeResponse.status === 409) {
+        const errorText = await recipeResponse.text();
+        toast.error(
+          `Erreur création recette:
+          ${recipeResponse.status},
+          ${errorText}`,
         );
         toast.error("Erreur lors de la création de la recette.");
       }
     } catch (error) {
-      console.error("Fetch error (global):", error);
+      toast.error(`Fetch error (global): ${error}`);
+      console.error(`Fetch error (global): ${error}`);
       toast.error("Une erreur s'est produite lors de la requête.");
     }
   }
@@ -461,7 +497,7 @@ function ModifyRecipe() {
         <label htmlFor="ingredients">Ingredients:</label>
         <section className="container-ingredients-season">
           {ingredientData.map((ingredient) => (
-            <div key={ingredient.id}>
+            <div key={ingredient.ingredientId}>
               <input
                 type="button"
                 name={ingredient.nom}
@@ -513,12 +549,12 @@ function ModifyRecipe() {
         <section className="container-ingredients-season filter-ingredients">
           <input
             type="text"
-            placeholder="Allez chercher..."
+            placeholder="Cherchez un ingredient..."
             onChange={handleSearch}
           />
           <ul>
             {filteredIngredients.map((ingredient) => (
-              <div key={ingredient.id}>
+              <div key={ingredient.ingredientId}>
                 <input
                   type="button"
                   onClick={() => handleInputIngredients(ingredient)}
@@ -542,8 +578,8 @@ function ModifyRecipe() {
           <div key={step.id}>
             <textarea
               id={`instructions-${index}`}
-              name={`preparation[${index}].description`} // This name is important for form submission
-              value={step.description} // Controlled component: value from state
+              name={`preparation[${index}].description`}
+              value={step.description}
               onChange={(event) => handleStepDescriptionChange(index, event)}
             />
             <button

@@ -85,11 +85,13 @@ router.put("/api/ingredient/:id", ingredientActions.edit);
 router.use("/api/ingredientAdded", authActions.verifyToken);
 router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/ingredientsAdded", ingToRecActions.add);
+router.put("/api/ingredientsAdded", ingToRecActions.updateRecipeIngredients);
 
 //Routes pour ajouter des étapes aux recettes
 router.use("/api/stepsAdded", authActions.verifyToken);
 router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
+router.put("/api/stepsAdded/:id", stepActions.updateSteps);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
