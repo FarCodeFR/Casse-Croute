@@ -55,7 +55,6 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
       const data = await response.json();
 
       if (data.token) {
-        console.warn(data);
         localStorage.setItem("jwtToken", data.token);
         toast.success("Connexion réussie !");
         setIsLogged(true);
