@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import type { loginDataTypes } from "../types/LoginData";
+import useAuth from "../pages/context/useAuth";
+import type { LoginFormProps, loginDataTypes } from "../types/LoginData";
 
-export function LoginForm() {
+export function LoginForm({ toggleForm }: LoginFormProps) {
+  const { setIsLogged } = useAuth();
   const [loginData, setLoginData] = useState<loginDataTypes>({});
+
   const navigate = useNavigate();
 
   const handleInputLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +20,7 @@ export function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const { email, password } = loginData;
     if (!email) {
       // Simplified check
@@ -52,8 +56,8 @@ export function LoginForm() {
 
       if (data.token) {
         localStorage.setItem("jwtToken", data.token);
-        console.warn("Token stored:", data.token);
         toast.success("Connexion réussie !");
+        setIsLogged(true);
         navigate("/view-profile");
       } else {
         toast.error(
@@ -66,14 +70,22 @@ export function LoginForm() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+    setIsLogged(false);
+    navigate("/");
+  };
+
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <form className="container-form-auth" onSubmit={handleSubmit}>
+      <h2>Heureux de vous revoir !</h2>
+      <section>
         <label htmlFor="username">Email:</label>
         <input
           type="text"
           id="email"
           name="email"
+          placeholder="thomas-42@email.fr"
           onChange={handleInputLogin}
           required // Add required attribute for form validation
         />
@@ -82,14 +94,29 @@ export function LoginForm() {
           type="password"
           id="password" // Corrected ID
           name="password"
+          placeholder="***********"
           onChange={handleInputLogin}
           required // Add required attribute
         />
+      </section>
+      <section>
         <button type="submit" id="login" aria-label="login">
           Se connecter
         </button>
-      </form>
-    </>
+        <p>Ou</p>
+        <button
+          type="button"
+          id="login"
+          aria-label="login"
+          onClick={toggleForm}
+        >
+          Créer un compte
+        </button>
+      </section>
+      <Link to="/" onClick={logout} type="button">
+        Deco
+      </Link>
+    </form>
   );
 }
 

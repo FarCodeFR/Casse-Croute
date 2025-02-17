@@ -49,7 +49,7 @@ CREATE TABLE recette (
     type_id VARCHAR (10),
     difficulte_id VARCHAR (20),
     temps_id VARCHAR (4),
-    utilisateur_id INT ON DELETE CASCADE
+    utilisateur_id INT
 );
 
 -- Table ingredient_recette (relation entre recettes et ingrédients)
