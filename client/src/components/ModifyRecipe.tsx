@@ -1,54 +1,18 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
-// import { useParams } from "react-router-dom";
-//interfaces to be put in a .d.ts, but still potentially going to change them, so hopefully can leave them here in the meantime.
-
-export interface RecipeData {
-  titre: string;
-  recette_ref: number;
-  image_url: string;
-  description: string;
-  temps_id: number;
-  difficulte_id: number;
-  type_id: number;
-  preparation: { id: number | undefined; ordre: number; description: string }[];
-  saison: string;
-  utilisateur_id: number;
-}
-
-export interface Ingredient {
-  nom: string;
-  ingredientId: number;
-  icone_categorie: string;
-  unite: string;
-}
-
-export interface IngredientData {
-  nom: string;
-  id?: number;
-  ingredientId: number;
-  quantite: number;
-  unite: string;
-  icone_categorie: string;
-  recette_ref: number;
-  saison?: string;
-}
-
-export interface Preparation {
-  id: number;
-  ordre: number;
-  description: string;
-}
+import type {
+  Ingredient,
+  IngredientData,
+  Preparation,
+  RecipeData,
+} from "../types/AddRecipe";
 
 function ModifyRecipe() {
   const token = localStorage.getItem("jwtToken");
-  //normally const recetteId = useParams();
-  const recetteId = 1;
+  const recetteId = 1; //C'est ici pour qu'on puisse voir une recette - normalement, ça serait definie par le lien cliqué depuis le compte utilisateur. C'est pour ça que je le transforme en chiffre dans l'étape suivante.
   const recipeIdNumber = Number(recetteId);
-  console.warn(recetteId, recipeIdNumber);
 
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
@@ -63,13 +27,10 @@ function ModifyRecipe() {
     saison: "",
     utilisateur_id: 1,
   });
-  // const navigate = useNavigate();
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [ingredientData, setIngredientData] = useState<IngredientData[]>([]);
   const [letters, setLetters] = useState("");
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
 
   const handleInputRecipe = (
     e: React.ChangeEvent<
@@ -82,8 +43,7 @@ function ModifyRecipe() {
       [name]: value,
     });
   };
-  console.warn("recipeData", recipeData);
-  console.warn("ingredientData", ingredientData);
+
   const handleInputIngredients = (ingredient: Ingredient) => {
     const foundIngredientInData = ingredientData.find(
       (existingIngredient) => existingIngredient.nom === ingredient.nom,
@@ -142,18 +102,15 @@ function ModifyRecipe() {
       .then((response) => response.json())
       .then((data) => {
         const ingredientsWithId = data.map((ingredient: IngredientData) => ({
-          ingredientId: ingredient.id, // Add ingredientId here
+          ingredientId: ingredient.id,
           nom: ingredient.nom,
           icone_categorie: ingredient.icone_categorie,
           unite: ingredient.unite,
         }));
-        setIngredients(ingredientsWithId); // Update the state with the new array
+        setIngredients(ingredientsWithId);
       });
 
     const fetchRecipe = async () => {
-      // setLoading(true);
-      // setError(null);
-
       try {
         // need to render this dynamic and treat the use params id block above - awaiting integration into navigation to ensure we can apply the correct logic.
         const response = await fetch(
@@ -168,9 +125,8 @@ function ModifyRecipe() {
 
         const data = await response.json();
 
-        // Correctly handle the 'etapes' array:
         const initialPreparation =
-          data.etapes && data.etapes.length > 0 // Check if etapes exists and is not empty
+          data.etapes && data.etapes.length > 0
             ? data.etapes.map((etape: Preparation) => ({
                 // Map over the etapes array
                 id: etape.id,
@@ -184,12 +140,12 @@ function ModifyRecipe() {
           recette_ref: data.id,
           image_url: data.image_url,
           description: data.description,
-          temps_id: data.temps_id || 1, // Provide default value if data.temps_id is null/undefined
-          difficulte_id: data.difficulte || 1, // Provide default value if data.difficulte is null/undefined
-          type_id: data.type_id || 0, // Provide default value if data.type_id is null/undefined
+          temps_id: data.temps_id || 1,
+          difficulte_id: data.difficulte || 1,
+          type_id: data.type_id || 0,
           preparation: initialPreparation,
           saison: data.saison,
-          utilisateur_id: data.utilisateur_id || 1, // Provide default value if data.utilisateur_id is null/undefined
+          utilisateur_id: data.utilisateur_id || 1,
         });
 
         // Ensure ingredients are in the correct format:
@@ -197,19 +153,18 @@ function ModifyRecipe() {
           ? data.ingredients.map((ingredient: IngredientData) => ({
               nom: ingredient.nom,
               ingredientId: ingredient.id,
-              quantite: ingredient.quantite || 1, // Default quantity if not provided
-              unite: ingredient.unite || "00 g", // Default unit if not provided
+              quantite: ingredient.quantite || 1,
+              unite: ingredient.unite || "00 g",
               icone_categorie: ingredient.icone_categorie,
-              recette_ref: data.id, // Use data.id here
+              recette_ref: data.id,
             }))
           : [];
         setIngredientData(initialIngredients);
       } catch (error) {
         console.error("Error fetching recipe:");
-        // setError(error.message);
+
         toast.error("Error fetching recipe. Please try again later.");
       } finally {
-        // setLoading(false);
       }
     };
     fetchRecipe();
@@ -277,13 +232,11 @@ function ModifyRecipe() {
     const { value } = event.target;
 
     setRecipeData((prevRecipeData) => {
-      // Create a *new* array for preparation
       const updatedPreparation = prevRecipeData.preparation.map((step, i) => {
         if (i === index) {
-          // Correctly target the step to update
-          return { ...step, description: value }; // Update the description
+          return { ...step, description: value };
         }
-        return step; // Keep other steps unchanged
+        return step;
       });
 
       return { ...prevRecipeData, preparation: updatedPreparation };
@@ -326,7 +279,6 @@ function ModifyRecipe() {
       );
 
       if (recipeResponse.ok) {
-        // Start of the if block
         toast.success("Recette modifiée ! 👨‍🍳");
 
         const updatedIngredientData = ingredientData.map((ingredient) => ({
@@ -339,13 +291,13 @@ function ModifyRecipe() {
         }));
 
         const ingredientsToSend = {
-          recipeId: recipeIdNumber, // Use recipeIdNumber
+          recipeId: recipeIdNumber,
           ingredients: updatedIngredientData,
         };
 
         const updatedPreparation = recipeData.preparation.map((step) => ({
           ...step,
-          recette_ref: recipeData.recette_ref, // Or remove if not needed on backend
+          recette_ref: recipeData.recette_ref,
         }));
         setIngredientData(updatedIngredientData);
         setRecipeData((prevRecipeData) => ({
@@ -396,12 +348,7 @@ function ModifyRecipe() {
             "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
           );
         }
-        // } catch (ingredientError) {
-        //   console.error("Fetch error (ingrédients):", ingredientError);
-        //   toast.error("Erreur lors de l'ajout des ingrédients.");
-        // }
-      } // End of the if (recipeResponse.ok) block  <--- This was missing
-      else if (recipeResponse.status === 409) {
+      } else if (recipeResponse.status === 409) {
         const errorText = await recipeResponse.text();
         toast.error(
           `Erreur création recette:
@@ -512,7 +459,7 @@ function ModifyRecipe() {
                   {ingredient.quantite}
                   <select
                     name={ingredient.nom}
-                    onChange={(e) => handleInputUnits(e, ingredient.nom)} // Pass ingredient name
+                    onChange={(e) => handleInputUnits(e, ingredient.nom)}
                     value={ingredient.unite}
                     className="unit-selector"
                   >
@@ -531,14 +478,14 @@ function ModifyRecipe() {
                   type="button"
                   aria-label="minus"
                   className="minus-button"
-                  onClick={() => handleMinus(ingredient.nom)} // Pass ingredient name
+                  onClick={() => handleMinus(ingredient.nom)}
                   value="-"
                 />
                 <input
                   type="button"
                   aria-label="add"
                   className="add-button"
-                  onClick={() => handlePlus(ingredient.nom)} // Pass ingredient name
+                  onClick={() => handlePlus(ingredient.nom)}
                   value="+"
                 />
               </section>

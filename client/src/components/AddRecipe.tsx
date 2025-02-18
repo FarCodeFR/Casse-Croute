@@ -15,7 +15,7 @@ function AddRecipe() {
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
     titre: "",
-    recette_ref: `${Date.now()}`,
+    recette_ref: 0,
     image_url: "",
     description: "",
     temps_id: 1,
