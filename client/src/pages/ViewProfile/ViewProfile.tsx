@@ -6,10 +6,8 @@ import MyProfileRecipes from "../../components/MyProfilRecipes";
 import type { userData } from "../../types/UserData";
 
 function ViewProfile() {
-  // Onglet actif : "viewProfile" | "modifyProfile" | "recipes"
   const [activeSection, setActiveSection] = useState("viewProfile");
 
-  // Stockage des données utilisateur
   const [user, setUser] = useState<userData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,13 +22,16 @@ function ViewProfile() {
       }
 
       try {
-        const response = await fetch("http://localhost:3310/api/user/profile", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/user/profile`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération du profil");
@@ -52,7 +53,7 @@ function ViewProfile() {
 
   return (
     <main className="view-profile">
-      <nav className="view-profile__nav">
+      <nav className="view-profile_nav">
         <button
           type="button"
           className={activeSection === "viewProfile" ? "active" : ""}
@@ -76,15 +77,17 @@ function ViewProfile() {
         </button>
       </nav>
 
-      <section className="view-profile__content">
+      <section className="view-profile_content">
         {loading && <p>Chargement du profil...</p>}
         {error && <p>{error}</p>}
-        {user && activeSection === "viewProfile" && <SeeProfile user={user} />}
+        {user && activeSection === "viewProfile" && (
+          <>
+            <SeeProfile user={user} />
+            <MyProfileRecipes />
+          </>
+        )}
         {user && activeSection === "modifyProfile" && (
           <ModifyProfile user={user} setUser={setUser} />
-        )}
-        {user?.id !== undefined && activeSection === "recipes" && (
-          <MyProfileRecipes userId={user.id} />
         )}
       </section>
     </main>

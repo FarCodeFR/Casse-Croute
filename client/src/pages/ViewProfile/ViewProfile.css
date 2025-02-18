@@ -1,4 +1,4 @@
-.view-profile__nav {
+.view-profile_nav {
   display: flex;
   background-color: var(--primary-color);
   padding: 10px 10px 0px 10px;
@@ -7,7 +7,7 @@
   width: 85%;
 }
 
-.view-profile__nav button {
+.view-profile_nav button {
   flex: 1;
   background: none;
   border: none;
@@ -18,13 +18,13 @@
 }
 
 /* Style de l'onglet actif */
-.view-profile__nav button.active {
+.view-profile_nav button.active {
   background-color: var(--secondary-color-3);
   color: var(--primary-color);
   border-radius: 10px 10px 0 0;
 }
 
-.view-profile__nav button:hover {
+.view-profile_nav button:hover {
   opacity: 0.8;
 }
 
@@ -33,7 +33,7 @@
   display: none;
 }
 
-.view-profile__nav button.active::before {
+.view-profile_nav button.active::before {
   content: "";
   position: absolute;
   bottom: -5px;
