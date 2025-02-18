@@ -7,6 +7,7 @@ import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
 import Home from "../pages/Home/Home";
 import LegalNotices from "../pages/Legal-notices/LegalNotices";
 import Login from "../pages/Login/AuthForm";
+import RecipePage from "../pages/RecipePage/RecipePage";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
 import Account from "../pages/account/Account";
 import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
@@ -24,10 +25,10 @@ const routes = [
     path: "/account",
     element: <Account />,
   },
-  // {
-  //   path: "/catalogue",
-  //   element: <Catalogue />,
-  // },
+  {
+    path: "/recipe-page",
+    element: <RecipePage />,
+  },
 
   {
     path: "/recipe/:id",
