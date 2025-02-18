@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { LoginFormProps } from "../types/LoginData";
 import type { userDataTypes } from "../types/UserData";
@@ -65,6 +65,17 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
           placeholder="thomas-42@email.fr"
           onChange={handleInputUserData}
         />
+        <label htmlFor="identifiant" className="login-label">
+          Identifiant:
+        </label>
+        <input
+          type="identifiant"
+          id="identifiant"
+          name="identifiant"
+          placeholder="Lecuisinierdu49"
+          required
+          onChange={handleInputUserData}
+        />
 
         <label htmlFor="password" className="login-label">
           Mot de passe:
@@ -88,6 +99,13 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
           placeholder="***********"
           onChange={handleInputUserData}
         />
+      </section>
+      <section className="legal-notices">
+        <input type="checkbox" name="legal-notices" required />
+        <label htmlFor="legal-notice">
+          Veuillez cocher la case pour accepter&nbsp;
+          <Link to="/legal-notices">les mentions légales.</Link>
+        </label>
       </section>
       <section>
         <button type="submit" id="register" aria-label="register">

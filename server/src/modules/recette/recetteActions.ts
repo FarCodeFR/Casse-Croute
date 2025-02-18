@@ -50,13 +50,33 @@ const browsUserRecipes: RequestHandler = async (req, res, next) => {
 const read: RequestHandler = async (req, res, next) => {
   try {
     const recipeId = Number.parseInt(req.params.id, 10);
-
     const recipe = await recetteRepository.readById(recipeId);
 
     if (!recipe) {
       res.status(404).send("Recette non trouvée.");
     } else {
-      res.status(200).json(recipe);
+      const {
+        tempsPreparationHeure,
+        tempsPreparationMinute,
+        commentaires,
+        ...restOfRecipe
+      } = recipe;
+
+      // Vérifier si commentaires est null et le transformer en tableau vide si nécessaire
+      const formattedCommentaires = commentaires
+        ? JSON.parse(commentaires)
+        : [];
+
+      const formattedRecipe = {
+        ...restOfRecipe,
+        tempsPreparation: {
+          heure: tempsPreparationHeure || 0,
+          minute: tempsPreparationMinute || 0,
+        },
+        commentaires: formattedCommentaires,
+      };
+
+      res.status(200).json(formattedRecipe);
     }
   } catch (err) {
     console.error(err);
@@ -70,7 +90,7 @@ const add: RequestHandler = async (req, res, next) => {
     const newRecipeId = await recetteRepository.create(req.body);
 
     if (newRecipeId) {
-      res.status(201).send("La recette a bien été ajoutée.");
+      res.status(201).json(newRecipeId);
     } else {
       res.status(400).send("Erreur lors de l'ajout de la recette.");
     }

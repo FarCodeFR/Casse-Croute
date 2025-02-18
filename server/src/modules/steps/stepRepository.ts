@@ -10,17 +10,14 @@ class stepRepository {
     return rows as StepsToRecipe[];
   }
 
-  async create(steps: {
-    preparation: [{ ordre: number; description: string }];
-    recette_ref: number;
-  }) {
+  async create(steps: [{ ordre: number; description: string; recette_ref: number }]) {
     // Type the input correctly
     let affectedRows = 0;
 
-    for (const el of steps.preparation) {
+    for (const el of steps) {
       const [result] = await databaseClient.query<Result>(
         "INSERT INTO etape_preparation (recette_id, ordre, description) VALUES (?, ?, ?)",
-        [steps.recette_ref, el.ordre, el.description], // Use steps.recette_ref
+        [el.recette_ref, el.ordre, el.description], // Use steps.recette_ref
       );
       affectedRows += result.affectedRows;
     }

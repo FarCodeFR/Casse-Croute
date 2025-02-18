@@ -81,9 +81,9 @@ COALESCE(
     FROM recette r
     LEFT JOIN type_recette t ON r.type_id = t.id
     LEFT JOIN difficulte d ON r.difficulte_id = d.id
-    LEFT JOIN temps_preparation tp ON r.temps_id = tp.id
+    LEFT JOIN temps_preparation tp ON r.temps_id = tp.id -- 🛠️ Ajout de la jointure ici
     WHERE r.id = ?;
-    `,
+  `,
       [id],
     );
 
@@ -95,10 +95,9 @@ COALESCE(
   // Créer une recette
   async create(recette: Recette) {
     const [row] = await databaseClient.query<Result>(
-      "INSERT INTO recette (titre, recette_ref, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO recette (titre, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         recette.titre,
-        recette.recette_ref,
         recette.description,
         recette.date_publication,
         recette.image_url,
