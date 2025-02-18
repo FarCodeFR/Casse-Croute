@@ -10,14 +10,25 @@
     height: 50px;
     background-color: var(--primary-color);
     border-radius: 0 0 20px 20px;
-    padding: 10 0 0 0px;
   }
   & a {
-    color: rgb(255, 255, 255);
+    position: relative;
     text-decoration: none;
     padding: 8px 16px;
+    top: 10%;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     border: none;
+  }
+}
+
+.inactive-background-admin {
+  color: rgb(255, 255, 255);
+}
+
+.active-background-admin {
+  background-color: white;
+  & a {
+    color: var(--primary-color);
   }
 }

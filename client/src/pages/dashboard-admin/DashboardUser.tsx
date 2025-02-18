@@ -179,12 +179,16 @@ function DashBoardUser() {
         <figure>
           {recipes.map((el, index) => {
             return (
-              <HorizontalRecipeCard
-                key={`${el.id}-${index}`}
-                titre={el.titre}
-                description={el.description}
-                image_url={el.image_url}
-              />
+              <NavLink
+                key={`${el.recette_id}-${index}`}
+                to={`/recipe/${el.recette_id}`}
+              >
+                <HorizontalRecipeCard
+                  titre={el.titre}
+                  description={el.description}
+                  image_url={el.image_url}
+                />
+              </NavLink>
             );
           })}
         </figure>

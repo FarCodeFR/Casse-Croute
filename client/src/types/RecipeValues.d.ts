@@ -9,7 +9,7 @@ export interface RecipeI {
 }
 
 export interface RecipeCardHorizontal {
-  id?: number;
+  recette_id?: number;
   titre: string;
   image_url: string;
   description: string;

@@ -9,7 +9,7 @@ function DashboardAdmin() {
           <NavLink
             to="dashboard-user"
             className={({ isActive }) =>
-              isActive ? "active-background" : "inactive-background"
+              isActive ? "active-background-admin" : "inactive-background-admin"
             }
           >
             Utilisateur
@@ -17,7 +17,7 @@ function DashboardAdmin() {
           <NavLink
             to="dashboard-recipes"
             className={({ isActive }) =>
-              isActive ? "active-background" : "inactive-background"
+              isActive ? "active-background-admin" : "inactive-background-admin"
             }
           >
             Recette

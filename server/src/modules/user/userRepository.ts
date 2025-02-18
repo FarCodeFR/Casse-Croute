@@ -52,7 +52,7 @@ class userRepository {
 
   async readUserRecipes(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT u.id, u.pseudo, u.email, u.photo_profil, u.est_admin, r.id AS recette_id, r.titre, r.description FROM utilisateur u JOIN recette r ON r.utilisateur_id = u.id WHERE u.id = ?",
+      "SELECT u.id, u.pseudo, u.email, u.photo_profil, u.est_admin, r.id AS recette_id, r.titre, r.image_url, r.description FROM utilisateur u JOIN recette r ON r.utilisateur_id = u.id WHERE u.id = ?",
       [userId],
     );
     return rows as User[];
