@@ -27,22 +27,16 @@ function HamburgerMenu() {
               <NavLink to="/catalogue">Catalogue</NavLink>
             </li>
             <li>
-              {isLogged === true ? (
-                <NavLink to="/create-recipe">Create Recipe</NavLink>
-              ) : (
-                ""
-              )}
+              {isLogged && <NavLink to="/create-recipe">Create Recipe</NavLink>}
             </li>
             <li>
               <NavLink to="/legal-notices">Mentions l'égales</NavLink>
             </li>
             <li>
-              {isLogged === true ? (
-                <Link to="/" onClick={logout} type="button">
+              {isLogged && (
+                <Link to="/" onClick={logout}>
                   Déconnexion
                 </Link>
-              ) : (
-                ""
               )}
             </li>
           </ul>
