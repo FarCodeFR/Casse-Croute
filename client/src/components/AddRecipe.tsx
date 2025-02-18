@@ -4,31 +4,11 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
 //interfaces to be put in a .d.ts, but still potentially going to change them, so hopefully can leave them here in the meantime.
-
-export interface RecipeData {
-  titre: string;
-  recette_ref: string;
-  image_url: string;
-  description: string;
-  temps_id: number;
-  difficulte_id: number;
-  type_id: number;
-  preparation: { id: string; ordre: number; description: string }[];
-  saison: string;
-  utilisateur_id: number;
-}
-
-export interface Ingredient {
-  nom: string;
-  id: string;
-  icone_categorie: string;
-  unite: string;
-}
-
-export interface IngredientData extends Ingredient {
-  quantite: number;
-  recette_ref: string;
-}
+import type {
+  Ingredient,
+  IngredientData,
+  RecipeData,
+} from "../types/AddRecipe";
 
 function AddRecipe() {
   const token = localStorage.getItem("jwtToken");
@@ -297,12 +277,7 @@ function AddRecipe() {
             "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
           );
         }
-        // } catch (ingredientError) {
-        //   console.error("Fetch error (ingrédients):", ingredientError);
-        //   toast.error("Erreur lors de l'ajout des ingrédients.");
-        // }
-      } // End of the if (recipeResponse.ok) block  <--- This was missing
-      else if (recipeResponse.status === 409) {
+      } else if (recipeResponse.status === 409) {
         const errorText = await recipeResponse.text();
         toast.error(
           `Erreur création recette:
@@ -464,16 +439,12 @@ function AddRecipe() {
                   {ingredient.nom}
                 </label>
               </div>
-              // <div>
-              // <input></input>
-              // </div>
             ))}
           </ul>
         </section>
 
         <label htmlFor="instructions">Instructions:</label>
         {recipeData.preparation.map((step, index) => (
-          // Je sais que ce n'est pas une bonne pratique d'utiliser une index comme valeur pour la clé, mais je ne sais pas quoi d'ature utiliser dans ce cas.
           <div key={step.id}>
             <textarea
               id={`instructions-${index}`}
