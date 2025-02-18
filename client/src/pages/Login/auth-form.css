@@ -15,7 +15,7 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
-  margin: 20% auto;
+  margin: 15% auto;
   font-family: var(--font-primary);
   & input {
     background-color: var(--secondary-color-2);
@@ -25,12 +25,16 @@
   }
 }
 
+.legal-notices {
+  margin: 0 10px 0 0;
+}
+
 .container-form-auth > section:last-of-type {
   display: flex;
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin: 0 auto;
+  margin: 5% auto;
   gap: 5%;
   & button {
     background-color: var(--secondary-color-2);
@@ -50,32 +54,59 @@
     height: 100%;
     & h2 {
       font-family: var(--font-primary);
-      font-size: 65px;
+      font-size: 45px;
       color: var(--primary-color);
     }
   }
   .container-form-auth > section:first-of-type {
-    font-size: 24px;
+    font-size: 20px;
     color: var(--primary-color);
-    margin: 10% auto;
-    width: 60%;
+    margin: 5% auto;
+    width: 40%;
+    height: 100%;
+    & label {
+      margin: 1em 0 0 0;
+    }
     & input {
-      border-radius: 20px;
-      height: 100%;
-      padding: 30px;
-      font-size: 24px;
+      border-radius: 15px;
+      height: 50px;
+      padding: 10px;
+      font-size: 16px;
     }
   }
 
+  .container-form-auth > .legal-notices {
+    width: 60%;
+    margin: 5% auto;
+    text-align: center;
+    & input {
+      height: 20px;
+      width: 30px;
+    }
+    & label {
+      margin: 5px;
+      font-size: 20px;
+    }
+  }
   .container-form-auth > section:last-of-type {
-    margin: 10% auto;
+    margin: 6% auto;
     & button {
-      font-size: 32px;
-      border-radius: 20px;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 15px;
       font-family: var(--font-primary);
+      width: 25%;
+      box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.111);
+      height: 2.5em;
+      transition: ease-in 150ms;
+    }
+    & button:hover {
+      color: white;
+      transition: ease-in 150ms;
+      background-color: var(--primary-color);
     }
     & p {
-      font-size: 32px;
+      font-size: 16px;
       font-family: var(--font-primary);
     }
   }

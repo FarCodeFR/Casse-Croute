@@ -3,6 +3,7 @@
 .menu-container {
   font-family: var(--font-secondary);
   font-size: large;
+  width: 100px;
 }
 
 /* Menu cliqué */
