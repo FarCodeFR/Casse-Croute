@@ -29,42 +29,44 @@ function Footer() {
             />
           </Link>
           <nav className="footer-links">
-            <li>
-              <Link to="https://www.facebook.com/">
-                <img
-                  className="footer-icons facebook"
-                  src="assets/images/facebook-icon.png"
-                  alt="logo facebook"
-                />
-              </Link>
-            </li>
-            <li>
-              <Link to="https://www.instagram.com/">
-                <img
-                  className="footer-icons instagram"
-                  src="assets/images/instagram-icon.png"
-                  alt="logo instagram"
-                />
-              </Link>
-            </li>
-            <li>
-              <Link to="https://x.com/">
-                <img
-                  className="footer-icons"
-                  src="assets/images/x-icon.png"
-                  alt="logo x"
-                />
-              </Link>
-            </li>
-            <li>
-              <Link to="https://www.youtube.com/">
-                <img
-                  className="footer-icons"
-                  src="assets/images/youtube-icon.png"
-                  alt="logo youtube"
-                />
-              </Link>
-            </li>
+            <ul>
+              <li>
+                <Link to="https://www.facebook.com/">
+                  <img
+                    className="footer-icons facebook"
+                    src="assets/images/facebook-icon.png"
+                    alt="logo facebook"
+                  />
+                </Link>
+              </li>
+              <li>
+                <Link to="https://www.instagram.com/">
+                  <img
+                    className="footer-icons instagram"
+                    src="assets/images/instagram-icon.png"
+                    alt="logo instagram"
+                  />
+                </Link>
+              </li>
+              <li>
+                <Link to="https://x.com/">
+                  <img
+                    className="footer-icons"
+                    src="assets/images/x-icon.png"
+                    alt="logo x"
+                  />
+                </Link>
+              </li>
+              <li>
+                <Link to="https://www.youtube.com/">
+                  <img
+                    className="footer-icons"
+                    src="assets/images/youtube-icon.png"
+                    alt="logo youtube"
+                  />
+                </Link>
+              </li>
+            </ul>
           </nav>
         </div>
         <div className="footer-right">
