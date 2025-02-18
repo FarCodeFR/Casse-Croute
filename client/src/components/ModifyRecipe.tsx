@@ -334,9 +334,11 @@ function ModifyRecipe() {
               toast.success("Etapes de préparation modifiées ! 🥦🔪");
             } else {
               toast.error("pas reussi");
+              console.error("error sending steps. Response:", stepResponse);
             }
           } catch {
             toast.error("Erreur ajout etapes de preparation");
+            console.error("error adding steps");
           }
         } else {
           const ingredientErrorText = await ingredientResponse.text();
@@ -350,15 +352,10 @@ function ModifyRecipe() {
         }
       } else if (recipeResponse.status === 409) {
         const errorText = await recipeResponse.text();
-        toast.error(
-          `Erreur création recette:
-          ${recipeResponse.status},
-          ${errorText}`,
-        );
+        console.error(recipeResponse.status, errorText);
         toast.error("Erreur lors de la création de la recette.");
       }
     } catch (error) {
-      toast.error(`Fetch error (global): ${error}`);
       console.error(`Fetch error (global): ${error}`);
       toast.error("Une erreur s'est produite lors de la requête.");
     }

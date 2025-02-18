@@ -16,7 +16,7 @@ const add: RequestHandler = async (req, res) => {
   try {
     const addStepsResult = await stepRepository.create(preparation);
 
-    if (addStepsResult > 0) {
+    if (addStepsResult) {
       // Check if ANY rows were inserted
       res.status(201).send("step(s) added successfully");
     } else {

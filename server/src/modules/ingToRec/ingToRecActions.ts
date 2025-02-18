@@ -86,7 +86,7 @@ const updateRecipeIngredients: RequestHandler = async (req, res) => {
       try {
         const updateResult = await ingToRecRepository.update(ingredient); // Pass the whole ingredient object
         if (updateResult === 0) {
-          console.warn(
+          console.error(
             "No rows were updated for ingredient id:",
             ingredient.ingredientId,
           );
