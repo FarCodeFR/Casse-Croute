@@ -26,7 +26,7 @@ const routes = [
     element: <Account />,
   },
   {
-    path: "/catalogue",
+    path: "/recipe-page",
     element: <RecipePage />,
   },
 

@@ -4,7 +4,7 @@ CREATE TABLE utilisateur (
     pseudo VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
-    date_inscription DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
     photo_profil VARCHAR(255),
     est_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -55,7 +55,7 @@ CREATE TABLE recette (
 CREATE TABLE ingredient_recette (
     recette_id int NOT NULL,
     ingredient_id INT NOT NULL,
-    quantite FLOAT NOT NULL,
+    quantite INT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_id, ingredient_id)
 
@@ -294,13 +294,6 @@ VALUES
 ("Salade estivale", "Une salade fraîche pour l'été.", "2023-06-15", "path/to/salade.jpg", "été", 1, 1, 1, 2);
 
 -- Table ingredient_recette
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(1, 81, 300, "g"), -- Carotte
-(1, 86, 200, "g"), -- Pomme de terre
-(1, 85, 1, "unité"), -- Oignon
-(1, 83, 1, "L");  -- Bouillon de légumes (remplacé par céleri)
-
 -- 🥗 Buddha Bowl (quinoa, tofu, légumes)
 INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
 VALUES
@@ -362,7 +355,11 @@ VALUES
 (9, 87, 200, "g"), -- Salade verte
 (9, 69, 150, "g"), -- Tomate
 (9, 74, 100, "g"), -- Concombre
-(9, 90, 50, "ml"); -- Basilic pour l’assaisonnement
+(9, 90, 50, "ml"), -- Basilic pour l’assaisonnement
+(1, 81, 300, "g"), -- Carotte
+(1, 86, 200, "g"), -- Pomme de terre
+(1, 85, 1, "g"), -- Oignon
+(1, 83, 1, "g");  -- Bouillon de légumes (remplacé par céleri)
 
 -- Table etape_preparation
 INSERT INTO etape_preparation (recette_id, ordre, description)
