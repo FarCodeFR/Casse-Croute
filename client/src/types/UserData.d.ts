@@ -2,6 +2,8 @@ export interface userDataTypes {
   id?: number;
   email?: string;
   pseudo?: string;
+  personalMessage?: string;
+  currentPassword?: string;
   password?: string;
   passwordConfirm?: string;
 }

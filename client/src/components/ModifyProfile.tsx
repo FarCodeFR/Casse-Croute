@@ -1,12 +1,14 @@
 import { useState } from "react";
 import type { userDataTypes } from "../types/UserData";
+import "../styles/modify-profil.css";
 
 function ModifyProfile() {
   const forbiddenCharacters = /[^a-zA-Z0-9]/g;
-  const [userData, setUserData] = useState<userDataTypes | null>(null);
-  ({
+  const [userData, setUserData] = useState<userDataTypes>({
     email: "",
     pseudo: "",
+    personalMessage: "",
+    currentPassword: "",
     password: "",
     passwordConfirm: "",
   });
@@ -20,90 +22,105 @@ function ModifyProfile() {
   };
 
   return (
-    <>
-      <form className="login-form">
-        <label htmlFor="email" className="login-label">
-          Email:
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
+    <form className="profile-form">
+      {/* ✅ Avatar avec bouton d'édition */}
+      <div className="avatar-container">
+        <img className="avatar" src="/assets/images/avatar.png" alt="Avatar" />
+        <button type="button" className="edit-avatar">
+          <img src="/assets/images/editIcon.png" alt="Edit avatar" />
+        </button>
+      </div>
 
-        <label htmlFor="pseudo" className="login-label">
-          Identifiant:
-        </label>
-        <input
-          type="text"
-          id="pseudo"
-          name="pseudo"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <label htmlFor="password" className="login-label">
-          Mot de passe:
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <label htmlFor="passwordConfirm" className="login-label">
-          Confirmer le mot de passe:
-        </label>
-        <input
-          type="passwordConfirm"
-          id="passwordConfirm"
-          name="passwordConfirm"
-          onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <fieldset>
+      {/* ✅ Email */}
+      <label>
+        Email
+        <div className="input-container">
           <input
-            type="radio"
-            id="cuisiner"
-            name="gender"
-            value="male"
+            type="email"
+            name="email"
+            value={userData.email}
             onChange={handleInputUserData}
-            className="login-radio"
           />
-          <label htmlFor="cuisiner" className="login-label">
-            Cuisiner
-          </label>
+          <img src="/assets/images/editIcon.png" alt="Edit email" />
+        </div>
+      </label>
 
+      {/* ✅ Pseudo */}
+      <label>
+        Pseudo
+        <div className="input-container">
           <input
-            type="radio"
-            id="cuisinere"
-            name="gender"
-            value="female"
+            type="text"
+            name="pseudo"
+            value={userData.pseudo}
             onChange={handleInputUserData}
-            className="login-radio"
           />
-          <label htmlFor="cuisinere" className="login-label">
-            Cuisinère
-          </label>
-        </fieldset>
+          <img src="/assets/images/editIcon.png" alt="Edit pseudo" />
+        </div>
+      </label>
 
-        <fieldset className="login-fieldset">
-          <button
-            type="submit"
-            id="login"
-            aria-label="login"
-            className="submit-button"
-          >
-            Sauvegarder les modifications
-          </button>
-        </fieldset>
-      </form>
-    </>
+      {/* ✅ Phrase perso */}
+      <label>
+        Phrase perso
+        <div className="input-container">
+          <input
+            type="text"
+            name="personalMessage"
+            value={userData.personalMessage}
+            onChange={handleInputUserData}
+          />
+          <img src="/assets/images/editIcon.png" alt="Edit personal message" />
+        </div>
+      </label>
+
+      {/* ✅ Mot de passe actuel */}
+      <label>
+        Mot de passe actuel
+        <div className="input-container">
+          <input
+            type="password"
+            name="currentPassword"
+            value={userData.currentPassword}
+            onChange={handleInputUserData}
+          />
+          <img src="/assets/images/editIcon.png" alt="Edit password" />
+        </div>
+      </label>
+
+      {/* ✅ Nouveau mot de passe */}
+      <label>
+        Nouveau mot de passe
+        <div className="input-container">
+          <input
+            type="password"
+            name="newPassword"
+            value={userData.password}
+            onChange={handleInputUserData}
+          />
+          <img src="/assets/images/editIcon.png" alt="Edit new password" />
+        </div>
+      </label>
+
+      {/* ✅ Confirmer le mot de passe */}
+      <label>
+        Confirmer le mot de passe
+        <div className="input-container">
+          <input
+            type="password"
+            name="confirmPassword"
+            value={userData.passwordConfirm}
+            onChange={handleInputUserData}
+          />
+          <img src="/assets/images/editIcon.png" alt="Confirm password" />
+        </div>
+      </label>
+
+      {/* ✅ Bouton Sauvegarde */}
+      <button type="submit" className="save-button">
+        Valider les modifications
+      </button>
+    </form>
   );
 }
+
 export default ModifyProfile;
