@@ -59,8 +59,6 @@ CREATE TABLE ingredient_recette (
     quantite FLOAT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_ref, ingredient_id)
-    -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
-    -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
 );
 
 -- Table etape_preparation (étapes de préparation des recettes)
@@ -69,7 +67,6 @@ CREATE TABLE etape_preparation (
     recette_ref VARCHAR(100) NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE
 );
 
 -- Table avis (avis des utilisateurs sur les recettes)
@@ -89,7 +86,7 @@ CREATE TABLE avis (
 
 -- Utilisateurs
 INSERT INTO utilisateur (pseudo, email, mot_de_passe, date_inscription, est_admin) VALUES
-("admin", "admin@example.com", "adminpasswordhash", CURDATE(), TRUE),
+("admin", "superadmin@example.com", "$argon2id$v=19$m=16,t=2,p=1$UHIwTlpubzNpOXlTc0hwUA$eTkVfHdX5CFFlItIiv5Ukw", CURDATE(), TRUE),
 ("user1", "user1@example.com", "user1passwordhash", CURDATE(), FALSE),
 ("user3", "user3@example.com", "user3passwordhash", CURDATE(), FALSE),
 ("user4", "user4@example.com", "user4passwordhash", CURDATE(), FALSE),

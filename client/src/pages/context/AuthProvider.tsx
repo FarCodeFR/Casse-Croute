@@ -7,7 +7,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogged, setIsLogged] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   // loading state will control the rendering of the AuthProvider
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (!token) {
       setIsLogged(false);
+      setIsAdmin(false);
       setLoading(true);
       return;
     }
@@ -34,10 +35,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           },
         },
       );
-
       // response.ok can be true or false.
+      if (response.ok) {
+        const data = await response.json();
+        setIsLogged(true);
+        setIsAdmin(data.est_admin);
+      }
       setIsLogged(response.ok);
-
       if (!response.ok) {
         toast.error("Connexion expirée. Veuillez vous reconnecter.");
       }
@@ -51,7 +55,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   if (loading)
     return (
-      <AuthContext.Provider value={{ isLogged, checkLogin, setIsLogged }}>
+      <AuthContext.Provider
+        value={{ isLogged, isAdmin, checkLogin, setIsLogged, setIsAdmin }}
+      >
         {children}
       </AuthContext.Provider>
     );
