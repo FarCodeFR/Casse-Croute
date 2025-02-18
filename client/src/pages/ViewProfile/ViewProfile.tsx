@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ModifyProfile from "../../components/ModifyProfile";
 import SeeProfile from "../../components/SeeProfile";
 import "./ViewProfile.css";
+import { toast } from "react-toastify";
 import MyProfileRecipes from "../../components/MyProfilRecipes";
 import type { userData } from "../../types/UserData";
 
@@ -39,10 +40,8 @@ function ViewProfile() {
 
         const data: userData = await response.json();
         setUser(data);
-        console.info(data);
       } catch (err) {
         setError("Impossible de charger le profil.");
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -79,7 +78,7 @@ function ViewProfile() {
 
       <section className="view-profile_content">
         {loading && <p>Chargement du profil...</p>}
-        {error && <p>{error}</p>}
+        {error && toast.error("Un problème a été rencontré")}
         {user && activeSection === "viewProfile" && (
           <>
             <SeeProfile user={user} />

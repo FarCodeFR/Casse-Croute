@@ -17,7 +17,6 @@
   transition: 0.3s;
 }
 
-/* Style de l'onglet actif */
 .view-profile_nav button.active {
   background-color: var(--secondary-color-3);
   color: var(--primary-color);
@@ -28,7 +27,6 @@
   opacity: 0.8;
 }
 
-/*  Cache "Mes recettes" sur mobile */
 .recipes-btn {
   display: none;
 }
