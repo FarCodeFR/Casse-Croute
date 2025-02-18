@@ -4,7 +4,7 @@ CREATE TABLE utilisateur (
     pseudo VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
-    date_inscription DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
     photo_profil VARCHAR(255),
     est_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
