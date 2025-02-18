@@ -90,7 +90,7 @@ const add: RequestHandler = async (req, res, next) => {
     const newRecipeId = await recetteRepository.create(req.body);
 
     if (newRecipeId) {
-      res.status(201).send("La recette a bien été ajoutée.");
+      res.status(201).json(newRecipeId);
     } else {
       res.status(400).send("Erreur lors de l'ajout de la recette.");
     }

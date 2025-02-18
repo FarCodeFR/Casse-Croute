@@ -40,7 +40,6 @@ CREATE TABLE ingredient (
 -- Table recette
 CREATE TABLE recette (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    recette_ref VARCHAR(100),
     titre VARCHAR(100) NOT NULL,
     description VARCHAR(200) NOT NULL,
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -54,11 +53,11 @@ CREATE TABLE recette (
 
 -- Table ingredient_recette (relation entre recettes et ingrédients)
 CREATE TABLE ingredient_recette (
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id int NOT NULL,
     ingredient_id INT NOT NULL,
     quantite FLOAT NOT NULL,
     unite VARCHAR(15) NOT NULL,
-    PRIMARY KEY (recette_ref, ingredient_id)
+    PRIMARY KEY (recette_id, ingredient_id)
     -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
     -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
 );
@@ -66,10 +65,10 @@ CREATE TABLE ingredient_recette (
 -- Table etape_preparation (étapes de préparation des recettes)
 CREATE TABLE etape_preparation (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    recette_ref VARCHAR(100) NOT NULL,
+    recette_id int NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_ref) REFERENCES recette(recette_ref) ON DELETE CASCADE
+    -- FOREIGN KEY (recette_id) REFERENCES recette(recette_id) ON DELETE CASCADE
 );
 
 -- Table avis (avis des utilisateurs sur les recettes)
@@ -89,7 +88,7 @@ CREATE TABLE avis (
 
 -- Utilisateurs
 INSERT INTO utilisateur (pseudo, email, mot_de_passe, date_inscription, est_admin) VALUES
-("admin", "admin@example.com", "adminpasswordhash", CURDATE(), TRUE),
+("admin", "superadmin@example.com", "$argon2id$v=19$m=16,t=2,p=1$UHIwTlpubzNpOXlTc0hwUA$eTkVfHdX5CFFlItIiv5Ukw", CURDATE(), TRUE),
 ("user1", "user1@example.com", "user1passwordhash", CURDATE(), FALSE),
 ("user3", "user3@example.com", "user3passwordhash", CURDATE(), FALSE),
 ("user4", "user4@example.com", "user4passwordhash", CURDATE(), FALSE),
@@ -296,8 +295,75 @@ VALUES
 ("Salade estivale", "Une salade fraîche pour l'été.", "2023-06-15", "path/to/salade.jpg", "été", 1, 1, 1, 2);
 
 -- Table ingredient_recette
-INSERT INTO ingredient_recette (recette_ref, ingredient_id, quantite, unite)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
 VALUES
+(1, 81, 300, "g"), -- Carotte
+(1, 86, 200, "g"), -- Pomme de terre
+(1, 85, 1, "unité"), -- Oignon
+(1, 83, 1, "L");  -- Bouillon de légumes (remplacé par céleri)
+
+-- 🥗 Buddha Bowl (quinoa, tofu, légumes)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(2, 64, 150, "g"), -- Asperge
+(2, 65, 200, "g"), -- Épinard
+(2, 69, 100, "g"), -- Tomate
+(2, 72, 100, "g"); -- Poivron
+
+-- 🍗 Poulet braisé (poulet + légumes)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(3, 2, 500, "g"), -- Filet de poulet
+(3, 86, 300, "g"), -- Pomme de terre
+(3, 85, 1, "unité"), -- Oignon
+(3, 88, 1, "gousse"); -- Ail
+
+-- 🍰 Gâteau de Noël (aucune viande)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(4, 58, 250, "g"), -- Beurre
+(4, 59, 4, "unités"), -- Oeuf de poule
+(4, 60, 150, "g"), -- Sucre
+(4, 61, 100, "g"); -- Farine
+
+-- 🧀 Fondue au fromage (fromage + vin)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(5, 49, 200, "g"), -- Comté
+(5, 52, 200, "g"), -- Gruyère
+(5, 121, 100, "ml"), -- Vin blanc
+(5, 88, 1, "gousse"); -- Ail
+
+-- 🍲 Ragoût (ajoutons des légumes)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(6, 16, 500, "g"), -- Bœuf haché
+(6, 85, 1, "unité"), -- Oignon
+(6, 81, 200, "g"), -- Carotte
+(6, 83, 1, "L"); -- Bouillon de légumes (remplacé par céleri)
+
+-- 🍝 Poulet Riggies (pâtes + poulet)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(7, 66, 250, "g"), -- Pâtes
+(7, 2, 300, "g"), -- Filet de poulet
+(7, 69, 200, "ml"), -- Sauce tomate
+(7, 44, 100, "g"); -- Parmesan
+
+-- 🥘 Gratin (pommes de terre + fromage)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(8, 86, 400, "g"), -- Pomme de terre
+(8, 39, 200, "ml"), -- Crème fraîche
+(8, 40, 150, "g"); -- Fromage râpé
+
+-- 🥗 Salade estivale (salade et légumes)
+INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
+VALUES
+(9, 87, 200, "g"), -- Salade verte
+(9, 69, 150, "g"), -- Tomate
+(9, 74, 100, "g"), -- Concombre
+(9, 90, 50, "ml"); -- Basilic pour l’assaisonnement
 (1, 81, 300, "g"), -- Carotte
 (1, 86, 200, "g"), -- Pomme de terre
 (1, 85, 1, "unité"), -- Oignon
@@ -368,7 +434,7 @@ VALUES
 
 
 -- Table etape_preparation
-INSERT INTO etape_preparation (recette_ref, ordre, description)
+INSERT INTO etape_preparation (recette_id, ordre, description)
 VALUES
 
 
