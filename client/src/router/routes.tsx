@@ -13,6 +13,7 @@ import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
 import DashboardRecipes from "../pages/dashboard-admin/DashboardRecipes";
 import DashBoardUser from "../pages/dashboard-admin/DashboardUser";
 import NotFound from "../pages/error/NotFound";
+import Recipe from "../pages/recipe/Recipe";
 
 const routes = [
   {
@@ -22,6 +23,15 @@ const routes = [
   {
     path: "/account",
     element: <Account />,
+  },
+  // {
+  //   path: "/catalogue",
+  //   element: <Catalogue />,
+  // },
+
+  {
+    path: "/recipe/:id",
+    element: <Recipe />,
   },
   {
     path: "/create-recipe",
