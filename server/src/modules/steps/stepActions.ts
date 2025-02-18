@@ -11,17 +11,14 @@ const browse: RequestHandler = async (req, res) => {
 };
 
 const add: RequestHandler = async (req, res) => {
-  const { preparation, recette_ref } = req.body;
+  const preparation = req.body;
 
   try {
-    const addStepsResult = await stepRepository.create({
-      preparation,
-      recette_ref,
-    });
+    const addStepsResult = await stepRepository.create(preparation);
 
     if (addStepsResult > 0) {
       // Check if ANY rows were inserted
-      res.status(201).send(`${addStepsResult} step(s) added successfully`);
+      res.status(201).send("step(s) added successfully");
     } else {
       res.status(200).send("No steps were added (or perhaps some failed).");
     }

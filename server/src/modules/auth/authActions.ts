@@ -39,7 +39,7 @@ const login: RequestHandler = async (req, res, next) => {
       // Sign the token with the payload, secret key, and expiration time - the signing is the last element to add to the token.
       const token = sign(payload, secretKey, { expiresIn: "1h" });
 
-      res.json({ token, user: user.email });
+      res.json({ token, user: user.email, isAdmin: user.est_admin });
       return;
     }
   } catch {

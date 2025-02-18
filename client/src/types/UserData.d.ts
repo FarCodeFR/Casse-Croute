@@ -10,7 +10,7 @@ export interface userData {
   id?: number;
   email: string;
   pseudo: string;
-  est_admin: string;
+  est_admin: number;
   photo_profil: string;
   message?: string;
 }
@@ -27,9 +27,11 @@ export interface DeleteUserProps {
 }
 
 export interface AuthContextType {
+  isAdmin: boolean;
   isLogged: boolean;
-  checkLogin: () => Promise<void>;
   setIsLogged: (value: boolean) => void;
+  setIsAdmin: (value: boolean) => void;
+  checkLogin: () => Promise<void>;
 }
 
 export interface UserPropsI extends userDataTypes {

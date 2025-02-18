@@ -13,7 +13,7 @@ class IngToRecRepository {
 
   async create(ingredient: IngredientToRecette) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO ingredient_recette (recette_ref, ingredient_id, quantite, unite) VALUES (?, ?, ?, ?)",
+      "INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite) VALUES (?, ?, ?, ?)",
       [
         ingredient.recette_ref,
         ingredient.id,
