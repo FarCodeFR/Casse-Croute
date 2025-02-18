@@ -10,7 +10,7 @@ export interface userData {
   id?: number;
   email: string;
   pseudo: string;
-  est_admin: string;
+  est_admin: number;
   photo_profil: string;
 }
 
@@ -23,6 +23,14 @@ export type UserScrollI = {
 export interface DeleteUserProps {
   handleVisibility: () => void;
   selectUser: userData;
+}
+
+export interface AuthContextType {
+  isAdmin: boolean;
+  isLogged: boolean;
+  setIsLogged: (value: boolean) => void;
+  setIsAdmin: (value: boolean) => void;
+  checkLogin: () => Promise<void>;
 }
 
 export interface UserPropsI extends userDataTypes {

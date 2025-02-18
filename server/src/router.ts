@@ -63,38 +63,53 @@ router.get("/api/ingredients-season", ingredientActions.browseSeason);
 router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
-router.get("/api/recette", recetteActions.browse);
+router.get("/api/recettes", recetteActions.browse);
+router.get("/api/recette-user", recetteActions.browsUserRecipes);
 router.get("/api/date-recette", recetteActions.browseLatestArrival);
 router.get("/api/recette-saison", recetteActions.browseSeason);
 router.get("/api/recette/:id", recetteActions.read);
+router.get("/api/stepsAdded", stepActions.browse);
+router.get("/api/ingredientsAdded", ingToRecActions.browse);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 /* ************************************************************************* */
-router.use(authActions.verifyToken);
+router.post("/api/user/verify", authActions.verifyToken, authActions.isLogged);
 
+router.use("/api/recette", authActions.verifyToken);
 router.post("/api/recette", recetteActions.add);
 router.put("/api/recette/:id", recetteActions.edit);
 router.delete("/api/recette/:id", recetteActions.del);
 
+router.use("/api/ingredient", authActions.verifyToken);
+router.post("/api/ingredient", ingredientActions.add);
 router.put("/api/ingredient/:id", ingredientActions.edit);
 //Routes pour ajouter une ingredient à une recette
-router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/ingredientsAdded", ingToRecActions.add);
 
 //Routes pour ajouter des étapes aux recettes
+router.use("/api/ingredientAdded", authActions.verifyToken);
+router.post("/api/ingredientsAdded", ingToRecActions.add);
+
+//Routes pour ajouter des étapes aux recettes
+router.use("/api/stepsAdded", authActions.verifyToken);
 router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
+
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 /* ************************************************************************* */
-router.use(authActions.verifyToken, authActions.isAdmin);
 
 //Update admin
+// router.use("/api/admin", authActions.isAdmin);
+
+router.post("/api/admin", authActions.isAdmin);
+
 router.put("/api/users/:id", userActions.edit);
 router.delete("/api/users/:id", userActions.destroy);
 
 //Update admin
 router.put("/api/users/:id", userActions.edit);
 router.delete("/api/users/:id", userActions.destroy);
+
 export default router;

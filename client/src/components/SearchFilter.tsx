@@ -11,7 +11,7 @@ function SearchFilter() {
     const fetchRecipes = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/recette`,
+          `${import.meta.env.VITE_API_URL}/api/recettes`,
         );
         if (!response.ok) throw new Error("Failed to fetch recipes");
         const data = await response.json();
@@ -40,7 +40,7 @@ function SearchFilter() {
       <div className="input-wrapper">
         <input
           type="text"
-          placeholder="Search for a recipe..."
+          placeholder="Recherche ta recette..."
           id="search-bar"
           className="input-header"
           onChange={handleChange}
