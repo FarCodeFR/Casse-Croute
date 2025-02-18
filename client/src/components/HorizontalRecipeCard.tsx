@@ -1,10 +1,10 @@
 import "../pages/ViewProfile/ViewProfile.css";
-import type { RecipeCardVertical } from "../types/RecipeValues";
+import type { RecipeCardHorizontal } from "../types/RecipeValues";
 function HorizontalRecipeCard({
   titre,
   description,
   image_url,
-}: RecipeCardVertical) {
+}: RecipeCardHorizontal) {
   return (
     <main className="horizontal-card">
       <header>
