@@ -20,16 +20,18 @@ function RecipesSeason() {
       <ul>
         {recette.map((el) => {
           return (
-            <li key={el.id}>
-              <VerticalRecipeCard
-                titre={el.titre}
-                temps_id={el.temps_id}
-                difficulte_id={el.difficulte_id}
-                type_id={el.type_id}
-                description={el.description}
-                image_url={el.image_url}
-              />
-            </li>
+            <NavLink key={el.id} to={`/api/recette/${el.id}`}>
+              <li>
+                <VerticalRecipeCard
+                  titre={el.titre}
+                  temps_id={el.temps_id}
+                  difficulte_id={el.difficulte_id}
+                  type_id={el.type_id}
+                  description={el.description}
+                  image_url={el.image_url}
+                />
+              </li>
+            </NavLink>
           );
         })}
       </ul>

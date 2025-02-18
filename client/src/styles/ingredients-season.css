@@ -1,6 +1,7 @@
 .container-ingredients-season {
   width: 100%;
   border-width: 5px 0;
+  margin: 25% auto;
 }
 .container-ingredients-season > ul::-webkit-scrollbar {
   display: none;
