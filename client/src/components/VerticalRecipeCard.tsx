@@ -12,11 +12,7 @@ function VerticalRecipeCard({
   return (
     <article className="recipe-container">
       <div className="img-container">
-        <img
-          className="circular-img"
-          src={image_url}
-          alt="sauté de porc à l'ananas"
-        />
+        <img className="circular-img" src={image_url} alt={titre} />
       </div>
       <section className="text-container">
         <h1 className="title">{titre}</h1>
@@ -27,7 +23,7 @@ function VerticalRecipeCard({
             <div className="circle">
               <img
                 className="time"
-                src="/assets/images/icone-horloge.png"
+                src="/assets/images/icons-card/icon-horloge.png"
                 alt="logo horloge"
               />
             </div>
@@ -37,7 +33,7 @@ function VerticalRecipeCard({
             <div className="circle">
               <img
                 className="difficulty"
-                src="assets/images/level-difficult/icon-difficult.png"
+                src="/assets/images/icons-card/icon-difficult.png"
                 alt="logo indiquant un niveau de difficulté"
               />{" "}
             </div>
@@ -48,7 +44,7 @@ function VerticalRecipeCard({
               {" "}
               <img
                 className="type"
-                src="/assets/images/icone-chicken.png"
+                src="/assets/images/icons-card/icon-chicken.png"
                 alt="logo d'un poulet cuit"
               />
             </div>

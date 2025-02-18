@@ -14,7 +14,7 @@ function RecipePage() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/api/recette`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/recettes`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Erreur lors du chargement des données");
