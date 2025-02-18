@@ -1,6 +1,7 @@
 import VerticalRecipeCard from "./VerticalRecipeCard";
 import "../styles/recipes-season.css";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import type { RecipeI } from "../types/RecipeValues";
 
 function RecipesSeason() {
