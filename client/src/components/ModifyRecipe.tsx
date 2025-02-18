@@ -161,8 +161,6 @@ function ModifyRecipe() {
           : [];
         setIngredientData(initialIngredients);
       } catch (error) {
-        console.error("Error fetching recipe:");
-
         toast.error("Error fetching recipe. Please try again later.");
       } finally {
       }
@@ -334,29 +332,19 @@ function ModifyRecipe() {
               toast.success("Etapes de préparation modifiées ! 🥦🔪");
             } else {
               toast.error("pas reussi");
-              console.error("error sending steps. Response:", stepResponse);
             }
           } catch {
             toast.error("Erreur ajout etapes de preparation");
-            console.error("error adding steps");
           }
         } else {
-          const ingredientErrorText = await ingredientResponse.text();
-          console.error(
-            `Erreur ajout ingrédients:
-            ${ingredientErrorText}`,
-          );
           toast.error(
             "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
           );
         }
       } else if (recipeResponse.status === 409) {
-        const errorText = await recipeResponse.text();
-        console.error(recipeResponse.status, errorText);
         toast.error("Erreur lors de la création de la recette.");
       }
     } catch (error) {
-      console.error(`Fetch error (global): ${error}`);
       toast.error("Une erreur s'est produite lors de la requête.");
     }
   }
