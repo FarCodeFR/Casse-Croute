@@ -8,7 +8,7 @@ export interface RecipeI {
   image_url: string;
 }
 
-export interface RecipeH {
+export interface RecipeCardVertical {
   id?: number;
   titre: string;
   image_url: string;

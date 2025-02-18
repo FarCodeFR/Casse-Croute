@@ -6,12 +6,12 @@ import "./dashboard-recipes-user.css";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import HorizontalRecipeCard from "../../components/HorizontalRecipeCard";
-import type { RecipeH } from "../../types/RecipeValues";
+import type { RecipeCardVertical } from "../../types/RecipeValues";
 
 function DashBoardUser() {
   const [users, setUsers] = useState<userData[]>([]);
   const [selectUser, setSelectUser] = useState<userData | null>(null);
-  const [recipes, setRecipes] = useState<RecipeH[]>([]);
+  const [recipes, setRecipes] = useState<RecipeCardVertical[]>([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchUser, setSearchUser] = useState("");
@@ -43,7 +43,7 @@ function DashBoardUser() {
     if (selectUser) {
       fetch(`${import.meta.env.VITE_API_URL}/api/user/${selectUser.id}/recipes`)
         .then((response) => response.json())
-        .then((data: RecipeH[]) => {
+        .then((data: RecipeCardVertical[]) => {
           setRecipes(data);
         })
         .catch((err) => {
