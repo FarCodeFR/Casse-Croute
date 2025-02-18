@@ -67,6 +67,8 @@ router.get("/api/recette-user", recetteActions.browsUserRecipes);
 router.get("/api/date-recette", recetteActions.browseLatestArrival);
 router.get("/api/recette-saison", recetteActions.browseSeason);
 router.get("/api/recette/:id", recetteActions.read);
+router.get("/api/stepsAdded", stepActions.browse);
+router.get("/api/ingredientsAdded", ingToRecActions.browse);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
@@ -82,8 +84,10 @@ router.use("/api/ingredient", authActions.verifyToken);
 router.post("/api/ingredient", ingredientActions.add);
 router.put("/api/ingredient/:id", ingredientActions.edit);
 //Routes pour ajouter une ingredient à une recette
+router.post("/api/ingredientsAdded", ingToRecActions.add);
+
+//Routes pour ajouter des étapes aux recettes
 router.use("/api/ingredientAdded", authActions.verifyToken);
-router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/ingredientsAdded", ingToRecActions.add);
 
 //Routes pour ajouter des étapes aux recettes
