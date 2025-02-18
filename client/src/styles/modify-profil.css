@@ -22,7 +22,7 @@
   position: absolute;
   bottom: 80%;
   right: -10%;
-  background: white;
+  background: var(--secondary-color-3);
   border: none;
   cursor: pointer;
   padding: 5px;
@@ -43,7 +43,7 @@ label {
 .input-container {
   display: flex;
   gap: 10px;
-  background: var();
+  background: var(--secondary-color-2);
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #4e4b4b;
@@ -63,8 +63,8 @@ label {
 }
 
 .save-button {
-  background: #2c3e50;
-  color: white;
+  background: var(--primary-color);
+  color: var(--secondary-color-3);
   padding: 10px;
   border: none;
   border-radius: 10px;

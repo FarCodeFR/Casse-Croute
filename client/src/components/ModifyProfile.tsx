@@ -3,7 +3,6 @@ import type { userDataTypes } from "../types/UserData";
 import "../styles/modify-profil.css";
 
 function ModifyProfile() {
-  const forbiddenCharacters = /[^a-zA-Z0-9]/g;
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
     pseudo: "",
@@ -13,20 +12,32 @@ function ModifyProfile() {
     passwordConfirm: "",
   });
 
+  const defaultAvatar = "/assets/images/profil.png";
+  const [avatarSrc, setAvatarSrc] = useState("/assets/images/profil.png");
+
+  const handleAvatarError = () => {
+    setAvatarSrc(defaultAvatar);
+  };
+
   const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData({
       ...userData,
-      [name]: value.replace(forbiddenCharacters, ""),
+      [name]: value,
     });
   };
 
   return (
     <form className="profile-form">
       <div className="avatar-container">
-        <img className="avatar" src="/assets/images/avatar.png" alt="Avatar" />
+        <img
+          className="avatar"
+          src={avatarSrc}
+          alt="Avatar"
+          onError={handleAvatarError}
+        />
         <button type="button" className="edit-avatar">
-          <img src="/assets/images/editIcon.png" alt="Edit avatar" />
+          <img src="/assets/images/editIcon.png" alt="Modifier l'avatar" />
         </button>
       </div>
 
