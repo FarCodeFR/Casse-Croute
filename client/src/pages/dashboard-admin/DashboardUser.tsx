@@ -110,7 +110,7 @@ function DashBoardUser() {
         />
         {selectUser && (
           <section>
-            <figure>
+            <picture>
               <img
                 src={
                   selectUser.photo_profil
@@ -119,7 +119,7 @@ function DashBoardUser() {
                 }
                 alt="Une illustration de profile"
               />
-            </figure>
+            </picture>
             <article>
               <h2>{selectUser.pseudo}</h2>
               <p>{selectUser.email}</p>
