@@ -21,5 +21,5 @@ export interface Ingredient {
 export interface IngredientData extends Ingredient {
   quantite: number;
   recette_ref: string;
-  id?
+  id?;
 }

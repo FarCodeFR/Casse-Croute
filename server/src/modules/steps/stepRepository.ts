@@ -10,7 +10,9 @@ class stepRepository {
     return rows as StepsToRecipe[];
   }
 
-  async create(steps: [{ ordre: number; description: string; recette_ref: number }]) {
+  async create(
+    steps: [{ ordre: number; description: string; recette_ref: number }],
+  ) {
     // Type the input correctly
     let affectedRows = 0;
 
