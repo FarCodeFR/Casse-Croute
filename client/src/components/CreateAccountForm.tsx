@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import type { LoginFormProps } from "../types/LoginData";
 import type { userDataTypes } from "../types/UserData";
 
-function CreateAccount() {
-  const forbiddenCharacters = /[^a-zA-Z0-9]/g;
+function CreateAccount({ toggleForm }: LoginFormProps) {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
     pseudo: "",
@@ -14,13 +17,44 @@ function CreateAccount() {
     const { name, value } = e.target;
     setUserData({
       ...userData,
-      [name]: value.replace(forbiddenCharacters, ""),
+      [name]: value,
     });
   };
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const { email, password, passwordConfirm } = userData;
+    if (password !== passwordConfirm) {
+      toast.error("Les mots de passe ne correspondent pas");
+    } else if (!email || !password || !passwordConfirm) {
+      toast.error("Veuillez remplir tous les champs");
+    } else if (password.length < 8) {
+      toast.error("Le mot de passe doit contenir au moins 8 caractères");
+    } else {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        },
+      );
+      if (response.ok) {
+        toast.success("Inscription réussie 👨‍🍳");
+        navigate("/login");
+      } else if (response.status === 409) {
+        toast.error("Email déjà utilisé");
+      } else {
+        toast.error("Erreur lors de l'inscription 🤦‍♀️");
+      }
+    }
+  }
   return (
-    <>
-      <form className="login-form">
+    <form className="container-form-auth" onSubmit={handleSubmit}>
+      <h2>Rejoignez la communauté Casse-croûte !</h2>
+      <section>
         <label htmlFor="email" className="login-label">
           Email:
         </label>
@@ -28,19 +62,8 @@ function CreateAccount() {
           type="email"
           id="email"
           name="email"
+          placeholder="thomas-42@email.fr"
           onChange={handleInputUserData}
-          className="login-input"
-        />
-
-        <label htmlFor="pseudo" className="login-label">
-          Identifiant:
-        </label>
-        <input
-          type="text"
-          id="pseudo"
-          name="pseudo"
-          onChange={handleInputUserData}
-          className="login-input"
         />
 
         <label htmlFor="password" className="login-label">
@@ -50,67 +73,39 @@ function CreateAccount() {
           type="password"
           id="password"
           name="password"
+          placeholder="***********"
           onChange={handleInputUserData}
-          className="login-input"
         />
 
         <label htmlFor="passwordConfirm" className="login-label">
           Confirmer le mot de passe:
+          {userData.password === userData.passwordConfirm ? "✅" : "❌"}
         </label>
         <input
-          type="passwordConfirm"
+          type="password"
           id="passwordConfirm"
           name="passwordConfirm"
+          placeholder="***********"
           onChange={handleInputUserData}
-          className="login-input"
         />
-
-        <fieldset>
-          <input
-            type="radio"
-            id="cuisiner"
-            name="gender"
-            value="male"
-            onChange={handleInputUserData}
-            className="login-radio"
-          />
-          <label htmlFor="cuisiner" className="login-label">
-            Cuisiner
-          </label>
-
-          <input
-            type="radio"
-            id="cuisinere"
-            name="gender"
-            value="female"
-            onChange={handleInputUserData}
-            className="login-radio"
-          />
-          <label htmlFor="cuisinere" className="login-label">
-            Cuisinère
-          </label>
-        </fieldset>
-
-        <fieldset className="login-fieldset">
-          <button
-            type="button"
-            id="login"
-            aria-label="login"
-            className="submit-button"
-          >
-            Page d' acceuil
-          </button>
-          <button
-            type="submit"
-            id="login"
-            aria-label="login"
-            className="submit-button"
-          >
-            S'inscrire
-          </button>
-        </fieldset>
-      </form>
-    </>
+      </section>
+      <section>
+        <button type="submit" id="register" aria-label="register">
+          S'inscrire
+        </button>
+        <p>Ou</p>
+        <button
+          type="button"
+          id="register"
+          aria-label="register"
+          className="registerHere"
+          onClick={toggleForm}
+        >
+          Se connecter
+        </button>
+      </section>
+    </form>
   );
 }
+
 export default CreateAccount;

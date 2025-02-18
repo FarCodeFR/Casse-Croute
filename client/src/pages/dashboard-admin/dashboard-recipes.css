@@ -1,0 +1,89 @@
+.container-dashboard-recipes {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  background-color: var(--secondary-color-2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  width: 80%;
+  margin: 10% auto;
+  border-radius: 10px;
+  height: 50vh;
+}
+
+.container-dashboard-recipes > label:first-of-type {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  font-family: var(--font-secondary);
+}
+
+.container-dashboard-recipes > input {
+  text-align: center;
+  margin: 0 auto;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  border: solid black 1px;
+  color: white;
+  font-size: 20px;
+  height: 50px;
+  width: 80%;
+}
+
+.container-dashboard-recipes > menu {
+  overflow-y: auto;
+  box-sizing: border-box;
+  scroll-snap-type: y mandatory;
+  width: 75%;
+  max-height: 20em;
+  margin: 2em auto;
+  border-radius: 15px 0 0 15px;
+  padding: 0px 10px 0 15px;
+  box-sizing: border-box;
+  background-color: var(--primary-color);
+  /* Principal */
+  & ul {
+    padding: 0 0 0 0;
+    width: 90%;
+  }
+  & ul > li {
+    margin: 10px 0 auto;
+  }
+}
+
+/* * Card Recipe */
+
+.container-bottom-recipe {
+  display: grid;
+  justify-content: center;
+  margin: 35% 0 20% 0;
+  width: 100%;
+}
+/* * Scroll utilisateur */
+
+.container-dashboard-recipes > menu::-webkit-scrollbar {
+  background: transparent;
+  width: 8px;
+}
+
+.container-dashboard-recipes > menu::-webkit-scrollbar-track {
+  background: gray;
+}
+
+.container-dashboard-recipes > menu::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255); /* Couleur de la scrollbar */
+  border-radius: 10px;
+}
+
+.container-dashboard-recipes > menu > ul > li > button {
+  font-size: 19px;
+  height: 40px;
+  width: 100%;
+  font-family: var(--font-secondary);
+  background: white;
+  border-radius: 10px;
+}
+.container-dashboard-recipes > menu > ul > li > button:hover {
+  border-bottom: solid 5px red;
+}

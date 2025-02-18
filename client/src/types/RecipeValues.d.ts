@@ -13,3 +13,9 @@ export interface ingredientI {
   nom: string;
   icone_categorie: string;
 }
+
+export type RecipesScroll = {
+  recipes: RecipeI[];
+  setSelectRecipe: Dispatch<SetStateAction<boolean>>;
+  searchRecipe: string;
+};

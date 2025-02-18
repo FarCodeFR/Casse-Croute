@@ -24,10 +24,26 @@ class userRepository {
     return rows[0] as User;
   }
 
-  async readAll(where = {}) {
+  async updateAdmin(user: User) {
+    const [result] = await databaseClient.query<Result>(
+      "update utilisateur set est_admin = ? WHERE id = ?",
+      [user.est_admin, user.id],
+    );
+    return result.affectedRows;
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM utilisateur WHERE id = ?",
+      [id],
+    );
+    return result.insertId;
+  }
+
+  async readAll() {
     // Execute the SQL SELECT query to retrieve all users from the "utilisateur" table
     const [rows] = await databaseClient.query<Rows>(
-      "select * from utilisateur",
+      "select id, pseudo, email, photo_profil, est_admin from utilisateur",
     );
 
     // Return the array of users
@@ -37,13 +53,12 @@ class userRepository {
   async create(user: User) {
     // Execute the SQL INSERT query to create a new user
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO utilisateur (pseudo, email, date_inscription, photo_profil, est_admin, mot_de_passe) values (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO utilisateur (pseudo, email, date_inscription, photo_profil, mot_de_passe) values (?, ?, ?, ?, ?)",
       [
         user.pseudo,
         user.email,
         user.date_inscription,
         user.photo_profil,
-        user.est_admin,
         user.mot_de_passe,
       ],
     );
@@ -59,6 +74,14 @@ class userRepository {
     );
 
     // Return the first row of the result, which represents the item
+    return rows[0] as User;
+  }
+
+  async verifiedEmail(email: string) {
+    const [rows] = await databaseClient.query<Rows>(
+      "select * from utilisateur where email = ?",
+      [email],
+    );
     return rows[0] as User;
   }
 }
