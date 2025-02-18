@@ -5,21 +5,20 @@ function Footer() {
   return (
     <footer>
       <div className="footer-container">
-        <div className="footer-left">
-          <ul className="footer-menu">
-            <li>
-              <Link to="/cgu">Conditions Générales d'Utilisation</Link>
-            </li>
-            <li>
-              <Link to="/faq">FAQ</Link>
-            </li>
-            <li>
-              <Link to="/cookies">
-                Vos choix concernant l'utilisation des cookies
-              </Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="footer-menu left-menu">
+          <li>
+            <Link to="/cgu">Conditions Générales d'Utilisation</Link>
+          </li>
+          <li>
+            <Link to="/faq">FAQ</Link>
+          </li>
+          <li>
+            <Link to="/cookies">
+              Vos choix concernant l'utilisation des cookies
+            </Link>
+          </li>
+        </ul>
+
         <div className="footer-center">
           <Link to="/">
             <img
@@ -69,17 +68,17 @@ function Footer() {
             </ul>
           </nav>
         </div>
-        <div className="footer-right">
-          <ul className="footer-menu">
-            <li>
-              <Link to="/mentions-legales">Mentions légales</Link>
-            </li>
-            <li>
-              <Link to="/recrutement">Recrutement</Link>
-            </li>
-          </ul>
-        </div>
+
+        <ul className="footer-menu right-menu">
+          <li>
+            <Link to="/mentions-legales">Mentions légales</Link>
+          </li>
+          <li>
+            <Link to="/recrutement">Recrutement</Link>
+          </li>
+        </ul>
       </div>
+
       <div className="footer-copyright">
         <p>Contacte-nous 👋 par Discord Gratuit</p>
         <p>© 2024 Casse Croûte. Tous droits réservés</p>
