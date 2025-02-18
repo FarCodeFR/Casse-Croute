@@ -1,17 +1,19 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
-//interfaces to be put in a .d.ts, but still potentially going to change them, so hopefully can leave them here in the meantime.
 import type {
   Ingredient,
   IngredientData,
+  Preparation,
   RecipeData,
 } from "../types/AddRecipe";
 
-function AddRecipe() {
+function ModifyRecipe() {
   const token = localStorage.getItem("jwtToken");
+  const recetteId = 1; //C'est ici pour qu'on puisse voir une recette - normalement, ça serait definie par le lien cliqué depuis le compte utilisateur. C'est pour ça que je le transforme en chiffre dans l'étape suivante.
+  const recipeIdNumber = Number(recetteId);
+
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
     titre: "",
@@ -21,11 +23,10 @@ function AddRecipe() {
     temps_id: 1,
     difficulte_id: 1,
     type_id: 0,
-    preparation: [{ id: `${Date.now()}`, ordre: 1, description: "" }],
+    preparation: [{ id: undefined, ordre: 1, description: "" }],
     saison: "",
-    utilisateur_id: 0,
+    utilisateur_id: 1,
   });
-  // const navigate = useNavigate();
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [ingredientData, setIngredientData] = useState<IngredientData[]>([]);
@@ -99,8 +100,73 @@ function AddRecipe() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`)
       .then((response) => response.json())
-      .then((data) => setIngredients(data));
-  }, []);
+      .then((data) => {
+        const ingredientsWithId = data.map((ingredient: IngredientData) => ({
+          ingredientId: ingredient.id,
+          nom: ingredient.nom,
+          icone_categorie: ingredient.icone_categorie,
+          unite: ingredient.unite,
+        }));
+        setIngredients(ingredientsWithId);
+      });
+
+    const fetchRecipe = async () => {
+      try {
+        // need to render this dynamic and treat the use params id block above - awaiting integration into navigation to ensure we can apply the correct logic.
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/recette/${recipeIdNumber}`,
+        );
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            `${response.status} ${response.statusText}: ${errorData?.message || "Failed to fetch recipe"}`,
+          );
+        }
+
+        const data = await response.json();
+
+        const initialPreparation =
+          data.etapes && data.etapes.length > 0
+            ? data.etapes.map((etape: Preparation) => ({
+                // Map over the etapes array
+                id: etape.id,
+                ordre: etape.ordre,
+                description: etape.description,
+              }))
+            : [{ id: `${Date.now()}`, ordre: 1, description: "" }]; // Provide a default if no etapes
+
+        setRecipeData({
+          titre: data.titre,
+          recette_ref: data.id,
+          image_url: data.image_url,
+          description: data.description,
+          temps_id: data.temps_id || 1,
+          difficulte_id: data.difficulte || 1,
+          type_id: data.type_id || 0,
+          preparation: initialPreparation,
+          saison: data.saison,
+          utilisateur_id: data.utilisateur_id || 1,
+        });
+
+        // Ensure ingredients are in the correct format:
+        const initialIngredients = data.ingredients
+          ? data.ingredients.map((ingredient: IngredientData) => ({
+              nom: ingredient.nom,
+              ingredientId: ingredient.id,
+              quantite: ingredient.quantite || 1,
+              unite: ingredient.unite || "00 g",
+              icone_categorie: ingredient.icone_categorie,
+              recette_ref: data.id,
+            }))
+          : [];
+        setIngredientData(initialIngredients);
+      } catch (error) {
+        toast.error("Error fetching recipe. Please try again later.");
+      } finally {
+      }
+    };
+    fetchRecipe();
+  }, [recipeIdNumber]);
 
   const handlePlus = (ingredientName: string) => {
     setIngredientData((prevIngredientData) =>
@@ -136,7 +202,7 @@ function AddRecipe() {
       preparation: [
         ...prevRecipeData.preparation,
         {
-          id: `${Date.now()}`,
+          id: undefined,
           ordre: prevRecipeData.preparation.length + 1,
           description: "",
         },
@@ -164,20 +230,17 @@ function AddRecipe() {
     const { value } = event.target;
 
     setRecipeData((prevRecipeData) => {
-      // Create a *new* array for preparation
       const updatedPreparation = prevRecipeData.preparation.map((step, i) => {
         if (i === index) {
-          // Correctly target the step to update
-          return { ...step, description: value }; // Update the description
+          return { ...step, description: value };
         }
-        return step; // Keep other steps unchanged
+        return step;
       });
 
       return { ...prevRecipeData, preparation: updatedPreparation };
     });
   };
 
-  //submit the form
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -202,9 +265,9 @@ function AddRecipe() {
     }
     try {
       const recipeResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/recette`,
+        `${import.meta.env.VITE_API_URL}/api/recette/${recipeIdNumber}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -214,45 +277,50 @@ function AddRecipe() {
       );
 
       if (recipeResponse.ok) {
-        // Start of the if block
-        toast.success("Recette crée ! 👨‍🍳");
-        const recipeDataFromServer = await recipeResponse.json();
+        toast.success("Recette modifiée ! 👨‍🍳");
 
         const updatedIngredientData = ingredientData.map((ingredient) => ({
-          ...ingredient,
-          recette_ref: recipeDataFromServer,
-          ingredientId: ingredient.id,
+          ingredientId: ingredient.ingredientId,
+          quantite: ingredient.quantite,
+          unite: ingredient.unite,
+          nom: ingredient.nom,
+          icone_categorie: ingredient.icone_categorie,
+          recette_ref: ingredient.recette_ref,
         }));
+
+        const ingredientsToSend = {
+          recipeId: recipeIdNumber,
+          ingredients: updatedIngredientData,
+        };
 
         const updatedPreparation = recipeData.preparation.map((step) => ({
           ...step,
-          recette_ref: recipeDataFromServer, // Or remove if not needed on backend
+          recette_ref: recipeData.recette_ref,
         }));
         setIngredientData(updatedIngredientData);
         setRecipeData((prevRecipeData) => ({
           ...prevRecipeData,
           preparation: updatedPreparation,
         }));
-
         const ingredientResponse = await fetch(
           `${import.meta.env.VITE_API_URL}/api/ingredientsAdded`,
           {
-            method: "POST",
+            method: "PUT",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedIngredientData),
+            body: JSON.stringify(ingredientsToSend),
           },
         );
 
         if (ingredientResponse.ok) {
-          toast.success("Ingredients ajouté ! 🍲");
+          toast.success("Ingredients modifiés ! 🍲");
           try {
             const stepResponse = await fetch(
-              `${import.meta.env.VITE_API_URL}/api/stepsAdded`,
+              `${import.meta.env.VITE_API_URL}/api/stepsAdded/${recipeIdNumber}`,
               {
-                method: "POST",
+                method: "PUT",
                 headers: {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
@@ -261,7 +329,7 @@ function AddRecipe() {
               },
             );
             if (stepResponse.ok) {
-              toast.success("Etapes de préparation ajoutées ! 🥦🔪");
+              toast.success("Etapes de préparation modifiées ! 🥦🔪");
             } else {
               toast.error("pas reussi");
             }
@@ -269,32 +337,19 @@ function AddRecipe() {
             toast.error("Erreur ajout etapes de preparation");
           }
         } else {
-          const ingredientErrorText = await ingredientResponse.text();
-          toast.error(
-            `Erreur ajout ingrédients:
-            ${ingredientErrorText}`,
-          );
           toast.error(
             "Erreur lors de l'ajout des ingrédients. Vérifiez les données.",
           );
         }
       } else if (recipeResponse.status === 409) {
-        const errorText = await recipeResponse.text();
-        toast.error(
-          `Erreur création recette:
-          ${recipeResponse.status},
-          ${errorText}`,
-        );
         toast.error("Erreur lors de la création de la recette.");
       }
     } catch (error) {
-      toast.error(`Fetch error (global): ${error}`);
       toast.error("Une erreur s'est produite lors de la requête.");
     }
   }
 
   //DISPLAY THE FORM
-
   return (
     <main className="add-recipe-main">
       <form onSubmit={handleSubmit} className="create-recipe-form">
@@ -304,6 +359,7 @@ function AddRecipe() {
           type="text"
           id="title"
           name="titre"
+          value={recipeData.titre}
           onChange={handleInputRecipe}
           className="generic-input"
         />
@@ -313,6 +369,7 @@ function AddRecipe() {
           type="text"
           id="description"
           name="description"
+          value={recipeData.description}
           onChange={handleInputRecipe}
           className="generic-input"
         />
@@ -321,6 +378,7 @@ function AddRecipe() {
           type="range"
           id="time"
           name="temps_id"
+          value={recipeData.temps_id}
           onChange={handleInputRecipe}
         />
         <label htmlFor="difficulty">Difficulté:</label>
@@ -328,6 +386,7 @@ function AddRecipe() {
           required
           id="difficulty"
           name="difficulte_id"
+          value={recipeData.difficulte_id}
           onChange={handleInputRecipe}
           className="generic-input"
         >
@@ -342,6 +401,7 @@ function AddRecipe() {
           required
           id="saison"
           name="saison"
+          value={recipeData.saison}
           onChange={handleInputRecipe}
           className="generic-input"
         >
@@ -357,13 +417,14 @@ function AddRecipe() {
           required
           id="type"
           name="type_id"
+          value={recipeData.type_id}
           onChange={handleInputRecipe}
           className="generic-input"
         >
-          <option value="1">plat principal</option>
-          <option value="2">entrée</option>
-          <option value="3">dessert</option>
-          <option value="4">boisson</option>
+          <option value="plat">plat principal</option>
+          <option value="entree">entrée</option>
+          <option value="dessert">dessert</option>
+          <option value="boisson">boisson</option>
         </select>
         <label htmlFor="ingredients">Ingredients:</label>
         <section className="container-ingredients-season">
@@ -383,7 +444,7 @@ function AddRecipe() {
                   {ingredient.quantite}
                   <select
                     name={ingredient.nom}
-                    onChange={(e) => handleInputUnits(e, ingredient.nom)} // Pass ingredient name
+                    onChange={(e) => handleInputUnits(e, ingredient.nom)}
                     value={ingredient.unite}
                     className="unit-selector"
                   >
@@ -402,14 +463,14 @@ function AddRecipe() {
                   type="button"
                   aria-label="minus"
                   className="minus-button"
-                  onClick={() => handleMinus(ingredient.nom)} // Pass ingredient name
+                  onClick={() => handleMinus(ingredient.nom)}
                   value="-"
                 />
                 <input
                   type="button"
                   aria-label="add"
                   className="add-button"
-                  onClick={() => handlePlus(ingredient.nom)} // Pass ingredient name
+                  onClick={() => handlePlus(ingredient.nom)}
                   value="+"
                 />
               </section>
@@ -420,7 +481,7 @@ function AddRecipe() {
         <section className="container-ingredients-season filter-ingredients">
           <input
             type="text"
-            placeholder="Allez chercher..."
+            placeholder="Cherchez un ingredient..."
             onChange={handleSearch}
           />
           <ul>
@@ -449,8 +510,8 @@ function AddRecipe() {
           <div key={step.id}>
             <textarea
               id={`instructions-${index}`}
-              name={`preparation[${index}].description`} // This name is important for form submission
-              value={step.description} // Controlled component: value from state
+              name={`preparation[${index}].description`}
+              value={step.description}
               onChange={(event) => handleStepDescriptionChange(index, event)}
             />
             <button
@@ -486,4 +547,4 @@ function AddRecipe() {
   );
 }
 
-export default AddRecipe;
+export default ModifyRecipe;
