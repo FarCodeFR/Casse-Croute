@@ -103,7 +103,7 @@ const add: RequestHandler = async (req, res, next) => {
 // Modifier une recette existante
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    const recipeId = Number.parseInt(req.params.id, 10);
+    const recipeId = Number.parseInt(req.params.id);
 
     const updatedRecipe = await recetteRepository.update({
       ...req.body,
@@ -111,7 +111,7 @@ const edit: RequestHandler = async (req, res, next) => {
     });
 
     if (updatedRecipe) {
-      res.status(200).send("Recette mise à jour avec succès.");
+      res.status(200).json({ message: "Recette mise à jour avec succès." });
     } else {
       res.status(404).send("Recette non trouvée.");
     }

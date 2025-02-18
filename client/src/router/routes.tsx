@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import UserRecipes from "../components/UserRecipes";
 import UserRecipesDelete from "../components/UserRecipesDelete";
-import UserRecipesModify from "../components/UserRecipesModify";
+import UserRecipesModify from "../components/admin-user-recipes/UserRecipesModify";
 import ProtectedRoutes from "../components/protect-context/ProtectedRoutes";
 import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
 import Home from "../pages/Home/Home";
@@ -83,6 +83,12 @@ const routes = [
             <DashBoardUser />
           </ProtectedRoutes>
         ),
+        children: [
+          {
+            path: "user-recipes-modify",
+            element: <UserRecipesModify />,
+          },
+        ],
       },
       {
         path: "dashboard-recipes",
