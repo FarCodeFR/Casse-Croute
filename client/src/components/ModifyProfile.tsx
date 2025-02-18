@@ -23,7 +23,6 @@ function ModifyProfile() {
 
   return (
     <form className="profile-form">
-      {/* ✅ Avatar avec bouton d'édition */}
       <div className="avatar-container">
         <img className="avatar" src="/assets/images/avatar.png" alt="Avatar" />
         <button type="button" className="edit-avatar">
@@ -31,7 +30,6 @@ function ModifyProfile() {
         </button>
       </div>
 
-      {/* ✅ Email */}
       <label>
         Email
         <div className="input-container">
@@ -45,7 +43,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Pseudo */}
       <label>
         Pseudo
         <div className="input-container">
@@ -59,7 +56,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Phrase perso */}
       <label>
         Phrase perso
         <div className="input-container">
@@ -73,7 +69,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Mot de passe actuel */}
       <label>
         Mot de passe actuel
         <div className="input-container">
@@ -87,7 +82,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Nouveau mot de passe */}
       <label>
         Nouveau mot de passe
         <div className="input-container">
@@ -101,7 +95,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Confirmer le mot de passe */}
       <label>
         Confirmer le mot de passe
         <div className="input-container">
@@ -115,7 +108,6 @@ function ModifyProfile() {
         </div>
       </label>
 
-      {/* ✅ Bouton Sauvegarde */}
       <button type="submit" className="save-button">
         Valider les modifications
       </button>
