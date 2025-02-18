@@ -31,3 +31,35 @@
     color: red;
   }
 }
+
+@media screen and (min-width: 440px) {
+  .container-title-notices {
+    height: 40vh;
+    object-fit: cover;
+    & h1 {
+      font-size: 44px;
+      font-family: var(--font-primary);
+    }
+  }
+  .container-text-notices {
+    text-align: center;
+    padding: 10px auto;
+    margin: 10% auto;
+    width: 45%;
+    height: 100%;
+    & h2 {
+      margin: 1em;
+      font-size: 26px;
+      & span {
+        font-size: 24px;
+      }
+    }
+    & h3 {
+      margin: 2em 0 auto;
+      font-size: 24px;
+    }
+    & p {
+      font-size: 22px;
+    }
+  }
+}
