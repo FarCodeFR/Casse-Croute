@@ -101,6 +101,13 @@ router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
 router.put("/api/stepsAdded/:id", stepActions.updateSteps);
 
+// Route pour récupérer le profil de l'utilisateur connecté
+router.get(
+  "/api/user/profile",
+  authActions.verifyToken,
+  userActions.getProfile,
+);
+
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 /* ************************************************************************* */
