@@ -366,7 +366,7 @@ function AddRecipe() {
           <option value="4">boisson</option>
         </select>
         <label htmlFor="ingredients">Ingredients:</label>
-        <section className="container-ingredients-season">
+        <section className="container-ingredients-recipe">
           {ingredientData.map((ingredient) => (
             <div key={ingredient.ingredientId}>
               <input
@@ -417,7 +417,10 @@ function AddRecipe() {
           ))}
         </section>
 
-        <section className="container-ingredients-season filter-ingredients">
+        <section
+          className="container-ingredients-season"
+          id="filter-ingredients"
+        >
           <input
             type="text"
             placeholder="Allez chercher..."
