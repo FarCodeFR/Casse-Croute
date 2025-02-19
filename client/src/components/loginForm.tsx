@@ -59,7 +59,7 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
         toast.success("Connexion réussie !");
         setIsLogged(true);
         setIsAdmin(!!data.isAdmin);
-        navigate("/view-profile");
+        navigate("/");
       } else {
         toast.error(
           "Email ou mot de passe non-reconnu. Veuillez reessayer ou vous inscrire.",

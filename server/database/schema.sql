@@ -58,8 +58,7 @@ CREATE TABLE ingredient_recette (
     quantite INT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_id, ingredient_id)
-    -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
-    -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
+
 );
 
 -- Table etape_preparation (étapes de préparation des recettes)
@@ -68,7 +67,6 @@ CREATE TABLE etape_preparation (
     recette_id int NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_id) REFERENCES recette(recette_id) ON DELETE CASCADE
 );
 
 -- Table avis (avis des utilisateurs sur les recettes)
@@ -90,6 +88,7 @@ CREATE TABLE avis (
 INSERT INTO utilisateur (pseudo, email, mot_de_passe, date_inscription, est_admin) VALUES
 ("admin", "superadmin@example.com", "$argon2id$v=19$m=16,t=2,p=1$UHIwTlpubzNpOXlTc0hwUA$eTkVfHdX5CFFlItIiv5Ukw", CURDATE(), TRUE),
 ("user1", "user1@example.com", "user1passwordhash", CURDATE(), FALSE),
+("user2", "user2@example.com", "user2passwordhash", CURDATE(), FALSE),
 ("user3", "user3@example.com", "user3passwordhash", CURDATE(), FALSE),
 ("user4", "user4@example.com", "user4passwordhash", CURDATE(), FALSE),
 ("user5", "user5@example.com", "user5passwordhash", CURDATE(), FALSE),
@@ -284,7 +283,7 @@ INSERT INTO ingredient (nom, categorie, icone_categorie, saison) VALUES
 -- Table recette
 INSERT INTO recette (titre, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id)
 VALUES
-("Soupe d'hiver", "Une soupe chaude pour l'hiver.", "2023-01-15", "https://media.istockphoto.com/id/1038979532/fr/photo/soupe-tomate-aux-lentilles-rouges-au-curry-et-noix-de-coco-d%C3%A9licieuse-nourriture-v%C3%A9g%C3%A9tarienne.jpg?s=612x612&w=0&k=20&c=P9aAkXmxQ4h4bfhFWuTtJfw8JefqxbPZ2VqWo-W0vtw=", "hiver", 2, 2, 3, 1),
+("Soupe d'hiver", "Une soupe chaude pour l'hiver.", "2023-01-15", "https://media.istockphoto.com/id/1038979532/fr/photo/soupe-tomate-aux-lentilles-rouges-au-curry-et-noix-de-coco-d%C3%A9licieuse-nourriture-v%C3%A9g%C3%A9tarienne.jpg?s=612x612&w=0&k=20&c=P9aAkXmxQ4h4bfhFWuTtJfw8JefqxbPZ2VqWo-W0vtw=", "hiver", 2, 2, 3, 3),
 ("Buddha Bowl", "Pour une alimentation équilibrée avec du tofu, du quinoa, des légumes", "2025-01-23", "https://media.istockphoto.com/id/2150471415/fr/photo/buddha-bowl-v%C3%A9g%C3%A9talien-pour-une-alimentation-%C3%A9quilibr%C3%A9e-avec-du-tofu-du-quinoa-des-l%C3%A9gumes-et.jpg?s=612x612&w=0&k=20&c=a2RkFZlMwaLKucEgj7aEwZW6uGCEuAUWX8tdB7Mpj88=", "été", 1, 1, 1, 2),
 ("Poulet braisé", "Poulet rôti avec pommes de terre et oignons", "2025-01-23", "https://media.istockphoto.com/id/1360064510/fr/photo/poulet-r%C3%B4ti-avec-pommes-de-terre-et-oignons.jpg?s=612x612&w=0&k=20&c=iZlsp-xAaw8h3SKU_MJ7pOPWPB_u4r9UgTmSkScDf20=", "été", 1, 1, 1, 2),
 ("Gâteau de Noël", "Gâteau de Noël italien traditionnel Panettone", "2022-01-23", "https://media.istockphoto.com/id/1805465945/fr/photo/g%C3%A2teau-de-no%C3%ABl-italien-traditionnel-panettone-avec-d%C3%A9corations-festives.jpg?s=612x612&w=0&k=20&c=mIDta2Rcx_rEGkgRH7VtZD6MyVtjvF8IggarLrtfMb4=", "hiver", 3, 2, 2, 2),
@@ -356,11 +355,8 @@ VALUES
 (9, 87, 200, "g"), -- Salade verte
 (9, 69, 150, "g"), -- Tomate
 (9, 74, 100, "g"), -- Concombre
-(9, 90, 50, "ml"), -- Basilic pour l’assaisonnement
-(1, 81, 300, "g"), -- Carotte
-(1, 86, 200, "g"), -- Pomme de terre
-(1, 85, 1, "g"), -- Oignon
-(1, 83, 1, "g");  -- Bouillon de légumes (remplacé par céleri)
+(9, 90, 50, "ml"); -- Basilic pour l’assaisonnement
+
 
 -- Table etape_preparation
 INSERT INTO etape_preparation (recette_id, ordre, description)
