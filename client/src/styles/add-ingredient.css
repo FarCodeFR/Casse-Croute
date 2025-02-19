@@ -1,0 +1,143 @@
+.add-ingredient-container {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #e08548;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.add-sign-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.add-sign {
+  font-size: 50px;
+  color: #e08548;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-sign:hover {
+  transform: scale(1.1);
+}
+
+.form-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.add-ingredient-container.expanded .add-sign-container {
+  opacity: 0;
+}
+
+.add-ingredient-container.expanded .form-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.add-ingredient-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 90%;
+}
+
+.add-ingredient-container label {
+  font-size: 14px;
+  color: #e08548;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-ingredient-container input {
+  width: 100%;
+  height: 25px;
+  border: 1px solid #e08548;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.add-ingredient-container select {
+  width: 100%;
+  height: 25px;
+  border: 1px solid #e08548;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.add-ingredient-container input:focus {
+  outline: none;
+  border-color: #d2691e;
+  box-shadow: 0px 0px 5px rgba(226, 133, 72, 0.5);
+}
+
+/* Bouton Ajouter */
+
+button[type="submit"] {
+  background-color: #e08548;
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: #c76c36;
+}
+
+button:disabled {
+  background-color: #d6a28b;
+  cursor: not-allowed;
+}
+
+/* Message de confirmation */
+.success-message {
+  color: green;
+  font-size: 12px;
+  margin-top: 5px;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
