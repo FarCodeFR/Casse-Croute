@@ -14,7 +14,12 @@ function DashBoardUser() {
   const [recipes, setRecipes] = useState<RecipeCardHorizontal[]>([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modifyRecipe, setModifyRecipe] = useState(false);
   const [searchUser, setSearchUser] = useState("");
+
+  const recipeModify = () => {
+    setModifyRecipe((modifyRecipe) => !modifyRecipe);
+  };
 
   const handleVisibility = () => {
     if (selectUser) {
@@ -161,6 +166,7 @@ function DashBoardUser() {
         <nav>
           <NavLink
             to="user-recipes-modify"
+            onClick={recipeModify}
             className={({ isActive }) =>
               isActive ? "active-background" : "inactive-background"
             }
@@ -168,7 +174,7 @@ function DashBoardUser() {
             Modifier
           </NavLink>
           <NavLink
-            to="/"
+            to="delete"
             className={({ isActive }) =>
               isActive ? "active-background" : "inactive-background"
             }
@@ -179,16 +185,45 @@ function DashBoardUser() {
         <figure>
           {recipes.map((el, index) => {
             return (
-              <NavLink
-                key={`${el.recette_id}-${index}`}
-                to={`/recipe/${el.recette_id}`}
-              >
-                <HorizontalRecipeCard
-                  titre={el.titre}
-                  description={el.description}
-                  image_url={el.image_url}
-                />
-              </NavLink>
+              <>
+                {modifyRecipe ? (
+                  <NavLink
+                    key={`${el.recette_id}-${index}`}
+                    to={`/recipe/${el.recette_id}`}
+                  >
+                    <HorizontalRecipeCard
+                      titre={el.titre}
+                      description={el.description}
+                      image_url={el.image_url}
+                    />
+                    <button type="button">
+                      <img
+                        src={
+                          modifyRecipe === true
+                            ? "/assets/images/modify-icon.png"
+                            : "/assets/images/divers/delete.png"
+                        }
+                        alt={
+                          modifyRecipe === true
+                            ? "logo modifier"
+                            : "logo supprimer"
+                        }
+                      />
+                    </button>
+                  </NavLink>
+                ) : (
+                  <NavLink
+                    key={`${el.recette_id}-${index}`}
+                    to={`/recipe/${el.recette_id}`}
+                  >
+                    <HorizontalRecipeCard
+                      titre={el.titre}
+                      description={el.description}
+                      image_url={el.image_url}
+                    />
+                  </NavLink>
+                )}
+              </>
             );
           })}
         </figure>
