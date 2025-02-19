@@ -9,6 +9,7 @@
 .avatar-container {
   position: relative;
   display: flex;
+  margin-top: 24px;
 }
 
 .avatar {
@@ -69,7 +70,7 @@ label {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  width: 100%;
+  width: 50%;
   margin-top: 16px;
   margin-bottom: 32px;
 }
