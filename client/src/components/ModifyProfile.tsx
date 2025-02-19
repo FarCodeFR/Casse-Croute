@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import type { userData } from "../types/UserData";
 
 function ModifyProfile({
@@ -24,7 +25,7 @@ function ModifyProfile({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwtToken");
 
     try {
       const response = await fetch("http://localhost:3310/api/user/profile", {
@@ -36,13 +37,22 @@ function ModifyProfile({
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok)
-        throw new Error("Erreur lors de la mise à jour du profil");
-
-      const updatedUser: userData = await response.json();
-      setUser(updatedUser);
+      if (response.ok) {
+        const updatedUser: userData = await response.json();
+        setUser(updatedUser);
+        toast.success("Profil mis à jour avec succès 🎉");
+      } else if (response.status === 400) {
+        toast.error("Données invalides, vérifiez vos informations ⚠️");
+      } else if (response.status === 401) {
+        toast.error("Non autorisé, veuillez vous reconnecter 🔑");
+      } else if (response.status === 409) {
+        toast.error("Cet email est déjà utilisé ❌");
+      } else {
+        toast.error("Erreur lors de la mise à jour du profil 🤦‍♂️");
+      }
     } catch (err) {
       console.error("Erreur:", err);
+      toast.error("Une erreur inattendue est survenue 🚨");
     }
   };
 
