@@ -21,8 +21,8 @@ function RecipesSeason() {
       <ul>
         {recette.map((el) => {
           return (
-            <NavLink key={el.id} to={`/recipe/${el.id}`}>
-              <li>
+            <li key={el.id}>
+              <NavLink to={`/recipe/${el.id}`}>
                 <VerticalRecipeCard
                   id={el.id}
                   titre={el.titre}
@@ -32,8 +32,8 @@ function RecipesSeason() {
                   description={el.description}
                   image_url={el.image_url}
                 />
-              </li>
-            </NavLink>
+              </NavLink>
+            </li>
           );
         })}
       </ul>
