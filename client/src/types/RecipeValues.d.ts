@@ -1,5 +1,5 @@
 export interface RecipeI {
-  id?: number;
+  id: number;
   titre: string;
   temps_id: string;
   type_id: string;
@@ -13,6 +13,10 @@ export interface RecipeCardHorizontal {
   titre: string;
   image_url: string;
   description: string;
+}
+
+export interface RecipePropsId {
+  recipeId: number;
 }
 
 export interface ingredientI {

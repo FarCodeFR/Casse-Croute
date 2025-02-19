@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
+import { useParams } from "react-router-dom";
 import type {
   Ingredient,
   IngredientData,
@@ -10,9 +11,9 @@ import type {
 } from "../types/AddRecipe";
 
 function ModifyRecipe() {
+  const { id } = useParams();
   const token = localStorage.getItem("jwtToken");
-  const recetteId = 1; //C'est ici pour qu'on puisse voir une recette - normalement, ça serait definie par le lien cliqué depuis le compte utilisateur. C'est pour ça que je le transforme en chiffre dans l'étape suivante.
-  const recipeIdNumber = Number(recetteId);
+  const recipeIdNumber = Number(id);
 
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({

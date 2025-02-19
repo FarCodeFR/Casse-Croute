@@ -114,7 +114,7 @@ COALESCE(
   // Mettre à jour une recette
   async update(recette: Recette) {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE recette SET titre = ?, description = ?, image_url = ?, saison = ?, type_id = ?, difficulte_id = ?, temps_id = ?, utilisateur_id = ? WHERE id = ?",
+      "UPDATE recette SET titre = ?, description = ?, image_url = ?, saison = ?, type_id = ?, difficulte_id = ?, temps_id = ? WHERE id = ?",
       [
         recette.titre,
         recette.description,
@@ -123,7 +123,6 @@ COALESCE(
         recette.type_id,
         recette.difficulte_id,
         recette.temps_id,
-        recette.utilisateur_id,
         recette.id,
       ],
     );
@@ -133,7 +132,7 @@ COALESCE(
   // Supprimer une recette
   async delete(id: number) {
     const [result] = await databaseClient.query<Result>(
-      "DELETE FROM recette WHERE id = ?",
+      "DELETE recette FROM recette WHERE id = ?",
       [id],
     );
 

@@ -124,10 +124,8 @@ const edit: RequestHandler = async (req, res, next) => {
 // Supprimer une recette
 const del: RequestHandler = async (req, res, next) => {
   try {
-    const recipeId = Number.parseInt(req.params.id, 10);
-
+    const recipeId = Number.parseInt(req.params.id);
     const deleted = await recetteRepository.delete(recipeId);
-
     if (deleted) {
       res.status(200).send("Recette supprimée avec succès.");
     } else {

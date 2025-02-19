@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import ModifyRecipe from "../components/ModifyRecipe";
 import UserRecipes from "../components/UserRecipes";
 import UserRecipesDelete from "../components/UserRecipesDelete";
 import UserRecipesModify from "../components/admin-user-recipes/UserRecipesModify";
@@ -9,7 +10,6 @@ import LegalNotices from "../pages/Legal-notices/LegalNotices";
 import Login from "../pages/Login/AuthForm";
 import RecipePage from "../pages/RecipePage/RecipePage";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
-import Account from "../pages/account/Account";
 import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
 import DashboardRecipes from "../pages/dashboard-admin/DashboardRecipes";
 import DashBoardUser from "../pages/dashboard-admin/DashboardUser";
@@ -22,17 +22,17 @@ const routes = [
     element: <Home />,
   },
   {
-    path: "/account",
-    element: <Account />,
-  },
-  {
     path: "/recipe-page",
     element: <RecipePage />,
   },
 
   {
     path: "/recipe/:id",
-    element: <Recipe />,
+    element: <Recipe recipeId={0} />,
+  },
+  {
+    path: "/modify/:id",
+    element: <ModifyRecipe />,
   },
   {
     path: "/create-recipe",
@@ -83,12 +83,6 @@ const routes = [
             <DashBoardUser />
           </ProtectedRoutes>
         ),
-        children: [
-          {
-            path: "user-recipes-modify",
-            element: <UserRecipesModify />,
-          },
-        ],
       },
       {
         path: "dashboard-recipes",
