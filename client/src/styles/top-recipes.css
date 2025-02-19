@@ -1,7 +1,7 @@
 .container-title-home {
   background-color: var(--secondary-color-2);
   width: 90%;
-  margin: 3em auto;
+  margin: 15% auto;
   padding: 15px;
   font-family: var(--font-secondary);
   text-align: center;
@@ -11,6 +11,10 @@
 
 .container-title-home > h2 {
   font-size: 32px;
+}
+
+.top-recipes-container {
+  margin: 20% auto;
 }
 
 .top-rank {

@@ -7,7 +7,22 @@ class RecetteRepository {
   // Lire toutes les recettes
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM recette ORDER BY id",
+      `SELECT 
+    r.id,
+    r.titre,
+    r.description,
+    r.date_publication,
+    r.image_url,
+    r.saison,
+    tr.nom AS type_recette,
+    d.nom AS difficulte,
+    CONCAT(tp.heure, 'h ', tp.minute, 'min') AS temps_preparation,
+    u.pseudo AS auteur
+FROM recette r
+LEFT JOIN type_recette tr ON r.type_id = tr.id
+LEFT JOIN difficulte d ON r.difficulte_id = d.id
+LEFT JOIN temps_preparation tp ON r.temps_id = tp.id
+LEFT JOIN utilisateur u ON r.utilisateur_id = u.id;`,
     );
     return rows;
   }

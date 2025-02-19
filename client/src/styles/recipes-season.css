@@ -31,18 +31,29 @@
   list-style: none;
   gap: 25%;
   padding: 20%;
+  & a {
+    text-decoration: none;
+    color: var(--primary-color);
+  }
 }
 
 .container-recipes-season > ul::-webkit-scrollbar {
   display: none;
 }
 
-.container-recipes-season > ul > li {
+.container-recipes-season > ul > a > li {
   display: block;
   margin: 15px;
   flex-shrink: 0;
   flex-basis: 80%;
   scroll-snap-align: center;
+}
+.container-recipes-season > ul > a:hover {
+  & article {
+    position: relative;
+    bottom: 5px;
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.237);
+  }
 }
 
 /* * Responsive */
@@ -64,7 +75,7 @@
     align-content: center;
     padding: 4% 0 3% 0;
     overflow-x: visible;
-    gap: 9em 0px;
+    gap: 9em 2em;
     scroll-snap-type: none;
     & li {
       flex-basis: auto;

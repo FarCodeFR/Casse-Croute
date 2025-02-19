@@ -30,7 +30,7 @@ function HamburgerMenu() {
               {isLogged && <NavLink to="/create-recipe">Create Recipe</NavLink>}
             </li>
             <li>
-              <NavLink to="/legal-notices">Mentions l'égales</NavLink>
+              <NavLink to="/legal-notices">Mentions légales</NavLink>
             </li>
             <li>
               {isLogged && (

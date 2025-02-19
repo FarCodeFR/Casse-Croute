@@ -1,6 +1,7 @@
 .container-ingredients-season {
   width: 100%;
   border-width: 5px 0;
+  margin: 25% auto;
 }
 .container-ingredients-season > ul::-webkit-scrollbar {
   display: none;
@@ -40,6 +41,9 @@
 /* * Responsive Desktop */
 
 @media screen and (min-width: 440px) {
+  .container-ingredients-season {
+    margin: 5% auto;
+  }
   .container-ingredients-season > ul {
     height: 300px;
     gap: 8em;
