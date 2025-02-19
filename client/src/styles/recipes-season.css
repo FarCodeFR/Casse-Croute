@@ -75,7 +75,7 @@
     align-content: center;
     padding: 4% 0 3% 0;
     overflow-x: visible;
-    gap: 9em 0px;
+    gap: 9em 2em;
     scroll-snap-type: none;
     & li {
       flex-basis: auto;

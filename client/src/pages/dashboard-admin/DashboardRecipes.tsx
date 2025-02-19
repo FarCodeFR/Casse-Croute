@@ -40,22 +40,24 @@ function DashboardRecipes() {
           searchRecipe={searchRecipe}
           setSelectRecipe={setSelectRecipe}
         />
+        {selectRecipe && (
+          <VerticalRecipeCard
+            id={selectRecipe.id}
+            titre={selectRecipe.titre}
+            temps_id={selectRecipe.temps_id}
+            difficulte_id={selectRecipe.difficulte_id}
+            type_id={selectRecipe.temps_id}
+            description={selectRecipe.description}
+            image_url={selectRecipe.image_url}
+          />
+        )}
       </section>
       <section className="container-bottom-recipe">
         <picture>
           {selectRecipe && (
-            <>
-              <VerticalRecipeCard
-                id={selectRecipe.id}
-                titre={selectRecipe.titre}
-                temps_id={selectRecipe.temps_id}
-                difficulte_id={selectRecipe.difficulte_id}
-                type_id={selectRecipe.temps_id}
-                description={selectRecipe.description}
-                image_url={selectRecipe.image_url}
-              />
+            <section className="container-recette-admin">
               <Recipe recipeId={selectRecipe.id} />
-            </>
+            </section>
           )}
         </picture>
       </section>
