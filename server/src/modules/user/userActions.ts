@@ -38,6 +38,16 @@ const getProfile: RequestHandler = async (req, res, next) => {
   }
 };
 
+const browseRecipesUser: RequestHandler = async (req, res, next) => {
+  const userId = Number(req.params.id);
+  try {
+    const user = await userRepository.readUserRecipes(userId);
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     // Create a new user object
@@ -154,4 +164,5 @@ export default {
   edit,
   destroy,
   getProfile,
+  browseRecipesUser,
 };
