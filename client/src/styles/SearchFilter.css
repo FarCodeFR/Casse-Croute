@@ -48,6 +48,12 @@
   margin: 10% auto;
 }
 
+.results a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-family: var(--font-secondary);
+}
+
 .recipe-results {
   padding: 10px 20px;
   font-size: 1.25rem;

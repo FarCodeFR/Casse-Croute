@@ -24,7 +24,7 @@ function HamburgerMenu() {
           </header>
           <ul>
             <li>
-              <NavLink to="/catalogue">Catalogue</NavLink>
+              <NavLink to="/recipe-page">Catalogue</NavLink>
             </li>
             <li>
               {isLogged && <NavLink to="/create-recipe">Create Recipe</NavLink>}
