@@ -1,19 +1,20 @@
 import { Navigate } from "react-router-dom";
+import ModifyRecipe from "../components/ModifyRecipe";
 import UserRecipes from "../components/UserRecipes";
 import UserRecipesDelete from "../components/UserRecipesDelete";
-import UserRecipesModify from "../components/UserRecipesModify";
+import UserRecipesModify from "../components/admin-user-recipes/UserRecipesModify";
 import ProtectedRoutes from "../components/protect-context/ProtectedRoutes";
 import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
 import Home from "../pages/Home/Home";
 import LegalNotices from "../pages/Legal-notices/LegalNotices";
 import Login from "../pages/Login/AuthForm";
+import RecipePage from "../pages/RecipePage/RecipePage";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
-import Account from "../pages/account/Account";
-import Catalogue from "../pages/catalogue/Catalogue";
 import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
 import DashboardRecipes from "../pages/dashboard-admin/DashboardRecipes";
 import DashBoardUser from "../pages/dashboard-admin/DashboardUser";
 import NotFound from "../pages/error/NotFound";
+import Recipe from "../pages/recipe/Recipe";
 
 const routes = [
   {
@@ -21,12 +22,17 @@ const routes = [
     element: <Home />,
   },
   {
-    path: "/account",
-    element: <Account />,
+    path: "/recipe-page",
+    element: <RecipePage />,
+  },
+
+  {
+    path: "/recipe/:id",
+    element: <Recipe recipeId={0} />,
   },
   {
-    path: "/catalogue",
-    element: <Catalogue />,
+    path: "/modify/:id",
+    element: <ModifyRecipe />,
   },
   {
     path: "/create-recipe",

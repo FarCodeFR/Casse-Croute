@@ -2,7 +2,10 @@ import { useState } from "react";
 import type { userDataTypes } from "../types/UserData";
 import "../styles/modify-profil.css";
 
+const defaultAvatar = "/assets/images/profil.png";
+
 function ModifyProfile() {
+  const [avatarSrc, setAvatarSrc] = useState(defaultAvatar);
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
     pseudo: "",
@@ -12,11 +15,10 @@ function ModifyProfile() {
     passwordConfirm: "",
   });
 
-  const defaultAvatar = "/assets/images/profil.png";
-  const [avatarSrc, setAvatarSrc] = useState("/assets/images/profil.png");
-
   const handleAvatarError = () => {
-    setAvatarSrc(defaultAvatar);
+    if (avatarSrc !== defaultAvatar) {
+      setAvatarSrc(defaultAvatar);
+    }
   };
 
   const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +39,7 @@ function ModifyProfile() {
           onError={handleAvatarError}
         />
         <button type="button" className="edit-avatar">
-          <img src="/assets/images/editIcon.png" alt="Modifier l'avatar" />
+          <img src="/assets/images/modify-icon.png" alt="Modifier l'avatar" />
         </button>
       </div>
 
@@ -50,7 +52,7 @@ function ModifyProfile() {
             value={userData.email}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Edit email" />
+          <img src="/assets/images/modify-icon.png" alt="Edit email" />
         </div>
       </label>
 
@@ -63,7 +65,7 @@ function ModifyProfile() {
             value={userData.pseudo}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Edit pseudo" />
+          <img src="/assets/images/modify-icon.png" alt="Edit pseudo" />
         </div>
       </label>
 
@@ -76,7 +78,10 @@ function ModifyProfile() {
             value={userData.personalMessage}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Edit personal message" />
+          <img
+            src="/assets/images/modify-icon.png"
+            alt="Edit personal message"
+          />
         </div>
       </label>
 
@@ -89,7 +94,7 @@ function ModifyProfile() {
             value={userData.currentPassword}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Edit password" />
+          <img src="/assets/images/modify-icon.png" alt="Edit password" />
         </div>
       </label>
 
@@ -98,11 +103,11 @@ function ModifyProfile() {
         <div className="input-container">
           <input
             type="password"
-            name="newPassword"
+            name="password"
             value={userData.password}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Edit new password" />
+          <img src="/assets/images/modify-icon.png" alt="Edit new password" />
         </div>
       </label>
 
@@ -111,11 +116,11 @@ function ModifyProfile() {
         <div className="input-container">
           <input
             type="password"
-            name="confirmPassword"
+            name="passwordConfirm"
             value={userData.passwordConfirm}
             onChange={handleInputUserData}
           />
-          <img src="/assets/images/editIcon.png" alt="Confirm password" />
+          <img src="/assets/images/modify-icon.png" alt="Confirm password" />
         </div>
       </label>
 
