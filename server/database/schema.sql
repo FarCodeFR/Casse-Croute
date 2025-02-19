@@ -355,11 +355,8 @@ VALUES
 (9, 87, 200, "g"), -- Salade verte
 (9, 69, 150, "g"), -- Tomate
 (9, 74, 100, "g"), -- Concombre
-(9, 90, 50, "ml"), -- Basilic pour l’assaisonnement
-(1, 81, 300, "g"), -- Carotte
-(1, 86, 200, "g"), -- Pomme de terre
-(1, 85, 1, "g"), -- Oignon
-(1, 83, 1, "g");  -- Bouillon de légumes (remplacé par céleri)
+(9, 90, 50, "ml"); -- Basilic pour l’assaisonnement
+
 
 -- Table etape_preparation
 INSERT INTO etape_preparation (recette_id, ordre, description)
