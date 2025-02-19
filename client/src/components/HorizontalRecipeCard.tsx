@@ -1,4 +1,4 @@
-import "../pages/ViewProfile/ViewProfile.css";
+import "../styles/horizontal-card.css";
 import type { RecipeCardHorizontal } from "../types/RecipeValues";
 function HorizontalRecipeCard({
   titre,
@@ -6,22 +6,15 @@ function HorizontalRecipeCard({
   image_url,
 }: RecipeCardHorizontal) {
   return (
-    <main className="horizontal-card">
-      <header>
-        <button type="button">
-          <img
-            src="../../public/assets/images/editIcon.png"
-            alt="edit button"
-          />
-        </button>
-
-        <h2>{titre}</h2>
-      </header>
-      <figure>
+    <section className="horizontal-card">
+      <picture>
         <img src={image_url} alt={titre} />
-        <figcaption>{description}</figcaption>
-      </figure>
-    </main>
+      </picture>
+      <article>
+        <h2>{titre}</h2>
+        <p>{description}</p>
+      </article>
+    </section>
   );
 }
 export default HorizontalRecipeCard;

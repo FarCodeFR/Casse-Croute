@@ -12,7 +12,7 @@ function DeleteUsers({ handleVisibility, selectUser }: DeleteUserProps) {
     fetch(`${import.meta.env.VITE_API_URL}/api/users/${selectUser.id}`, {
       method: "DELETE",
       headers: {
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {

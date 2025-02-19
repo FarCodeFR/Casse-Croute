@@ -7,20 +7,21 @@ import RecipePrepa from "../../components/RecipePreparation";
 import RecipeDescription from "../../components/RicipeDescription";
 import type { Recette } from "../../types/RecetteByID";
 import "./recipe.css";
+import type { RecipePropsId } from "../../types/RecipeValues";
 
-function Recipe() {
+function Recipe({ recipeId }: RecipePropsId) {
   const { id } = useParams();
   const [recette, setRecette] = useState<Recette | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRecette = async () => {
-      if (!id) {
+      if (!id && !recipeId) {
         setError("ID non défini");
         return;
       }
 
-      const parsedId = Number(id);
+      const parsedId = recipeId ? Number(recipeId) : Number(id);
       if (Number.isNaN(parsedId)) {
         setError("ID invalide");
         return;
@@ -41,7 +42,7 @@ function Recipe() {
     };
 
     fetchRecette();
-  }, [id]);
+  }, [id, recipeId]);
 
   if (error) return <p>{error}</p>;
   if (!recette) return <p>Chargement...</p>;
