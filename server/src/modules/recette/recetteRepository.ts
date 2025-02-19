@@ -132,7 +132,7 @@ COALESCE(
   // Supprimer une recette
   async delete(id: number) {
     const [result] = await databaseClient.query<Result>(
-      "DELETE FROM recette WHERE id = ?",
+      "DELETE recette FROM recette WHERE id = ?",
       [id],
     );
 
