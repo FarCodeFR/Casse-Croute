@@ -6,8 +6,22 @@ function DashboardAdmin() {
     <>
       <nav className="container-user-recipes">
         <section>
-          <NavLink to="dashboard-user">Utilisateur</NavLink>
-          <NavLink to="dashboard-recipes">Recette</NavLink>
+          <NavLink
+            to="dashboard-user"
+            className={({ isActive }) =>
+              isActive ? "active-background-admin" : "inactive-background-admin"
+            }
+          >
+            Utilisateur
+          </NavLink>
+          <NavLink
+            to="dashboard-recipes"
+            className={({ isActive }) =>
+              isActive ? "active-background-admin" : "inactive-background-admin"
+            }
+          >
+            Recette
+          </NavLink>
         </section>
       </nav>
       <Outlet />

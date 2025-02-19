@@ -23,12 +23,16 @@ const browseSeason: RequestHandler = async (req, res) => {
 
 const add: RequestHandler = async (req, res) => {
   try {
-    const addIngredient = await ingredientRepository.create(req.body);
+    const { nom, categorie, saison } = req.body;
+
+    const addIngredient = await ingredientRepository.create({
+      nom,
+      categorie,
+      saison,
+    });
 
     if (addIngredient) {
-      res
-        .status(201)
-        .send(`L'ingrédient : ${req.body.name}, à bien été ajouté`);
+      res.status(201).send(`L'ingrédient : ${req.body.nom}, à bien été ajouté`);
     } else {
       res.status(404).send("Une erreur a été rencontré");
     }

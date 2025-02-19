@@ -2,9 +2,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-bottom: 25px;
+  gap: px;
 }
 
 .main-page-recipe-container > .recipe-container:nth-child(n + 3) {
+  margin-top: 110px;
+}
+
+.main-page-recipe-container > .recipe-container:nth-child(-n + 2) {
   margin-top: 110px;
 }
 

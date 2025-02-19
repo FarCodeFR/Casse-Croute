@@ -4,7 +4,7 @@ CREATE TABLE utilisateur (
     pseudo VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
-    date_inscription DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
     photo_profil VARCHAR(255),
     est_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -55,11 +55,10 @@ CREATE TABLE recette (
 CREATE TABLE ingredient_recette (
     recette_id int NOT NULL,
     ingredient_id INT NOT NULL,
-    quantite FLOAT NOT NULL,
+    quantite INT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_id, ingredient_id)
-    -- FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
-    -- FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
+
 );
 
 -- Table etape_preparation (étapes de préparation des recettes)
@@ -68,7 +67,6 @@ CREATE TABLE etape_preparation (
     recette_id int NOT NULL,
     ordre INT NOT NULL,
     description TEXT NOT NULL
-    -- FOREIGN KEY (recette_id) REFERENCES recette(recette_id) ON DELETE CASCADE
 );
 
 -- Table avis (avis des utilisateurs sur les recettes)
@@ -90,6 +88,7 @@ CREATE TABLE avis (
 INSERT INTO utilisateur (pseudo, email, mot_de_passe, date_inscription, est_admin) VALUES
 ("admin", "superadmin@example.com", "$argon2id$v=19$m=16,t=2,p=1$UHIwTlpubzNpOXlTc0hwUA$eTkVfHdX5CFFlItIiv5Ukw", CURDATE(), TRUE),
 ("user1", "user1@example.com", "user1passwordhash", CURDATE(), FALSE),
+("user2", "user2@example.com", "user2passwordhash", CURDATE(), FALSE),
 ("user3", "user3@example.com", "user3passwordhash", CURDATE(), FALSE),
 ("user4", "user4@example.com", "user4passwordhash", CURDATE(), FALSE),
 ("user5", "user5@example.com", "user5passwordhash", CURDATE(), FALSE),
@@ -284,91 +283,17 @@ INSERT INTO ingredient (nom, categorie, icone_categorie, saison) VALUES
 -- Table recette
 INSERT INTO recette (titre, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id)
 VALUES
-("Soupe d'hiver", "Une soupe chaude pour l'hiver.", "2023-01-15", "https://media.istockphoto.com/id/1038979532/fr/photo/soupe-tomate-aux-lentilles-rouges-au-curry-et-noix-de-coco-d%C3%A9licieuse-nourriture-v%C3%A9g%C3%A9tarienne.jpg?s=612x612&w=0&k=20&c=P9aAkXmxQ4h4bfhFWuTtJfw8JefqxbPZ2VqWo-W0vtw=", "hiver", 2, 2, 3, 1),
+("Soupe d'hiver", "Une soupe chaude pour l'hiver.", "2023-01-15", "https://media.istockphoto.com/id/1038979532/fr/photo/soupe-tomate-aux-lentilles-rouges-au-curry-et-noix-de-coco-d%C3%A9licieuse-nourriture-v%C3%A9g%C3%A9tarienne.jpg?s=612x612&w=0&k=20&c=P9aAkXmxQ4h4bfhFWuTtJfw8JefqxbPZ2VqWo-W0vtw=", "hiver", 2, 2, 3, 3),
 ("Buddha Bowl", "Pour une alimentation équilibrée avec du tofu, du quinoa, des légumes", "2025-01-23", "https://media.istockphoto.com/id/2150471415/fr/photo/buddha-bowl-v%C3%A9g%C3%A9talien-pour-une-alimentation-%C3%A9quilibr%C3%A9e-avec-du-tofu-du-quinoa-des-l%C3%A9gumes-et.jpg?s=612x612&w=0&k=20&c=a2RkFZlMwaLKucEgj7aEwZW6uGCEuAUWX8tdB7Mpj88=", "été", 1, 1, 1, 2),
-("Poulet braisé", "Poulet rôti avec pommes de terre et oignons", "2025-01-23", "https://media.istockphoto.com/id/1360064510/fr/photo/poulet-r%C3%B4ti-avec-pommes-de-terre-et-oignons.jpg?s=612x612&w=0&k=20&c=iZlsp-xAaw8h3SKU_MJ7pOPWPB_u4r9UgTmSkScDf20=", "été", 1, 1, 1, 2),
-("Gâteau de Noël", "Gâteau de Noël italien traditionnel Panettone", "2022-01-23", "https://media.istockphoto.com/id/1805465945/fr/photo/g%C3%A2teau-de-no%C3%ABl-italien-traditionnel-panettone-avec-d%C3%A9corations-festives.jpg?s=612x612&w=0&k=20&c=mIDta2Rcx_rEGkgRH7VtZD6MyVtjvF8IggarLrtfMb4=", "hiver", 3, 2, 2, 2),
-("Fondue au fromage", "Fondue au fromage avec vin, pain et raisin", "2022-01-23", "https://media.istockphoto.com/id/1154139425/fr/photo/fondue-au-fromage-avec-vin-de-pain-et-raisin.jpg?s=612x612&w=0&k=20&c=PNR9MytdVe3l3zbBCHPWm10U8h-2Vk5sh0fqgLNaDTU=", "hiver", 2, 1, 2, 2),
-("Ragoût", "Ragoût fait maison avec de la viande et des légumes", "2022-01-23", "https://media.istockphoto.com/id/614712998/fr/photo/rago%C3%BBt-fait-maison-avec-de-la-viande-et-des-l%C3%A9gumes.jpg?s=612x612&w=0&k=20&c=w3K22nteo-a_8d56FsCjUj89dpCBj0jdSDL3-LCdOA0=", "hiver", 2, 2, 4, 2),
+("Poulet braisé", "Poulet rôti avec pommes de terre et oignons", "2025-01-23", "https://media.istockphoto.com/id/1360064510/fr/photo/poulet-r%C3%B4ti-avec-pommes-de-terre-et-oignons.jpg?s=612x612&w=0&k=20&c=iZlsp-xAaw8h3SKU_MJ7pOPWPB_u4r9UgTmSkScDf20=", "été", 1, 1, 1, 6),
+("Gâteau de Noël", "Gâteau de Noël italien traditionnel Panettone", "2022-01-23", "https://media.istockphoto.com/id/1805465945/fr/photo/g%C3%A2teau-de-no%C3%ABl-italien-traditionnel-panettone-avec-d%C3%A9corations-festives.jpg?s=612x612&w=0&k=20&c=mIDta2Rcx_rEGkgRH7VtZD6MyVtjvF8IggarLrtfMb4=", "hiver", 3, 2, 2, 6),
+("Fondue au fromage", "Fondue au fromage avec vin, pain et raisin", "2022-01-23", "https://media.istockphoto.com/id/1154139425/fr/photo/fondue-au-fromage-avec-vin-de-pain-et-raisin.jpg?s=612x612&w=0&k=20&c=PNR9MytdVe3l3zbBCHPWm10U8h-2Vk5sh0fqgLNaDTU=", "hiver", 2, 1, 2, 4),
+("Ragoût", "Ragoût fait maison avec de la viande et des légumes", "2022-01-23", "https://media.istockphoto.com/id/614712998/fr/photo/rago%C3%BBt-fait-maison-avec-de-la-viande-et-des-l%C3%A9gumes.jpg?s=612x612&w=0&k=20&c=w3K22nteo-a_8d56FsCjUj89dpCBj0jdSDL3-LCdOA0=", "hiver", 2, 2, 4, 4),
 ("Poulet Riggies", "Pâtes cuites au four avec du boeuf haché et du fromage", "2025-01-23", "https://media.istockphoto.com/id/1098150768/fr/photo/poulet-riggies.jpg?s=612x612&w=0&k=20&c=xRyWBscDAlDA_ke4iZQqrOi_4KY63vVSD_Q9Vb-pnhg=", "hiver", 2, 1, 3, 2),
 ("Gratin", "Gratin de pommes de terre au fromage maison", "2025-01-23", "https://media.istockphoto.com/id/1442601396/fr/photo/gratin-de-pommes-de-terre-au-fromage-maison.jpg?s=612x612&w=0&k=20&c=yJp1IfY2kuj7ShcCkzOWWABT0YMS-6C1CyuBFptCSSQ=", "hiver", 2, 1, 2, 2),
-("Salade estivale", "Une salade fraîche pour l'été.", "2023-06-15", "path/to/salade.jpg", "été", 1, 1, 1, 2);
+("Salade estivale", "Une salade fraîche pour l'été.", "2023-06-15", "https://media.istockphoto.com/id/1011857262/fr/photo/poires-fra%C3%AEches-m%C3%A9lange-de-salade-fromage-bleu-avec-des-l%C3%A9gumes-verts-noix-canneberge.jpg?s=612x612&w=0&k=20&c=Sw9O0N3ccMg9POU0Z_rSfStGY8vFWtkohyCD2vF776w=", "été", 1, 1, 1, 7);
 
 -- Table ingredient_recette
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(1, 81, 300, "g"), -- Carotte
-(1, 86, 200, "g"), -- Pomme de terre
-(1, 85, 1, "unité"), -- Oignon
-(1, 83, 1, "L");  -- Bouillon de légumes (remplacé par céleri)
-
--- 🥗 Buddha Bowl (quinoa, tofu, légumes)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(2, 64, 150, "g"), -- Asperge
-(2, 65, 200, "g"), -- Épinard
-(2, 69, 100, "g"), -- Tomate
-(2, 72, 100, "g"); -- Poivron
-
--- 🍗 Poulet braisé (poulet + légumes)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(3, 2, 500, "g"), -- Filet de poulet
-(3, 86, 300, "g"), -- Pomme de terre
-(3, 85, 1, "unité"), -- Oignon
-(3, 88, 1, "gousse"); -- Ail
-
--- 🍰 Gâteau de Noël (aucune viande)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(4, 58, 250, "g"), -- Beurre
-(4, 59, 4, "unités"), -- Oeuf de poule
-(4, 60, 150, "g"), -- Sucre
-(4, 61, 100, "g"); -- Farine
-
--- 🧀 Fondue au fromage (fromage + vin)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(5, 49, 200, "g"), -- Comté
-(5, 52, 200, "g"), -- Gruyère
-(5, 121, 100, "ml"), -- Vin blanc
-(5, 88, 1, "gousse"); -- Ail
-
--- 🍲 Ragoût (ajoutons des légumes)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(6, 16, 500, "g"), -- Bœuf haché
-(6, 85, 1, "unité"), -- Oignon
-(6, 81, 200, "g"), -- Carotte
-(6, 83, 1, "L"); -- Bouillon de légumes (remplacé par céleri)
-
--- 🍝 Poulet Riggies (pâtes + poulet)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(7, 66, 250, "g"), -- Pâtes
-(7, 2, 300, "g"), -- Filet de poulet
-(7, 69, 200, "ml"), -- Sauce tomate
-(7, 44, 100, "g"); -- Parmesan
-
--- 🥘 Gratin (pommes de terre + fromage)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(8, 86, 400, "g"), -- Pomme de terre
-(8, 39, 200, "ml"), -- Crème fraîche
-(8, 40, 150, "g"); -- Fromage râpé
-
--- 🥗 Salade estivale (salade et légumes)
-INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
-VALUES
-(9, 87, 200, "g"), -- Salade verte
-(9, 69, 150, "g"), -- Tomate
-(9, 74, 100, "g"), -- Concombre
-(9, 90, 50, "ml"); -- Basilic pour l’assaisonnement
-(1, 81, 300, "g"), -- Carotte
-(1, 86, 200, "g"), -- Pomme de terre
-(1, 85, 1, "unité"), -- Oignon
-(1, 83, 1, "L");  -- Bouillon de légumes (remplacé par céleri)
-
 -- 🥗 Buddha Bowl (quinoa, tofu, légumes)
 INSERT INTO ingredient_recette (recette_id, ingredient_id, quantite, unite)
 VALUES

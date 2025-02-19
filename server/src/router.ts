@@ -22,6 +22,9 @@ import userActions from "./modules/user/userActions";
 
 //Retrieve user data
 router.get("/api/users", userActions.browse);
+// Recipes User
+router.get("/api/user/:id/recipes", userActions.browseRecipesUser);
+
 //Add user data
 router.post(
   "/api/users",
@@ -29,6 +32,7 @@ router.post(
   userActions.hashPassword,
   userActions.add,
 );
+
 //Login
 router.post("/api/users/login", authActions.login);
 
@@ -60,6 +64,7 @@ import stepActions from "./modules/steps/stepActions";
 // Routes pour les ingrédients
 router.get("/api/ingredient", ingredientActions.browse);
 router.get("/api/ingredients-season", ingredientActions.browseSeason);
+router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
 router.get("/api/recettes", recetteActions.browse);
@@ -89,18 +94,24 @@ router.post("/api/ingredientsAdded", ingToRecActions.add);
 //Routes pour ajouter des étapes aux recettes
 router.use("/api/ingredientAdded", authActions.verifyToken);
 router.post("/api/ingredientsAdded", ingToRecActions.add);
+router.put("/api/ingredientsAdded", ingToRecActions.updateRecipeIngredients);
 
 //Routes pour ajouter des étapes aux recettes
 router.use("/api/stepsAdded", authActions.verifyToken);
 router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
+router.put("/api/stepsAdded/:id", stepActions.updateSteps);
+
+// Route pour récupérer le profil de l'utilisateur connecté
+router.get(
+  "/api/user/profile",
+  authActions.verifyToken,
+  userActions.getProfile,
+);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 /* ************************************************************************* */
-
-//Update admin
-// router.use("/api/admin", authActions.isAdmin);
 
 router.post("/api/admin", authActions.isAdmin);
 

@@ -22,6 +22,7 @@ function RecipesSeason() {
           return (
             <li key={el.id}>
               <VerticalRecipeCard
+                id={el.id}
                 titre={el.titre}
                 temps_id={el.temps_id}
                 difficulte_id={el.difficulte_id}
