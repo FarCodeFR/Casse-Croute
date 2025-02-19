@@ -58,3 +58,36 @@
   background-color: white;
   color: black;
 }
+
+/* * RESPONSIVE  */
+
+@media screen and (min-width: 440px) {
+  .container-recipes-user {
+    background: none;
+    box-shadow: none;
+    margin: 0 auto;
+    width: 80%;
+    & nav {
+      width: 50%;
+      align-items: end;
+      margin: 0 auto;
+      background-color: var(--secondary-color-2);
+      border-radius: 0 0 15px 15px;
+      height: 6em;
+      & button {
+        width: 200px;
+        border-radius: 15px 15px 0 0;
+      }
+    }
+  }
+  .container-recipes-user > figure {
+    margin: 5% auto;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    & section {
+      height: 250px;
+      width: 400px;
+    }
+  }
+}

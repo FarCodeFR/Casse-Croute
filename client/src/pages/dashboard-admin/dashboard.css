@@ -32,3 +32,13 @@
     color: var(--primary-color);
   }
 }
+
+/* * RESPONSIVE */
+
+@media screen and (min-width: 440px) {
+  .container-user-recipes > section > a {
+    font-size: 26px;
+    width: 200px;
+    text-align: center;
+  }
+}
