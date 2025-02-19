@@ -7,6 +7,8 @@
   font-family: var(--font-primary);
   position: relative;
   box-shadow: 0 0 20px rgba(181, 168, 168, 0.416);
+  margin-top: 110px;
+  color: var(--primary-color);
 }
 
 /* Image */
@@ -27,6 +29,12 @@
   text-align: center;
   position: relative;
   top: -100px;
+}
+.text-container ul li {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -13px;
 }
 
 .title {
@@ -65,10 +73,6 @@
   width: 50px;
   background-color: var(--quaternary-color);
   border-radius: 50%;
-}
-
-.recipe-container ul li p {
-  padding-top: 5px;
 }
 
 .time {
