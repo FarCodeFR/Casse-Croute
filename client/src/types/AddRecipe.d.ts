@@ -8,7 +8,7 @@ export interface RecipeData {
   type_id: number;
   preparation: { id: string | undefined; ordre: number; description: string }[];
   saison: string;
-  utilisateur_id: number;
+  utilisateur_id?: number;
 }
 
 export interface Ingredient {

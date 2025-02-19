@@ -89,7 +89,7 @@ const RecipePrepa: React.FC<RecipePrepaProps> = ({
           {recipeTypes.map((el) => (
             <div
               key={el.id}
-              className={el.id === typeRecette.toLowerCase() ? "active" : ""}
+              className={el.id === typeRecette?.toLowerCase() ? "active" : ""}
             >
               <img src={el.image} alt={el.label} />
               <span>{el.label}</span>

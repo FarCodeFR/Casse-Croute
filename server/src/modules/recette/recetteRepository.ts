@@ -93,7 +93,7 @@ COALESCE(
   }
 
   // Créer une recette
-  async create(recette: Recette, userId: number) {
+  async create(recette: Recette, userId: number, typeId: number) {
     const [row] = await databaseClient.query<Result>(
       "INSERT INTO recette (titre, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -102,7 +102,7 @@ COALESCE(
         recette.date_publication,
         recette.image_url,
         recette.saison,
-        recette.type_id,
+        typeId,
         recette.difficulte_id,
         recette.temps_id,
         userId,
@@ -112,18 +112,17 @@ COALESCE(
   }
 
   // Mettre à jour une recette
-  async update(recette: Recette) {
+  async update(recette: Recette, typeId: number) {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE recette SET titre = ?, description = ?, image_url = ?, saison = ?, type_id = ?, difficulte_id = ?, temps_id = ?, utilisateur_id = ? WHERE id = ?",
+      "UPDATE recette SET titre = ?, description = ?, image_url = ?, saison = ?, type_id = ?, difficulte_id = ?, temps_id = ? WHERE id = ?",
       [
         recette.titre,
         recette.description,
         recette.image_url,
         recette.saison,
-        recette.type_id,
+        typeId,
         recette.difficulte_id,
         recette.temps_id,
-        recette.utilisateur_id,
         recette.id,
       ],
     );
