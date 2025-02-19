@@ -93,7 +93,7 @@ COALESCE(
   }
 
   // Créer une recette
-  async create(recette: Recette) {
+  async create(recette: Recette, userId: number) {
     const [row] = await databaseClient.query<Result>(
       "INSERT INTO recette (titre, description, date_publication, image_url, saison, type_id, difficulte_id, temps_id, utilisateur_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -105,7 +105,7 @@ COALESCE(
         recette.type_id,
         recette.difficulte_id,
         recette.temps_id,
-        recette.utilisateur_id,
+        userId,
       ],
     );
     return row.insertId;

@@ -86,8 +86,10 @@ const read: RequestHandler = async (req, res, next) => {
 
 // Ajouter une recette
 const add: RequestHandler = async (req, res, next) => {
+  const userId = res.locals.decodedToken.id; // Or req.user.id, or req.auth.userId, etc.
+
   try {
-    const newRecipeId = await recetteRepository.create(req.body);
+    const newRecipeId = await recetteRepository.create(req.body, userId);
 
     if (newRecipeId) {
       res.status(201).json(newRecipeId);
