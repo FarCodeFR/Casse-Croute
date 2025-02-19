@@ -64,6 +64,7 @@ import stepActions from "./modules/steps/stepActions";
 // Routes pour les ingrédients
 router.get("/api/ingredient", ingredientActions.browse);
 router.get("/api/ingredients-season", ingredientActions.browseSeason);
+router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
 router.get("/api/recettes", recetteActions.browse);
