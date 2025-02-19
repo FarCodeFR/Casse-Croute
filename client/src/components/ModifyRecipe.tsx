@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
+import { useParams } from "react-router-dom";
 import type {
   Ingredient,
   IngredientData,
@@ -10,9 +11,9 @@ import type {
 } from "../types/AddRecipe";
 
 function ModifyRecipe() {
+  const { id } = useParams();
   const token = localStorage.getItem("jwtToken");
-  const recetteId = 1; //C'est ici pour qu'on puisse voir une recette - normalement, ça serait definie par le lien cliqué depuis le compte utilisateur. C'est pour ça que je le transforme en chiffre dans l'étape suivante.
-  const recipeIdNumber = Number(recetteId);
+  const recipeIdNumber = Number(id);
 
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
@@ -25,7 +26,6 @@ function ModifyRecipe() {
     type_id: 0,
     preparation: [{ id: undefined, ordre: 1, description: "" }],
     saison: "",
-    utilisateur_id: 1,
   });
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -145,9 +145,8 @@ function ModifyRecipe() {
           type_id: data.type_id || 0,
           preparation: initialPreparation,
           saison: data.saison,
-          utilisateur_id: data.utilisateur_id || 1,
+          utilisateur_id: data.utilisateur_id,
         });
-
         // Ensure ingredients are in the correct format:
         const initialIngredients = data.ingredients
           ? data.ingredients.map((ingredient: IngredientData) => ({
@@ -421,10 +420,10 @@ function ModifyRecipe() {
           onChange={handleInputRecipe}
           className="generic-input"
         >
-          <option value="plat">plat principal</option>
-          <option value="entree">entrée</option>
-          <option value="dessert">dessert</option>
-          <option value="boisson">boisson</option>
+          <option value="1">plat principal</option>
+          <option value="2">entrée</option>
+          <option value="3">dessert</option>
+          <option value="4">boisson</option>
         </select>
         <label htmlFor="ingredients">Ingredients:</label>
         <section className="container-ingredients-season">

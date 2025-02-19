@@ -22,6 +22,7 @@ function LatestArrival() {
           return (
             <Fragment key={el.id}>
               <VerticalRecipeCard
+                id={el.id}
                 temps_id={el.temps_id}
                 difficulte_id={el.difficulte_id}
                 titre={el.titre}

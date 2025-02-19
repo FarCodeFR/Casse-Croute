@@ -3,7 +3,7 @@ export interface Ingredient {
   nom: string;
   categorie: string;
   saison: string;
-  icone_categorie: string;
+  icone_categorie?: string;
   id?: number;
 }
 export interface IngredientToRecette {

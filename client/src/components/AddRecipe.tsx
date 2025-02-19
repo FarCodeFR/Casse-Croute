@@ -23,7 +23,7 @@ function AddRecipe() {
     type_id: 0,
     preparation: [{ id: `${Date.now()}`, ordre: 1, description: "" }],
     saison: "",
-    utilisateur_id: 1,
+    utilisateur_id: 0,
   });
   // const navigate = useNavigate();
 

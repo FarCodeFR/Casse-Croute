@@ -64,6 +64,7 @@ import stepActions from "./modules/steps/stepActions";
 // Routes pour les ingrédients
 router.get("/api/ingredient", ingredientActions.browse);
 router.get("/api/ingredients-season", ingredientActions.browseSeason);
+router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
 router.get("/api/recettes", recetteActions.browse);
@@ -100,6 +101,13 @@ router.use("/api/stepsAdded", authActions.verifyToken);
 router.get("/api/stepsAdded", stepActions.browse);
 router.post("/api/stepsAdded", stepActions.add);
 router.put("/api/stepsAdded/:id", stepActions.updateSteps);
+
+// Route pour récupérer le profil de l'utilisateur connecté
+router.get(
+  "/api/user/profile",
+  authActions.verifyToken,
+  userActions.getProfile,
+);
 
 /* ************************************************************************* */
 // !!!!!!!!!!!!!!!!!!!!!!!!!!VERIFICATION WALL ADMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //

@@ -1,5 +1,11 @@
+import ModifyRecipe from "../ModifyRecipe";
+
 function UserRecipesModify() {
-  return <p> Modify </p>;
+  return (
+    <main>
+      <ModifyRecipe />
+    </main>
+  );
 }
 
 export default UserRecipesModify;

@@ -24,6 +24,14 @@ class userRepository {
     return rows[0] as User;
   }
 
+  async getUserById(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, pseudo, email, photo_profil, est_admin FROM utilisateur WHERE id = ?",
+      [id],
+    );
+    return rows[0] || null;
+  }
+
   async updateAdmin(user: User) {
     const [result] = await databaseClient.query<Result>(
       "update utilisateur set est_admin = ? WHERE id = ?",
@@ -52,7 +60,7 @@ class userRepository {
 
   async readUserRecipes(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT u.id, u.pseudo, u.email, u.photo_profil, u.est_admin, r.id AS recette_id, r.titre, r.description FROM utilisateur u JOIN recette r ON r.utilisateur_id = u.id WHERE u.id = ?",
+      "SELECT u.id, u.pseudo, u.email, u.photo_profil, u.est_admin, r.id AS recette_id, r.titre, r.image_url, r.description FROM utilisateur u JOIN recette r ON r.utilisateur_id = u.id WHERE u.id = ?",
       [userId],
     );
     return rows as User[];

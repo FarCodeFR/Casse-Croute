@@ -1,23 +1,34 @@
-function SeeProfile() {
-  const user = {
-    pseudo: "Jean",
-    email: "jean_moulin@ruisseau.fr",
-    password: "MoulinI$DaBe$t",
-    description: "Je suis un résistant",
-    profilePic: "client/src/public/assets/images/favicon.png",
-  };
+import type { userData } from "../types/UserData";
+import "../styles/see-user.css";
 
+function SeeProfile({ user }: { user: userData }) {
   return (
-    <>
-      <figure>
-        <img src={user.profilePic} alt="profile pic" />
-        <figcaption>
-          <p> {user.pseudo} </p>
-          <br />
-          <p> {user.description} </p>
-        </figcaption>
-      </figure>
-    </>
+    <section className="profile-container">
+      <article className="profile">
+        <figure>
+          <img
+            src={user.photo_profil || "/assets/images/profil.png"}
+            alt="Avatar de profil"
+          />
+
+          <figcaption>
+            <h2>{user.pseudo || user.email}</h2>
+          </figcaption>
+        </figure>
+
+        <div className="profile-message">
+          <div className="message-line" />
+          <p>Petit message</p>
+          <div className="message-line" />
+        </div>
+
+        <p className="profile-description">
+          {user.message ||
+            "Je suis passionné de cuisine et j’aime partager mes recettes et découvrir de nouvelles spécialités."}
+        </p>
+      </article>
+    </section>
   );
 }
+
 export default SeeProfile;
