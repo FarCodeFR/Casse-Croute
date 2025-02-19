@@ -16,7 +16,7 @@ const add: RequestHandler = async (req, res) => {
   try {
     const addStepsResult = await stepRepository.create(preparation);
 
-    if (addStepsResult > 0) {
+    if (addStepsResult) {
       // Check if ANY rows were inserted
       res.status(201).send("step(s) added successfully");
     } else {
@@ -27,4 +27,66 @@ const add: RequestHandler = async (req, res) => {
   }
 };
 
-export default { browse, add };
+const updateSteps: RequestHandler = async (req, res) => {
+  const steps = req.body;
+
+  try {
+    const existingSteps = await stepRepository.readByRecipeId(
+      steps[0].recette_ref,
+    );
+
+    const newSteps = [];
+    const updatedSteps = [];
+    for (const step of steps) {
+      const existingStep = existingSteps.find(
+        (existing) => existing.id === step.id, // Correct comparison
+      );
+
+      if (existingStep) {
+        updatedSteps.push(step);
+      } else {
+        newSteps.push(step);
+      }
+    }
+
+    for (const step of existingSteps) {
+      if (
+        !updatedSteps.find((s) => s.id === step.id) &&
+        !newSteps.find((s) => s.id === step.id)
+      ) {
+        // stepsToDelete.push(step)
+        stepRepository.delete(step.id);
+      }
+    }
+
+    // Update existing Steps
+    for (const step of updatedSteps) {
+      try {
+        const updateResult = await stepRepository.update(step); // Pass the whole step object
+        if (updateResult === 0) {
+          console.warn("No rows were updated for step id:", step.step_id);
+        }
+      } catch (updateError) {
+        console.error("Error updating step:", updateError);
+        // Handle error as needed
+      }
+    }
+
+    // 4. Create new Steps
+    for (const step of newSteps) {
+      try {
+        await stepRepository.modifCreate(step); // Associate with recipeId
+      } catch (createError) {
+        console.error("Error creating step:", createError);
+        // Handle error as needed
+      }
+    }
+
+    res.status(200).send("Steps updated/created successfully"); // Or a more detailed response
+  } catch (error) {
+    console.error("Global error:", error);
+    res.status(500).send("An error occurred.");
+  }
+};
+
+export default { browse, add, updateSteps };
