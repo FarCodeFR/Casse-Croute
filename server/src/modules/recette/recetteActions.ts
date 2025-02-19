@@ -87,9 +87,14 @@ const read: RequestHandler = async (req, res, next) => {
 // Ajouter une recette
 const add: RequestHandler = async (req, res, next) => {
   const userId = res.locals.decodedToken.id; // Or req.user.id, or req.auth.userId, etc.
+  const typeId = Number.parseInt(req.body.type_id, 10); // Use parseInt for integers
 
   try {
-    const newRecipeId = await recetteRepository.create(req.body, userId);
+    const newRecipeId = await recetteRepository.create(
+      req.body,
+      userId,
+      typeId,
+    );
 
     if (newRecipeId) {
       res.status(201).json(newRecipeId);
@@ -104,13 +109,17 @@ const add: RequestHandler = async (req, res, next) => {
 
 // Modifier une recette existante
 const edit: RequestHandler = async (req, res, next) => {
+  const typeId = Number.parseInt(req.body.type_id, 10); // Use parseInt for integers
   try {
     const recipeId = Number.parseInt(req.params.id);
 
-    const updatedRecipe = await recetteRepository.update({
-      ...req.body,
-      id: recipeId,
-    });
+    const updatedRecipe = await recetteRepository.update(
+      {
+        ...req.body,
+        id: recipeId,
+      },
+      typeId,
+    );
 
     if (updatedRecipe) {
       res.status(200).json({ message: "Recette mise à jour avec succès." });
