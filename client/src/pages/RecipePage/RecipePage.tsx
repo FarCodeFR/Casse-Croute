@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import VerticalRecipeCard from "../../components/VerticalRecipeCard";
 import "./RecipePage.css";
+import { Link } from "react-router-dom";
 import type { RecipeI } from "../../types/RecipeValues";
 
 function RecipePage() {
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -91,16 +93,21 @@ function RecipePage() {
 
       <div className="main-page-recipe-container">
         {filteredRecipes.map((recipe) => (
-          <VerticalRecipeCard
-            id={recipe.id}
-            image_url={recipe.image_url}
+          <Link
+            to={`/recipe/${recipe.id}`}
             key={recipe.id}
-            titre={recipe.titre}
-            temps_id={recipe.temps_id}
-            difficulte_id={recipe.difficulte_id}
-            type_id={recipe.type_id}
-            description={recipe.description}
-          />
+            className="link-recipe"
+          >
+            <VerticalRecipeCard
+              id={recipe.id}
+              image_url={recipe.image_url}
+              titre={recipe.titre}
+              temps_id={recipe.temps_id}
+              difficulte_id={recipe.difficulte_id}
+              type_id={recipe.type_id}
+              description={recipe.description}
+            />
+          </Link>
         ))}
       </div>
     </div>

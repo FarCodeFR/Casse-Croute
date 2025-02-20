@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import type { RecipeI } from "../types/RecipeValues";
 import "../styles/SearchFilter.css";
+import { NavLink } from "react-router-dom";
 
 function SearchFilter() {
   const [letters, setLetters] = useState("");
@@ -52,7 +53,7 @@ function SearchFilter() {
           <div className="results">
             {filteredArray.map((recipe: RecipeI) => (
               <div key={recipe.id} className="recipe-results">
-                {recipe.titre}
+                <NavLink to={`/recipe/${recipe.id}`}>{recipe.titre}</NavLink>
               </div>
             ))}
           </div>
