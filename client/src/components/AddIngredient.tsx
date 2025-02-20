@@ -1,8 +1,9 @@
 import "../styles/add-ingredient.css";
 import { type FormEvent, useState } from "react";
 import { toast } from "react-toastify";
+import type { ChildFormProps } from "../types/AddRecipe";
 
-function AddIngredient() {
+function AddIngredient({ onDataUpdate }: ChildFormProps) {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -11,7 +12,7 @@ function AddIngredient() {
     setVisible(true);
   };
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
@@ -30,6 +31,7 @@ function AddIngredient() {
           toast.success("Ingrédient ajouté avec succès.");
           setTimeout(() => setMessage(""), 3000);
           setVisible(false);
+          onDataUpdate();
         }
       })
       .catch(() => {
