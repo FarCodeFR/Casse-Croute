@@ -105,7 +105,7 @@
 
 /* Bouton Ajouter */
 
-button[type="submit"] {
+.add-ingredient-container button[type="submit"] {
   background-color: #e08548;
   color: white;
   font-size: 14px;
@@ -116,11 +116,11 @@ button[type="submit"] {
   transition: background-color 0.3s ease-in-out;
 }
 
-button[type="submit"]:hover {
+.add-ingredient-container button[type="submit"]:hover {
   background-color: #c76c36;
 }
 
-button:disabled {
+.add-ingredient-container button:disabled {
   background-color: #d6a28b;
   cursor: not-allowed;
 }
