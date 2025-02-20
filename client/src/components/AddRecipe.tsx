@@ -302,7 +302,7 @@ function AddRecipe() {
         <input
           required
           type="text"
-          id="title"
+          aria-label="Titre"
           name="titre"
           onChange={handleInputRecipe}
           className="generic-input"
@@ -311,7 +311,7 @@ function AddRecipe() {
         <input
           required
           type="text"
-          id="description"
+          aria-label="Description"
           name="description"
           onChange={handleInputRecipe}
           className="generic-input"
@@ -365,7 +365,9 @@ function AddRecipe() {
           <option value="3">dessert</option>
           <option value="4">boisson</option>
         </select>
-        <label htmlFor="ingredients">Ingredients:</label>
+        <label aria-label="Ingredients" htmlFor="ingredients">
+          Ingredients:
+        </label>
         <section className="container-ingredients-season">
           {ingredientData.map((ingredient) => (
             <div key={ingredient.ingredientId}>
@@ -420,6 +422,7 @@ function AddRecipe() {
         <section className="container-ingredients-season filter-ingredients">
           <input
             type="text"
+            aria-label="Recherche ingredients"
             placeholder="Allez chercher..."
             onChange={handleSearch}
           />
@@ -449,6 +452,7 @@ function AddRecipe() {
           <div key={step.id}>
             <textarea
               id={`instructions-${index}`}
+              aria-label="Description"
               name={`preparation[${index}].description`} // This name is important for form submission
               value={step.description} // Controlled component: value from state
               onChange={(event) => handleStepDescriptionChange(index, event)}
