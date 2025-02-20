@@ -1,6 +1,7 @@
 import VerticalRecipeCard from "./VerticalRecipeCard";
 import "../styles/latest-arrival.css";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import type { RecipeI } from "../types/RecipeValues";
 
 function LatestArrival() {
@@ -20,7 +21,7 @@ function LatestArrival() {
       <section className="container-recipes-latest-arrival">
         {recette.map((el) => {
           return (
-            <Fragment key={el.id}>
+            <NavLink key={el.id} to={`/recipe/${el.id}`}>
               <VerticalRecipeCard
                 id={el.id}
                 temps_id={el.temps_id}
@@ -30,7 +31,7 @@ function LatestArrival() {
                 description={el.description}
                 image_url={el.image_url}
               />
-            </Fragment>
+            </NavLink>
           );
         })}
       </section>
