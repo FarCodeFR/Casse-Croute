@@ -1,43 +1,10 @@
-import { useState } from "react";
-import type { userDataTypes } from "../types/UserData";
 import "../styles/modify-profil.css";
 
-const defaultAvatar = "/assets/images/profil.png";
-
-function ModifyProfile() {
-  const [avatarSrc, setAvatarSrc] = useState(defaultAvatar);
-  const [userData, setUserData] = useState<userDataTypes>({
-    email: "",
-    pseudo: "",
-    personalMessage: "",
-    currentPassword: "",
-    password: "",
-    passwordConfirm: "",
-  });
-
-  const handleAvatarError = () => {
-    if (avatarSrc !== defaultAvatar) {
-      setAvatarSrc(defaultAvatar);
-    }
-  };
-
-  const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  };
-
+const ModifyProfile = () => {
   return (
     <form className="profile-form">
       <div className="avatar-container">
-        <img
-          className="avatar"
-          src={avatarSrc}
-          alt="Avatar"
-          onError={handleAvatarError}
-        />
+        <img className="avatar" src="/assets/images/profil.png" alt="Avatar" />
         <button type="button" className="edit-avatar">
           <img src="/assets/images/modify-icon.png" alt="Modifier l'avatar" />
         </button>
@@ -46,12 +13,7 @@ function ModifyProfile() {
       <label>
         Email
         <div className="input-container">
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleInputUserData}
-          />
+          <input type="email" name="email" defaultValue="user@email.com" />
           <img src="/assets/images/modify-icon.png" alt="Edit email" />
         </div>
       </label>
@@ -59,12 +21,7 @@ function ModifyProfile() {
       <label>
         Pseudo
         <div className="input-container">
-          <input
-            type="text"
-            name="pseudo"
-            value={userData.pseudo}
-            onChange={handleInputUserData}
-          />
+          <input type="text" name="pseudo" defaultValue="Pseudo" />
           <img src="/assets/images/modify-icon.png" alt="Edit pseudo" />
         </div>
       </label>
@@ -72,12 +29,7 @@ function ModifyProfile() {
       <label>
         Phrase perso
         <div className="input-container">
-          <input
-            type="text"
-            name="personalMessage"
-            value={userData.personalMessage}
-            onChange={handleInputUserData}
-          />
+          <input type="text" name="personalMessage" defaultValue="Message" />
           <img
             src="/assets/images/modify-icon.png"
             alt="Edit personal message"
@@ -88,12 +40,7 @@ function ModifyProfile() {
       <label>
         Mot de passe actuel
         <div className="input-container">
-          <input
-            type="password"
-            name="currentPassword"
-            value={userData.currentPassword}
-            onChange={handleInputUserData}
-          />
+          <input type="password" name="currentPassword" defaultValue="" />
           <img src="/assets/images/modify-icon.png" alt="Edit password" />
         </div>
       </label>
@@ -101,12 +48,7 @@ function ModifyProfile() {
       <label>
         Nouveau mot de passe
         <div className="input-container">
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            onChange={handleInputUserData}
-          />
+          <input type="password" name="password" defaultValue="" />
           <img src="/assets/images/modify-icon.png" alt="Edit new password" />
         </div>
       </label>
@@ -114,12 +56,7 @@ function ModifyProfile() {
       <label>
         Confirmer le mot de passe
         <div className="input-container">
-          <input
-            type="password"
-            name="passwordConfirm"
-            value={userData.passwordConfirm}
-            onChange={handleInputUserData}
-          />
+          <input type="password" name="passwordConfirm" defaultValue="" />
           <img src="/assets/images/modify-icon.png" alt="Confirm password" />
         </div>
       </label>
@@ -129,6 +66,6 @@ function ModifyProfile() {
       </button>
     </form>
   );
-}
+};
 
 export default ModifyProfile;
