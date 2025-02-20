@@ -38,6 +38,10 @@ body {
   --font-size-xlarge: 2rem;
 }
 
+a {
+  font-family: var(--font-secondary);
+}
+
 h1 {
   font-family: var(--font-secondary);
 }

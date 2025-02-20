@@ -65,7 +65,7 @@
   width: 100%;
   & picture {
     margin: 0 auto;
-    width: 70%;
+    width: 60%;
   }
   & .recipe-title-section {
     position: relative;
@@ -85,6 +85,9 @@
   }
   & .icon-container {
     gap: 10px;
+  }
+  & .container-recipe-ingredient-preparation {
+    padding: 20px;
   }
 }
 /* * Scroll utilisateur */

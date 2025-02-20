@@ -41,14 +41,14 @@
   display: none;
 }
 
-.container-recipes-season > ul > a > li {
+.container-recipes-season > ul > li > a {
   display: block;
   margin: 15px;
   flex-shrink: 0;
   flex-basis: 80%;
   scroll-snap-align: center;
 }
-.container-recipes-season > ul > a:hover {
+.container-recipes-season > ul > li > a:hover {
   & article {
     position: relative;
     bottom: 5px;

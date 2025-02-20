@@ -53,69 +53,85 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
   }
   return (
     <form className="container-form-auth" onSubmit={handleSubmit}>
-      <h2>Rejoignez la communauté Casse-croûte !</h2>
+      <h1>Rejoignez la communauté Casse-croûte !</h1>
       <section>
-        <label htmlFor="email" className="login-label">
+        <label aria-label="Mail" htmlFor="email" className="login-label">
           Email:
         </label>
         <input
           type="email"
-          id="email"
+          aria-label="Mail"
           name="email"
           placeholder="thomas-42@email.fr"
           onChange={handleInputUserData}
         />
-        <label htmlFor="identifiant" className="login-label">
+        <label
+          aria-label="Identifiant"
+          htmlFor="identifiant"
+          className="login-label"
+        >
           Identifiant:
         </label>
         <input
           type="identifiant"
-          id="identifiant"
+          aria-label="Identifiant"
           name="identifiant"
           placeholder="Lecuisinierdu49"
           required
           onChange={handleInputUserData}
         />
 
-        <label htmlFor="password" className="login-label">
+        <label
+          aria-label="Mot de passe"
+          htmlFor="password"
+          className="login-label"
+        >
           Mot de passe:
         </label>
         <input
           type="password"
-          id="password"
+          aria-label="Mot de passe"
           name="password"
           placeholder="***********"
           onChange={handleInputUserData}
         />
 
-        <label htmlFor="passwordConfirm" className="login-label">
+        <label
+          aria-label="Confirme Mot de passe"
+          htmlFor="passwordConfirm"
+          className="login-label"
+        >
           Confirmer le mot de passe:
           {userData.password === userData.passwordConfirm ? "✅" : "❌"}
         </label>
         <input
           type="password"
-          id="passwordConfirm"
+          aria-label="Confirme Mot de passe"
           name="passwordConfirm"
           placeholder="***********"
           onChange={handleInputUserData}
         />
       </section>
       <section className="legal-notices">
-        <input type="checkbox" name="legal-notices" required />
-        <label htmlFor="legal-notice">
+        <input
+          aria-label="Mentiosn légales"
+          type="checkbox"
+          name="legal-notices"
+          required
+        />
+        <label aria-label="Mentions légales" htmlFor="legal-notice">
           Veuillez cocher la case pour accepter&nbsp;
           <Link to="/legal-notices">les mentions légales.</Link>
         </label>
       </section>
       <section>
-        <button type="submit" id="register" aria-label="register">
+        <button type="submit" id="register" aria-label="Inscription">
           S'inscrire
         </button>
         <p>Ou</p>
         <button
           type="button"
-          id="register"
-          aria-label="register"
+          aria-label="Se connecter"
           className="registerHere"
           onClick={toggleForm}
         >

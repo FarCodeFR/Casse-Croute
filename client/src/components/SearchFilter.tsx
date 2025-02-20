@@ -44,6 +44,7 @@ function SearchFilter() {
           placeholder="Recherche ta recette..."
           id="search-bar"
           className="input-header"
+          aria-label="Barre de recherche"
           onChange={handleChange}
         />
       </div>

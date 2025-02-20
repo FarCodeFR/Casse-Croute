@@ -73,36 +73,39 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
 
   return (
     <form className="container-form-auth" onSubmit={handleSubmit}>
-      <h2>Heureux de vous revoir !</h2>
+      <h1>Heureux de vous revoir !</h1>
       <section>
-        <label htmlFor="username">Email:</label>
+        <label aria-label="Mail" htmlFor="email">
+          Email:
+        </label>
         <input
-          type="text"
-          id="email"
           name="email"
           placeholder="thomas-42@email.fr"
           onChange={handleInputLogin}
-          required // Add required attribute for form validation
+          aria-label="Mail"
+          required
         />
-        <label htmlFor="password">Mot de passe:</label>
+        <label aria-label="Mot de passe" htmlFor="password">
+          Mot de passe:
+        </label>
         <input
-          type="password"
-          id="password" // Corrected ID
           name="password"
+          type="password"
           placeholder="***********"
           onChange={handleInputLogin}
-          required // Add required attribute
+          aria-label="mot de passe"
+          required
         />
       </section>
       <section>
-        <button type="submit" id="login" aria-label="login">
+        <button type="submit" id="login" aria-label="Se connecter">
           Se connecter
         </button>
         <p>Ou</p>
         <button
           type="button"
           id="login"
-          aria-label="login"
+          aria-label="Créer un compte"
           onClick={toggleForm}
         >
           Créer un compte

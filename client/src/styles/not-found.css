@@ -15,7 +15,7 @@
     font-size: 32px;
     margin: 10px 0px;
   }
-  & p {
+  & h2 {
     font-size: 24px;
   }
   & a {
@@ -52,7 +52,7 @@
     & h1 {
       font-size: 64px;
     }
-    & p {
+    & h2 {
       font-size: 32px;
     }
     & a {

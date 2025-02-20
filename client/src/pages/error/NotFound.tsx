@@ -12,7 +12,7 @@ function NotFound() {
       </picture>
       <article>
         <h1>Ooooops...</h1>
-        <p>Cette page est introuvable.</p>
+        <h2>Cette page est introuvable.</h2>
         <NavLink to="/">Retournez sur la page d'accueil...</NavLink>
       </article>
     </section>

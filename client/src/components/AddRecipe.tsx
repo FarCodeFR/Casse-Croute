@@ -316,7 +316,7 @@ function AddRecipe() {
         <input
           required
           type="text"
-          id="title"
+          aria-label="Titre"
           name="titre"
           onChange={handleInputRecipe}
           className="generic-input"
@@ -325,7 +325,7 @@ function AddRecipe() {
         <input
           required
           type="text"
-          id="description"
+          aria-label="Description"
           name="description"
           onChange={handleInputRecipe}
           className="generic-input"
@@ -379,7 +379,9 @@ function AddRecipe() {
           <option value="3">dessert</option>
           <option value="4">boisson</option>
         </select>
-        <label htmlFor="ingredients">Ingredients:</label>
+        <label aria-label="Ingredients" htmlFor="ingredients">
+          Ingredients:
+        </label>
         <section className="container-ingredients-recipe">
           {ingredientData.map((ingredient) => (
             <div key={ingredient.ingredientId}>
@@ -437,6 +439,7 @@ function AddRecipe() {
         >
           <input
             type="text"
+            aria-label="Recherche ingredients"
             placeholder="Allez chercher..."
             onChange={handleSearch}
           />
@@ -451,7 +454,11 @@ function AddRecipe() {
                 />
                 <label htmlFor={ingredient.nom}>
                   <img
-                    src={ingredient.icone_categorie}
+                    src={
+                      ingredient.icone_categorie
+                        ? ingredient.icone_categorie
+                        : "/assets/images/ingredients/divers.png"
+                    }
                     alt={`${ingredient.nom} icon`}
                   />
                   {ingredient.nom}
@@ -467,6 +474,7 @@ function AddRecipe() {
           <div key={step.id}>
             <textarea
               id={`instructions-${index}`}
+              aria-label="Description"
               name={`preparation[${index}].description`} // This name is important for form submission
               value={step.description} // Controlled component: value from state
               onChange={(event) => handleStepDescriptionChange(index, event)}
