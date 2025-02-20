@@ -1,84 +1,71 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
-import type { userData } from "../types/UserData";
+import "../styles/modify-profil.css";
 
-function ModifyProfile({
-  user,
-  setUser,
-}: {
-  user: userData;
-  setUser: (user: userData) => void;
-}) {
-  const [formData, setFormData] = useState<userData>({
-    id: user.id,
-    email: user.email,
-    pseudo: user.pseudo,
-    est_admin: user.est_admin,
-    photo_profil: user.photo_profil,
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("jwtToken");
-
-    try {
-      const response = await fetch("http://localhost:3310/api/user/profile", {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const updatedUser: userData = await response.json();
-        setUser(updatedUser);
-        toast.success("Profil mis à jour avec succès 🎉");
-      } else if (response.status === 400) {
-        toast.error("Données invalides, vérifiez vos informations ⚠️");
-      } else if (response.status === 401) {
-        toast.error("Non autorisé, veuillez vous reconnecter 🔑");
-      } else if (response.status === 409) {
-        toast.error("Cet email est déjà utilisé ❌");
-      } else {
-        toast.error("Erreur lors de la mise à jour du profil 🤦‍♂️");
-      }
-    } catch (err) {
-      console.error("Erreur:", err);
-      toast.error("Une erreur inattendue est survenue 🚨");
-    }
-  };
-
+const ModifyProfile = () => {
   return (
-    <form className="modify-profile" onSubmit={handleSubmit}>
-      <label htmlFor="email">Email:</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-      />
+    <form className="profile-form">
+      <div className="avatar-container">
+        <img className="avatar" src="/assets/images/profil.png" alt="Avatar" />
+        <button type="button" className="edit-avatar">
+          <img src="/assets/images/modify-icon.png" alt="Modifier l'avatar" />
+        </button>
+      </div>
 
-      <label htmlFor="pseudo">Identifiant:</label>
-      <input
-        type="text"
-        id="pseudo"
-        name="pseudo"
-        value={formData.pseudo}
-        onChange={handleInputChange}
-      />
+      <label>
+        Email
+        <div className="input-container">
+          <input type="email" name="email" defaultValue="user@email.com" />
+          <img src="/assets/images/modify-icon.png" alt="Edit email" />
+        </div>
+      </label>
 
-      <button type="submit">Sauvegarder</button>
+      <label>
+        Pseudo
+        <div className="input-container">
+          <input type="text" name="pseudo" defaultValue="Pseudo" />
+          <img src="/assets/images/modify-icon.png" alt="Edit pseudo" />
+        </div>
+      </label>
+
+      <label>
+        Phrase perso
+        <div className="input-container">
+          <input type="text" name="personalMessage" defaultValue="Message" />
+          <img
+            src="/assets/images/modify-icon.png"
+            alt="Edit personal message"
+          />
+        </div>
+      </label>
+
+      <label>
+        Mot de passe actuel
+        <div className="input-container">
+          <input type="password" name="currentPassword" defaultValue="" />
+          <img src="/assets/images/modify-icon.png" alt="Edit password" />
+        </div>
+      </label>
+
+      <label>
+        Nouveau mot de passe
+        <div className="input-container">
+          <input type="password" name="password" defaultValue="" />
+          <img src="/assets/images/modify-icon.png" alt="Edit new password" />
+        </div>
+      </label>
+
+      <label>
+        Confirmer le mot de passe
+        <div className="input-container">
+          <input type="password" name="passwordConfirm" defaultValue="" />
+          <img src="/assets/images/modify-icon.png" alt="Confirm password" />
+        </div>
+      </label>
+
+      <button type="submit" className="save-button">
+        Valider les modifications
+      </button>
     </form>
   );
-}
+};
 
 export default ModifyProfile;

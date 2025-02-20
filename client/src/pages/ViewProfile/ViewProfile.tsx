@@ -85,9 +85,7 @@ function ViewProfile() {
             <MyProfileRecipes />
           </>
         )}
-        {user && activeSection === "modifyProfile" && (
-          <ModifyProfile user={user} setUser={setUser} />
-        )}
+        {user && activeSection === "modifyProfile" && <ModifyProfile />}
       </section>
     </main>
   );

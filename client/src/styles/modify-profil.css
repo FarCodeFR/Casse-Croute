@@ -1,0 +1,80 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  max-width: 400px;
+}
+
+.avatar-container {
+  position: relative;
+  display: flex;
+  margin-top: 24px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.edit-avatar {
+  position: absolute;
+  bottom: 80%;
+  right: -10%;
+  background: var(--secondary-color-3);
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.edit-avatar img {
+  width: 16px;
+  height: 16px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+  background: var(--secondary-color-2);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #4e4b4b;
+}
+
+.input-container input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.input-container img {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.save-button {
+  background: var(--primary-color);
+  color: var(--secondary-color-3);
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 50%;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.save-button:hover {
+  background: #1a252f;
+}
