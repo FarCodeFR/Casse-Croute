@@ -11,6 +11,10 @@ export interface RecipeData {
   utilisateur_id?: number;
 }
 
+export interface ChildFormProps {
+  onDataUpdate: () => Promise<void>;
+}
+
 export interface Ingredient {
   nom: string;
   ingredientId: string;
@@ -29,3 +33,5 @@ export interface Preparation {
   ordre: number;
   description: string;
 }
+
+export type OnDataUpdateFunction = () => Promise<void>;

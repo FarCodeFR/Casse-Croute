@@ -1,14 +1,16 @@
 import type { ChangeEvent } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
-//interfaces to be put in a .d.ts, but still potentially going to change them, so hopefully can leave them here in the meantime.
+import { useNavigate } from "react-router-dom";
 import type {
   Ingredient,
   IngredientData,
+  OnDataUpdateFunction,
   RecipeData,
 } from "../types/AddRecipe";
+import AddIngredient from "./AddIngredient";
 
 function AddRecipe() {
   const token = localStorage.getItem("jwtToken");
@@ -25,7 +27,7 @@ function AddRecipe() {
     saison: "",
     utilisateur_id: 0,
   });
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [ingredientData, setIngredientData] = useState<IngredientData[]>([]);
@@ -96,11 +98,22 @@ function AddRecipe() {
     setLetters(e.target.value.toLowerCase());
   }
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`)
-      .then((response) => response.json())
-      .then((data) => setIngredients(data));
+  const fetchIngredients = useCallback(async () => {
+    try {
+      fetch(`${import.meta.env.VITE_API_URL}/api/ingredient`)
+        .then((response) => response.json())
+        .then((data) => setIngredients(data));
+    } catch {
+      console.error("Error fetching data:");
+    }
   }, []);
+  useEffect(() => {
+    fetchIngredients();
+  }, [fetchIngredients]);
+
+  const handleDataUpdate: OnDataUpdateFunction = async () => {
+    await fetchIngredients();
+  };
 
   const handlePlus = (ingredientName: string) => {
     setIngredientData((prevIngredientData) =>
@@ -178,7 +191,7 @@ function AddRecipe() {
   };
 
   //submit the form
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     const {
@@ -262,6 +275,7 @@ function AddRecipe() {
             );
             if (stepResponse.ok) {
               toast.success("Etapes de préparation ajoutées ! 🥦🔪");
+              navigate(`/recipe/${recipeDataFromServer}`);
             } else {
               toast.error("pas reussi");
             }
@@ -296,8 +310,8 @@ function AddRecipe() {
   //DISPLAY THE FORM
 
   return (
-    <main className="add-recipe-main">
-      <form onSubmit={handleSubmit} className="create-recipe-form">
+    <section className="add-recipe-main">
+      <div className="create-recipe-form">
         <label htmlFor="titre">Titre:</label>
         <input
           required
@@ -368,7 +382,7 @@ function AddRecipe() {
         <label aria-label="Ingredients" htmlFor="ingredients">
           Ingredients:
         </label>
-        <section className="container-ingredients-season">
+        <section className="container-ingredients-recipe">
           {ingredientData.map((ingredient) => (
             <div key={ingredient.ingredientId}>
               <input
@@ -419,7 +433,10 @@ function AddRecipe() {
           ))}
         </section>
 
-        <section className="container-ingredients-season filter-ingredients">
+        <section
+          className="container-ingredients-season"
+          id="filter-ingredients"
+        >
           <input
             type="text"
             aria-label="Recherche ingredients"
@@ -437,13 +454,18 @@ function AddRecipe() {
                 />
                 <label htmlFor={ingredient.nom}>
                   <img
-                    src={ingredient.icone_categorie}
+                    src={
+                      ingredient.icone_categorie
+                        ? ingredient.icone_categorie
+                        : "/assets/images/ingredients/divers.png"
+                    }
                     alt={`${ingredient.nom} icon`}
                   />
                   {ingredient.nom}
                 </label>
               </div>
             ))}
+            <AddIngredient onDataUpdate={handleDataUpdate} />
           </ul>
         </section>
 
@@ -478,15 +500,16 @@ function AddRecipe() {
           +
         </button>
         <button
-          type="submit"
+          type="button"
           id="submit"
           aria-label="submit"
           className="submit-button"
+          onClick={handleSubmit}
         >
           Submit
         </button>
-      </form>
-    </main>
+      </div>
+    </section>
   );
 }
 
