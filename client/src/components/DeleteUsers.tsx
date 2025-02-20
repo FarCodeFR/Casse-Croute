@@ -29,10 +29,10 @@ function DeleteUsers({ handleVisibility, selectUser }: DeleteUserProps) {
   return (
     <figure className="container-delete-users">
       <h3>Êtes-vous sûres de vouloir supprimer cette utilisateur?</h3>
-      <button onClick={handleClick} type="button">
+      <button aria-label="Oui" onClick={handleClick} type="button">
         Oui
       </button>
-      <button onClick={handleVisibility} type="button">
+      <button aria-label="Non" onClick={handleVisibility} type="button">
         Non
       </button>
     </figure>

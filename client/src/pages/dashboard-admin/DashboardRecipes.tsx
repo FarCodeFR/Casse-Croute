@@ -26,9 +26,12 @@ function DashboardRecipes() {
   return (
     <>
       <section className="container-dashboard-recipes">
-        <label htmlFor="Recherche">Recettes</label>
+        <label aria-label="Recette" htmlFor="Recherche">
+          Recettes
+        </label>
         <input
           type="text"
+          aria-label="Recherche recette"
           name="name"
           placeholder="Recherche une recette"
           onChange={(event) => {

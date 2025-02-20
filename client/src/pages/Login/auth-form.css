@@ -4,7 +4,7 @@
   width: 70%;
   height: 100%;
   margin: 10% auto;
-  & h2 {
+  & h1 {
     font-size: 20px;
     text-align: center;
     font-family: var(--font-primary);
@@ -52,7 +52,7 @@
     margin: 0% auto;
     font-family: var(--font-primary);
     height: 100%;
-    & h2 {
+    & h1 {
       font-family: var(--font-primary);
       font-size: 45px;
       color: var(--primary-color);

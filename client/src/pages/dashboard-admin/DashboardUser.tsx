@@ -129,7 +129,9 @@ function DashBoardUser() {
   return (
     <>
       <section className="container-dashboard-admin">
-        <label htmlFor="Recherche">Utilisateur</label>
+        <label aria-label="Utilisateur" htmlFor="Recherche">
+          Utilisateur
+        </label>
         <input
           type="text"
           name="name"
