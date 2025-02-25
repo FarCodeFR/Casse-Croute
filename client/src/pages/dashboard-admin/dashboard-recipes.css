@@ -1,0 +1,194 @@
+.container-dashboard-recipes {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  background-color: var(--secondary-color-2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  width: 80%;
+  margin: 10% auto;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.container-dashboard-recipes > label:first-of-type {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  font-family: var(--font-secondary);
+}
+
+.container-dashboard-recipes > input {
+  text-align: center;
+  margin: 0 auto;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  border: solid black 1px;
+  color: white;
+  font-size: 20px;
+  height: 50px;
+  width: 80%;
+}
+
+.container-dashboard-recipes > menu {
+  overflow-y: auto;
+  box-sizing: border-box;
+  scroll-snap-type: y mandatory;
+  width: 75%;
+  max-height: 20em;
+  margin: 2em auto;
+  border-radius: 15px 0 0 15px;
+  padding: 0px 10px 0 15px;
+  box-sizing: border-box;
+  background-color: var(--primary-color);
+  /* Principal */
+  & ul {
+    padding: 0 0 0 0;
+    width: 90%;
+  }
+  & ul > li {
+    margin: 10px 0 auto;
+  }
+}
+
+.container-dashboard-recipes > article {
+  margin: 30% auto;
+}
+
+/* * Card Recipe */
+
+.container-bottom-recipe {
+  display: grid;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  & picture {
+    margin: 0 auto;
+    width: 60%;
+  }
+  & .recipe-title-section {
+    position: relative;
+    bottom: -5px;
+  }
+  & .recipe-rating {
+    font-size: 12px;
+    & article {
+      position: relative;
+      height: 25px;
+      bottom: 2px;
+    }
+  }
+  & .container-recipe-description > section > h2 {
+    font-size: 16px;
+    align-items: center;
+  }
+  & .icon-container {
+    gap: 10px;
+  }
+  & .container-recipe-ingredient-preparation {
+    padding: 20px;
+  }
+}
+/* * Scroll utilisateur */
+
+.container-dashboard-recipes > menu::-webkit-scrollbar {
+  background: transparent;
+  width: 8px;
+}
+
+.container-dashboard-recipes > menu::-webkit-scrollbar-track {
+  background: gray;
+}
+
+.container-dashboard-recipes > menu::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255); /* Couleur de la scrollbar */
+  border-radius: 10px;
+}
+
+.container-dashboard-recipes > menu > ul > li > button {
+  font-size: 19px;
+  height: 40px;
+  width: 100%;
+  font-family: var(--font-secondary);
+  background: white;
+  border-radius: 10px;
+}
+.container-dashboard-recipes > menu > ul > li > button:hover {
+  border-bottom: solid 5px red;
+}
+
+/*  * RESPONSIVE */
+
+@media screen and (min-width: 440px) {
+  .container-dashboard-recipes {
+    margin: 0% auto;
+    margin-top: 5%;
+    width: 50%;
+    height: 100%;
+    font-size: 24px;
+  }
+
+  .container-dashboard-recipes > input {
+    width: 50%;
+  }
+  .container-dashboard-recipes > menu {
+    width: 70%;
+    max-height: 50vh;
+    padding: 0px 10px 0 5%;
+    & ul {
+      list-style: none;
+    }
+    & ul > li {
+      margin: 5% 0 auto;
+    }
+  }
+  .container-dashboard-recipes > menu > ul > li > button {
+    height: 60px;
+  }
+  .container-dashboard-recipes > section:first-of-type {
+    margin: 5% auto;
+    width: 60%;
+    min-height: 25vh;
+    & figure {
+      margin: 0;
+      padding: 10px;
+    }
+    & article {
+      font-size: 24px;
+      align-content: center;
+      text-align: start;
+      width: 100%;
+    }
+  }
+  .container-dashboard-recipes > section:first-of-type > figure > img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .container-dashboard-admin > section:last-of-type {
+    width: 70%;
+    margin: 0 auto;
+    gap: 10%;
+    & .button-delete-user {
+      font-size: 24px;
+    }
+  }
+  .container-recette-admin {
+    margin: 0 auto;
+  }
+  .container-dashboard-recipes {
+    & article {
+      margin: 10% auto;
+    }
+  }
+  .container-bottom-recipe {
+    margin: 5% auto;
+    & picture {
+      background: var(--secondary-color-2);
+      min-width: 50vw;
+      border-radius: 15px;
+      padding: 30px;
+    }
+  }
+}
