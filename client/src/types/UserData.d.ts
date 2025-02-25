@@ -29,10 +29,10 @@ export interface DeleteUserProps {
 }
 
 export interface AuthContextType {
-  isAdmin: boolean;
+  isAdmin: number;
   isLogged: boolean;
   setIsLogged: (value: boolean) => void;
-  setIsAdmin: (value: boolean) => void;
+  setIsAdmin: (value: number) => void;
   checkLogin: () => Promise<void>;
 }
 

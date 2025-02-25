@@ -12,7 +12,7 @@ function HamburgerMenu() {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("isAdmin");
     setIsLogged(false);
-    setIsAdmin(false);
+    setIsAdmin(0);
     navigate("/");
   };
 

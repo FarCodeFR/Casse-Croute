@@ -55,12 +55,12 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
 
       if (data.token) {
         localStorage.setItem("jwtToken", data.token);
-        localStorage.setItem("isAdmin", data.isAdmin ? "true" : "false");
+        localStorage.setItem("isAdmin", data.isAdmin);
 
         toast.success("Connexion réussie !");
         setIsLogged(true);
         setIsAdmin(data.isAdmin);
-        navigate(data.isAdmin ? "/" : "/view-profile");
+        navigate(data.isAdmin ? "/dashboard-admin" : "/view-profile");
       } else {
         toast.error(
           "Email ou mot de passe non-reconnu. Veuillez réessayer ou vous inscrire.",
