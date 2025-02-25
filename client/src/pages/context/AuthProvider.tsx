@@ -6,7 +6,7 @@ import type { AuthContextType } from "../../types/UserData";
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(0);
   const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (!token) {
       setIsLogged(false);
-      setIsAdmin(false);
+      setIsAdmin(0);
       setLoading(false);
       return;
     }
@@ -38,11 +38,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (response.ok) {
         const data = await response.json();
         setIsLogged(true);
-        setIsAdmin(data.isAdmin === 1);
-        localStorage.setItem("isAdmin", data.isAdmin === 1 ? "true" : "false");
+        setIsAdmin(data.isAdmin === 1 ? 1 : 0);
+        localStorage.setItem(
+          "isAdmin",
+          (data.isAdmin === 1 ? 1 : 0).toString(),
+        );
       } else {
         setIsLogged(false);
-        setIsAdmin(false);
+        setIsAdmin(0);
         localStorage.removeItem("jwtToken");
         localStorage.removeItem("isAdmin");
         toast.error("Connexion expirée. Veuillez vous reconnecter.");
@@ -50,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error(err);
       setIsLogged(false);
-      setIsAdmin(false);
+      setIsAdmin(0);
       toast.error("Une erreur s'est produite, veuillez réessayer.");
     } finally {
       setLoading(false);

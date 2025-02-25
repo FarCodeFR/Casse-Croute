@@ -1,6 +1,6 @@
 import "../../styles/Header.css";
 import "../../styles/Global.css";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../pages/context/useAuth";
 import SearchBar from "../SearchFilter";
@@ -8,12 +8,6 @@ import HamburgerMenu from "./HamburgerMenu";
 
 function Header() {
   const { isLogged, isAdmin } = useAuth();
-  const [isAdminState, setIsAdminState] = useState(isAdmin);
-
-  // Utilise useEffect pour mettre à jour isAdminState après la connexion
-  useEffect(() => {
-    setIsAdminState(isAdmin);
-  }, [isAdmin]); // Se déclenche chaque fois que isAdmin change
 
   return (
     <header>
@@ -35,25 +29,19 @@ function Header() {
             {isLogged ? (
               <NavLink
                 className={
-                  isAdminState === true
+                  isAdmin === 1
                     ? "isLogged-header-admin"
                     : "isLogged-header-true"
                 }
-                to={
-                  isAdminState === true ? "/dashboard-admin" : "/view-profile"
-                }
+                to={isAdmin === 1 ? "/dashboard-admin" : "/view-profile"}
               >
                 <img
                   src={
-                    isAdminState === true
+                    isAdmin === 1
                       ? "/assets/images/admin.png"
                       : "/assets/images/profil.png"
                   }
-                  alt={
-                    isAdminState === true
-                      ? "Profil Admin"
-                      : "Profil utilisateur"
-                  }
+                  alt={isAdmin === 1 ? "Profil Admin" : "Profil utilisateur"}
                 />
               </NavLink>
             ) : (
