@@ -6,11 +6,13 @@ import useAuth from "../../pages/context/useAuth";
 
 function HamburgerMenu() {
   const [open, setOpen] = useState(false);
-  const { setIsLogged, isLogged } = useAuth();
+  const { setIsLogged, isLogged, setIsAdmin } = useAuth();
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("isAdmin");
     setIsLogged(false);
+    setIsAdmin(false);
     navigate("/");
   };
 

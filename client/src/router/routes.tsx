@@ -4,6 +4,7 @@ import UserRecipes from "../components/UserRecipes";
 import UserRecipesDelete from "../components/UserRecipesDelete";
 import UserRecipesModify from "../components/admin-user-recipes/UserRecipesModify";
 import ProtectedRoutes from "../components/protect-context/ProtectedRoutes";
+import ProtectedRoutesAdmin from "../components/protect-context/ProtectedRoutesAdmin";
 import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
 import Home from "../pages/Home/Home";
 import LegalNotices from "../pages/Legal-notices/LegalNotices";
@@ -70,7 +71,12 @@ const routes = [
   },
   {
     path: "/dashboard-admin",
-    element: <DashboardAdmin />,
+
+    element: (
+      <ProtectedRoutesAdmin>
+        <DashboardAdmin />
+      </ProtectedRoutesAdmin>
+    ),
     children: [
       {
         index: true,
@@ -79,17 +85,17 @@ const routes = [
       {
         path: "dashboard-user",
         element: (
-          <ProtectedRoutes>
+          <ProtectedRoutesAdmin>
             <DashBoardUser />
-          </ProtectedRoutes>
+          </ProtectedRoutesAdmin>
         ),
       },
       {
         path: "dashboard-recipes",
         element: (
-          <ProtectedRoutes>
+          <ProtectedRoutesAdmin>
             <DashboardRecipes />
-          </ProtectedRoutes>
+          </ProtectedRoutesAdmin>
         ),
       },
     ],

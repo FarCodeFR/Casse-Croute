@@ -5,10 +5,11 @@ import useAuth from "../pages/context/useAuth";
 import type { LoginFormProps, loginDataTypes } from "../types/LoginData";
 
 export function LoginForm({ toggleForm }: LoginFormProps) {
+  // Récupérer isLogged, isAdmin et setIsLogged, setIsAdmin depuis le contexte
   const { setIsLogged, setIsAdmin } = useAuth();
-  const [loginData, setLoginData] = useState<loginDataTypes>({});
-
   const navigate = useNavigate();
+
+  const [loginData, setLoginData] = useState<loginDataTypes>({});
 
   const handleInputLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,14 +24,12 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
 
     const { email, password } = loginData;
     if (!email) {
-      // Simplified check
       toast.error("Veuillez entrer votre nom d'utilisateur");
-      return; // Stop further execution
+      return;
     }
     if (!password) {
-      // Simplified check
       toast.error("Veuillez entrer votre mot de passe");
-      return; // Stop further execution
+      return;
     }
 
     try {
@@ -46,23 +45,25 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
       );
 
       if (!response.ok) {
-        const errorData = await response.json(); // Try to get error details from the server
-        const errorMessage = errorData.message || "Erreur d'authentification"; // Use server message or default
+        const errorData = await response.json();
+        const errorMessage = errorData.message || "Erreur d'authentification";
         toast.error(errorMessage);
-        return; // Stop here if there's an error
+        return;
       }
 
       const data = await response.json();
 
       if (data.token) {
         localStorage.setItem("jwtToken", data.token);
+        localStorage.setItem("isAdmin", data.isAdmin ? "true" : "false");
+
         toast.success("Connexion réussie !");
         setIsLogged(true);
-        setIsAdmin(!!data.isAdmin);
-        navigate("/");
+        setIsAdmin(data.isAdmin);
+        navigate(data.isAdmin ? "/" : "/view-profile");
       } else {
         toast.error(
-          "Email ou mot de passe non-reconnu. Veuillez reessayer ou vous inscrire.",
+          "Email ou mot de passe non-reconnu. Veuillez réessayer ou vous inscrire.",
         );
       }
     } catch (error) {

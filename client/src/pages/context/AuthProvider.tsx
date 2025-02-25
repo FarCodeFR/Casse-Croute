@@ -6,10 +6,9 @@ import type { AuthContextType } from "../../types/UserData";
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  // loading state will control the rendering of the AuthProvider
-  const [loading, setLoading] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     checkLogin();
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!token) {
       setIsLogged(false);
       setIsAdmin(false);
-      setLoading(true);
+      setLoading(false);
       return;
     }
 
@@ -35,30 +34,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           },
         },
       );
-      // response.ok can be true or false.
+
       if (response.ok) {
         const data = await response.json();
         setIsLogged(true);
-        setIsAdmin(data.est_admin);
-      }
-      setIsLogged(response.ok);
-      if (!response.ok) {
+        setIsAdmin(data.isAdmin === 1);
+        localStorage.setItem("isAdmin", data.isAdmin === 1 ? "true" : "false");
+      } else {
+        setIsLogged(false);
+        setIsAdmin(false);
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("isAdmin");
         toast.error("Connexion expirée. Veuillez vous reconnecter.");
       }
     } catch (err) {
       console.error(err);
+      setIsLogged(false);
+      setIsAdmin(false);
+      toast.error("Une erreur s'est produite, veuillez réessayer.");
     } finally {
-      // this state is useful to render the AuthContext.Provider only when it's true.
-      setLoading(true);
+      setLoading(false);
     }
   }
 
-  if (loading)
-    return (
-      <AuthContext.Provider
-        value={{ isLogged, isAdmin, checkLogin, setIsLogged, setIsAdmin }}
-      >
-        {children}
-      </AuthContext.Provider>
-    );
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{ isLogged, isAdmin, checkLogin, setIsLogged, setIsAdmin }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

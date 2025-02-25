@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import userRepository from "../user/userRepository";
 
 interface JwtPayload {
-  isAdmin: string;
+  isAdmin: number;
 }
 
 const login: RequestHandler = async (req, res, next) => {
@@ -28,7 +28,7 @@ const login: RequestHandler = async (req, res, next) => {
       const payload = {
         id: user.id,
         email: user.email,
-        role: user.est_admin,
+        isAdmin: user.est_admin,
       };
       // Make sure to define the APP_SECRET in your .env file
       const secretKey = process.env.APP_SECRET;
@@ -38,7 +38,6 @@ const login: RequestHandler = async (req, res, next) => {
       }
       // Sign the token with the payload, secret key, and expiration time - the signing is the last element to add to the token.
       const token = sign(payload, secretKey, { expiresIn: "1h" });
-
       res.json({ token, user: user.email, isAdmin: user.est_admin });
       return;
     }
@@ -68,14 +67,12 @@ const verifyToken: RequestHandler = (req, res, next) => {
       throw new Error("APP_SECRET is not defined");
     }
 
-    const isTokenValid = jwt.verify(token, secretKey);
+    const decodedToken = jwt.verify(token, secretKey) as JwtPayload;
 
-    if (isTokenValid) {
-      const decodedToken = jwt.decode(token);
-      res.locals = { decodedToken };
+    if (decodedToken && decodedToken.isAdmin !== undefined) {
+      res.locals.decodedToken = decodedToken;
+      next();
     }
-
-    next();
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
   }
@@ -83,15 +80,15 @@ const verifyToken: RequestHandler = (req, res, next) => {
 
 const isLogged: RequestHandler = (req, res) => {
   if (res.locals.decodedToken) {
-    res.status(200).send("Vous êtes connecté");
+    const { isAdmin } = res.locals.decodedToken;
+    res.status(200).json({ message: "Vous êtes connecté", isAdmin });
     return;
   }
-
   res.sendStatus(403);
 };
 
 const isAdmin: RequestHandler = (req, res) => {
-  if (!res.locals.role) {
+  if (!res.locals.decodedToken) {
     res.sendStatus(403);
   }
 

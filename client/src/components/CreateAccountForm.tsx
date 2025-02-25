@@ -23,10 +23,10 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { email, password, passwordConfirm } = userData;
+    const { email, pseudo, password, passwordConfirm } = userData;
     if (password !== passwordConfirm) {
       toast.error("Les mots de passe ne correspondent pas");
-    } else if (!email || !password || !passwordConfirm) {
+    } else if (!email || !pseudo || !password || !passwordConfirm) {
       toast.error("Veuillez remplir tous les champs");
     } else if (password.length < 8) {
       toast.error("Le mot de passe doit contenir au moins 8 caractères");
@@ -73,9 +73,9 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
           Identifiant:
         </label>
         <input
-          type="identifiant"
+          type="text"
           aria-label="Identifiant"
-          name="identifiant"
+          name="pseudo"
           placeholder="Lecuisinierdu49"
           required
           onChange={handleInputUserData}
