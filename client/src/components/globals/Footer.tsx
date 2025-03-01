@@ -27,46 +27,6 @@ function Footer() {
               alt="logo"
             />
           </Link>
-          <nav className="footer-links">
-            <ul>
-              <li>
-                <Link to="https://www.facebook.com/">
-                  <img
-                    className="footer-icons facebook"
-                    src="assets/images/facebook-icon.png"
-                    alt="logo facebook"
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link to="https://www.instagram.com/">
-                  <img
-                    className="footer-icons instagram"
-                    src="assets/images/instagram-icon.png"
-                    alt="logo instagram"
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link to="https://x.com/">
-                  <img
-                    className="footer-icons"
-                    src="assets/images/x-icon.png"
-                    alt="logo x"
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link to="https://www.youtube.com/">
-                  <img
-                    className="footer-icons"
-                    src="assets/images/youtube-icon.png"
-                    alt="logo youtube"
-                  />
-                </Link>
-              </li>
-            </ul>
-          </nav>
         </div>
 
         <ul className="footer-menu right-menu">
@@ -78,7 +38,6 @@ function Footer() {
           </li>
         </ul>
       </div>
-
       <div className="footer-copyright">
         <p>Contacte-nous 👋 par Discord Gratuit</p>
         <p>© 2024 Casse Croûte. Tous droits réservés</p>

@@ -16,6 +16,13 @@ function DashBoardUser() {
   const [modifyRecipe, setModifyRecipe] = useState(false);
   const [deleteRecipe, setDeleteRecipe] = useState(false);
   const [searchUser, setSearchUser] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
 
   const recipeModify = () => {
     setModifyRecipe((modifyRecipe) => !modifyRecipe);
@@ -128,7 +135,9 @@ function DashBoardUser() {
 
   return (
     <>
-      <section className="container-dashboard-admin">
+      <section
+        className={`container-dashboard-admin ${isVisible ? "active" : ""}`}
+      >
         <label aria-label="Utilisateur" htmlFor="Recherche">
           Utilisateur
         </label>

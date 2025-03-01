@@ -13,6 +13,13 @@ function RecipePage() {
   const [selectedTime, setSelectedTime] = useState("Temps");
   const [selectedDifficulty, setSelectedDifficulty] = useState("Difficulté");
   const [selectedType, setSelectedType] = useState("Type");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -91,7 +98,9 @@ function RecipePage() {
         </select>
       </div>
 
-      <div className="main-page-recipe-container">
+      <div
+        className={`main-page-recipe-container ${isVisible ? "active" : ""}`}
+      >
         {filteredRecipes.map((recipe) => (
           <Link
             to={`/recipe/${recipe.id}`}

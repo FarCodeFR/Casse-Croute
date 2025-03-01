@@ -8,8 +8,14 @@
   margin: 10% auto;
   border-radius: 10px;
   height: 100%;
+  transition: opacity 0.5s ease-out;
+  opacity: 0;
 }
 
+.container-dashboard-recipes.active {
+  opacity: 1;
+  transform: translateY(0);
+}
 .container-dashboard-recipes > label:first-of-type {
   width: 100%;
   text-align: center;

@@ -8,7 +8,8 @@ import ProtectedRoutesAdmin from "../components/protect-context/ProtectedRoutesA
 import CreateRecipe from "../pages/CreateRecipe/CreateRecipe";
 import Home from "../pages/Home/Home";
 import LegalNotices from "../pages/Legal-notices/LegalNotices";
-import Login from "../pages/Login/AuthForm";
+import Register from "../pages/Login/Register";
+import LoginForm from "../pages/Login/loginForm";
 import RecipePage from "../pages/RecipePage/RecipePage";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
 import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
@@ -43,10 +44,16 @@ const routes = [
       </ProtectedRoutes>
     ),
   },
+
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginForm />,
   },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+
   {
     path: "/view-profile",
     element: (

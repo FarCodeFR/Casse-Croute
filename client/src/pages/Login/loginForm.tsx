@@ -1,13 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAuth from "../pages/context/useAuth";
-import type { LoginFormProps, loginDataTypes } from "../types/LoginData";
+import type { loginDataTypes } from "../../types/LoginData";
+import useAuth from "../context/useAuth";
+import "./form.css";
 
-export function LoginForm({ toggleForm }: LoginFormProps) {
-  // Récupérer isLogged, isAdmin et setIsLogged, setIsAdmin depuis le contexte
+export function LoginForm() {
   const { setIsLogged, setIsAdmin } = useAuth();
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
 
   const [loginData, setLoginData] = useState<loginDataTypes>({});
 
@@ -24,7 +31,7 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
 
     const { email, password } = loginData;
     if (!email) {
-      toast.error("Veuillez entrer votre nom d'utilisateur");
+      toast.error("Veuillez entrer votre email");
       return;
     }
     if (!password) {
@@ -73,7 +80,10 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
   };
 
   return (
-    <form className="container-form-auth" onSubmit={handleSubmit}>
+    <form
+      className={`container-form-auth ${isVisible ? "visible" : ""}`}
+      onSubmit={handleSubmit}
+    >
       <h1>Heureux de vous revoir !</h1>
       <section>
         <label aria-label="Mail" htmlFor="email">
@@ -99,18 +109,15 @@ export function LoginForm({ toggleForm }: LoginFormProps) {
         />
       </section>
       <section>
-        <button type="submit" id="login" aria-label="Se connecter">
+        <button type="submit" aria-label="Se connecter">
           Se connecter
         </button>
         <p>Ou</p>
-        <button
-          type="button"
-          id="login"
-          aria-label="Créer un compte"
-          onClick={toggleForm}
-        >
-          Créer un compte
-        </button>
+        <NavLink to="/register">
+          <button type="button" aria-label="Créer un compte">
+            Créer un compte
+          </button>
+        </NavLink>
       </section>
     </form>
   );

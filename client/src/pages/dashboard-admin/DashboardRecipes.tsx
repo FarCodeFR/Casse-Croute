@@ -10,6 +10,13 @@ function DashboardRecipes() {
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
   const [selectRecipe, setSelectRecipe] = useState<RecipeI | null>(null);
   const [searchRecipe, setSearchRecipe] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/recettes`)
@@ -25,7 +32,9 @@ function DashboardRecipes() {
 
   return (
     <>
-      <section className="container-dashboard-recipes">
+      <section
+        className={`container-dashboard-recipes ${isVisible ? "active" : ""}`}
+      >
         <label aria-label="Recette" htmlFor="Recherche">
           Recettes
         </label>

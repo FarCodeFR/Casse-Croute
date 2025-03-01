@@ -3,6 +3,13 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 25px;
+  transition: opacity 0.1s ease-in-out;
+  opacity: 0;
+}
+
+.main-page-recipe-container.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .main-page-recipe-container > .recipe-container:nth-child(n + 3) {

@@ -6,7 +6,7 @@ function NotFound() {
     <section className="container-not-found">
       <picture>
         <img
-          src="assets/images/not-found.png"
+          src={`${import.meta.env.VITE_API_URL}/assets/images/not-found.png`}
           alt="Représentation d'un monsieur cookie qui boit son café"
         />
       </picture>
