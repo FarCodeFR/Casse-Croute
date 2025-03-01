@@ -14,7 +14,7 @@ const login: RequestHandler = async (req, res, next) => {
 
   const user = await userRepository.getUserByEmail(email);
   if (user === null || user === undefined) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "Email non valide !" });
     return;
   }
 
@@ -40,6 +40,9 @@ const login: RequestHandler = async (req, res, next) => {
       const token = sign(payload, secretKey, { expiresIn: "1h" });
       res.json({ token, user: user.email, isAdmin: user.est_admin });
       return;
+    }
+    if (!isValid) {
+      res.status(404).json({ message: "Mot de passe incorrect !" });
     }
   } catch {
     // If the password is invalid, return a 401 status code

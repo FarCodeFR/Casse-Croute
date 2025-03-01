@@ -135,11 +135,18 @@ const hashPassword: RequestHandler = async (req, res, next) => {
 const verified: RequestHandler = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const existe = await userRepository.verifiedEmail(email);
-    if (existe) {
+    const { pseudo } = req.body;
+    const existeEmail = await userRepository.verifiedEmail(email);
+    const existePseudo = await userRepository.verifiedPseudo(pseudo);
+    if (existeEmail) {
       res.status(409).send("Email déjà utilisé");
       return;
     }
+    if (existePseudo) {
+      res.status(408).send("Identifiant déja utilisé");
+      return;
+    }
+
     next();
   } catch (err) {
     console.error(err);

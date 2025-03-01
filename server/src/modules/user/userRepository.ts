@@ -100,5 +100,12 @@ class userRepository {
     );
     return rows[0] as User;
   }
+  async verifiedPseudo(pseudo: string) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM utilisateur where pseudo = ?",
+      [pseudo],
+    );
+    return rows[0] as User;
+  }
 }
 export default new userRepository();
