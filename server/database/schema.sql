@@ -58,7 +58,6 @@ CREATE TABLE ingredient_recette (
     quantite INT NOT NULL,
     unite VARCHAR(15) NOT NULL,
     PRIMARY KEY (recette_id, ingredient_id)
-
 );
 
 -- Table etape_preparation (étapes de préparation des recettes)
