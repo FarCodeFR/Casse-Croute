@@ -28,13 +28,15 @@ router.get("/api/user/:id/recipes", userActions.browseRecipesUser);
 //Add user data
 router.post(
   "/api/users",
+  validate.registerValidate,
+  validate.validation,
   userActions.verified,
   userActions.hashPassword,
   userActions.add,
 );
 
 //Login
-router.post("/api/users/login", authActions.login);
+router.post("/api/users/login", validate.loginValidate, authActions.login);
 
 // addition of a file - this allows an upload to be placed in the public folder, and is renamed, adding the date in miliseconds to the filename
 const storage = multer.diskStorage({
@@ -58,13 +60,13 @@ router.post(
 // Define casseCroute-related routes
 import ingToRecActions from "./modules/ingToRec/ingToRecActions";
 import ingredientActions from "./modules/ingredient/ingredientActions";
+import validate from "./modules/middleware/validate";
 import recetteActions from "./modules/recette/recetteActions";
 import stepActions from "./modules/steps/stepActions";
 
 // Routes pour les ingrédients
 router.get("/api/ingredient", ingredientActions.browse);
 router.get("/api/ingredients-season", ingredientActions.browseSeason);
-router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
 router.get("/api/recettes", recetteActions.browse);
