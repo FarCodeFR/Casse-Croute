@@ -1,43 +1,54 @@
-.view-profile_nav {
+.view-profile {
+  height: 65vh;
+}
+
+.view-profile > nav > section {
   display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  margin-top: -1px;
+  gap: 10%;
+  border-radius: 0px 0px 15px 15px;
   background-color: var(--primary-color);
-  padding: 10px 10px 0px 10px;
-  border-radius: 0px 0px 10px 10px;
-  margin: auto;
-  width: 85%;
+  width: 70%;
+  height: 40px;
+  text-align: center;
 }
 
-.view-profile_nav button {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--secondary-color-3);
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+.view-profile > nav > section > a {
+  text-decoration: none;
+  margin-top: 2%;
+  align-content: center;
+  min-width: 40%;
 }
 
-.view-profile_nav button.active {
-  background-color: var(--secondary-color-3);
-  color: var(--primary-color);
+.active-background-profile {
+  background-color: white;
   border-radius: 10px 10px 0 0;
+  & a {
+    color: var(--primary-color);
+  }
+}
+.inactive-background-profile {
+  color: white;
+}
+.active-background-modify {
+  background-color: white;
+  border-radius: 10px 10px 0 0;
+  & a {
+    color: var(--primary-color);
+  }
+}
+.inactive-background-modify {
+  color: white;
 }
 
-.view-profile_nav button:hover {
-  opacity: 0.8;
-}
-
-.recipes-btn {
-  display: none;
-}
-
-.view-profile_nav button.active::before {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  width: 100%;
-  height: 5px;
-  background: var(var(--secondary-color-3));
-  transform: translateX(-50%);
+@media screen and (min-width: 440px) {
+  .view-profile {
+    height: 100%;
+  }
+  .view-profile > nav > section {
+    width: 50%;
+    height: 50px;
+  }
 }

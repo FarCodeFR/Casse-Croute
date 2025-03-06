@@ -8,6 +8,11 @@ export interface userDataTypes {
   passwordConfirm?: string;
 }
 
+export interface OutletContext {
+  user: userData;
+  setUser: React.Dispatch<React.SetStateAction<userData | null>>;
+}
+
 export interface userData {
   id?: number;
   email: string;

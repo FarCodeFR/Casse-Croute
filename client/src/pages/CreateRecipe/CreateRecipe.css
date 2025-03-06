@@ -5,6 +5,14 @@
   margin-bottom: 36px;
 }
 
+.create-recipe-form > input:first-of-type {
+  background-color: var(--secondary-color-1);
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  width: 60%;
+}
+
 .create-recipe-form > label {
   font-family: var(--font-secondary);
 }

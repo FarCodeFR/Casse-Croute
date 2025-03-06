@@ -1,80 +1,51 @@
-.profile-form {
+.container-form-auth > picture {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  max-width: 400px;
+  justify-content: center;
+  & img {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+  }
 }
 
-.avatar-container {
-  position: relative;
-  display: flex;
-  margin-top: 24px;
+.container-form-auth > section > label {
+  margin-top: 10px;
 }
-
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid #ddd;
-}
-
-.edit-avatar {
-  position: absolute;
-  bottom: 80%;
-  right: -10%;
-  background: var(--secondary-color-3);
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-}
-
-.edit-avatar img {
-  width: 16px;
-  height: 16px;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-}
-
-.input-container {
-  display: flex;
-  gap: 10px;
-  background: var(--secondary-color-2);
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #4e4b4b;
-}
-
-.input-container input {
-  flex-grow: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-}
-
-.input-container img {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
 .save-button {
-  background: var(--primary-color);
-  color: var(--secondary-color-3);
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  width: 50%;
-  margin-top: 16px;
-  margin-bottom: 32px;
+  width: 100%;
+  margin: 0 auto;
+  & button {
+    height: 50px;
+    max-width: 60%;
+    font-family: var(--font-primary);
+    color: var(--primary-color);
+  }
 }
 
-.save-button:hover {
-  background: #1a252f;
+@media screen and (min-width: 440px) {
+  .container-form-auth {
+    justify-content: center;
+    padding: 0px;
+    width: 80%;
+    max-height: 100%;
+  }
+  .container-form-auth > picture {
+    width: 200px;
+    height: 200px;
+    margin: 5% auto;
+    & img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .save-button > button {
+    min-width: 60%;
+  }
 }

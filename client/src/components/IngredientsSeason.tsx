@@ -28,7 +28,10 @@ function IngredientsSeason() {
               >
                 <figure>
                   <img
-                    src={el.icone_categorie}
+                    src={
+                      el.icone_categorie ||
+                      "/assets/images/ingredients/divers.png"
+                    }
                     alt={`representation de ${el.nom}`}
                   />
                   <figcaption>{el.nom}</figcaption>

@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import ModifyProfile from "../components/ModifyProfile";
 import ModifyRecipe from "../components/ModifyRecipe";
 import UserRecipes from "../components/UserRecipes";
 import UserRecipesDelete from "../components/UserRecipesDelete";
@@ -11,6 +12,7 @@ import LegalNotices from "../pages/Legal-notices/LegalNotices";
 import Register from "../pages/Login/Register";
 import LoginForm from "../pages/Login/loginForm";
 import RecipePage from "../pages/RecipePage/RecipePage";
+import Profile from "../pages/ViewProfile/Profile";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
 import DashboardAdmin from "../pages/dashboard-admin/DashBoardAdmin";
 import DashboardRecipes from "../pages/dashboard-admin/DashboardRecipes";
@@ -61,6 +63,20 @@ const routes = [
         <ViewProfile />
       </ProtectedRoutes>
     ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="profile" replace />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "profile-modify",
+        element: <ModifyProfile />,
+      },
+    ],
   },
   {
     path: "/user-recipes",

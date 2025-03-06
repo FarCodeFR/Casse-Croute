@@ -1,69 +1,98 @@
+import { useEffect, useState } from "react";
 import "../styles/modify-profil.css";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
+import type { OutletContext } from "../types/UserData";
 
 const ModifyProfile = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+  const { user, setUser } = useOutletContext<OutletContext>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
+
+  // function
+
+  const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  // function to modify profil
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      return toast.warn("Accès refusé : droits insuffisants.");
+    }
+    fetch(`${import.meta.env.VITE_API_URL}/api/user/${user.id}`, {
+      method: "put",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ pseudo: user.pseudo, email: user.email }),
+    }).then((response) => {
+      if (response.status === 204) {
+        toast.success("Profil mis à jour avec succès 🎉");
+      } else if (response.status === 401) {
+        toast.warn("Accès refusé");
+      } else {
+        toast.error("Erreur lors de la mise à jour du profil");
+      }
+
+      return navigate("/view-profile");
+    });
+  };
+
   return (
-    <form className="profile-form">
-      <div className="avatar-container">
-        <img className="avatar" src="/assets/images/profil.png" alt="Avatar" />
-        <button type="button" className="edit-avatar">
-          <img src="/assets/images/modify-icon.png" alt="Modifier l'avatar" />
-        </button>
-      </div>
+    <form
+      className={`container-form-auth ${isVisible ? "visible" : ""}`}
+      onSubmit={handleSubmit}
+    >
+      <picture>
+        <img src="/assets/images/profil.png" alt="Avatar" />
+      </picture>
 
-      <label>
-        Email
-        <div className="input-container">
-          <input type="email" name="email" defaultValue="user@email.com" />
-          <img src="/assets/images/modify-icon.png" alt="Edit email" />
-        </div>
-      </label>
-
-      <label>
-        Pseudo
-        <div className="input-container">
-          <input type="text" name="pseudo" defaultValue="Pseudo" />
-          <img src="/assets/images/modify-icon.png" alt="Edit pseudo" />
-        </div>
-      </label>
-
-      <label>
-        Phrase perso
-        <div className="input-container">
-          <input type="text" name="personalMessage" defaultValue="Message" />
-          <img
-            src="/assets/images/modify-icon.png"
-            alt="Edit personal message"
-          />
-        </div>
-      </label>
-
-      <label>
-        Mot de passe actuel
-        <div className="input-container">
-          <input type="password" name="currentPassword" defaultValue="" />
-          <img src="/assets/images/modify-icon.png" alt="Edit password" />
-        </div>
-      </label>
-
-      <label>
-        Nouveau mot de passe
-        <div className="input-container">
-          <input type="password" name="password" defaultValue="" />
-          <img src="/assets/images/modify-icon.png" alt="Edit new password" />
-        </div>
-      </label>
-
-      <label>
-        Confirmer le mot de passe
-        <div className="input-container">
-          <input type="password" name="passwordConfirm" defaultValue="" />
-          <img src="/assets/images/modify-icon.png" alt="Confirm password" />
-        </div>
-      </label>
-
-      <button type="submit" className="save-button">
-        Valider les modifications
-      </button>
+      <section>
+        <label aria-label="Email" htmlFor="email" className="login-label">
+          Email
+        </label>
+        <input
+          type="email"
+          aria-label="Email"
+          name="email"
+          placeholder={user.email}
+          onChange={handleInputUserData}
+        />
+        <label
+          aria-label="Identifiant"
+          htmlFor="identifiant"
+          className="login-label"
+        >
+          Identifiant:
+        </label>
+        <input
+          type="text"
+          aria-label="Identifiant"
+          name="pseudo"
+          placeholder={user.pseudo}
+          onChange={handleInputUserData}
+        />
+        <section className="save-button">
+          <button type="submit" aria-label="Sauvegarde">
+            Sauvegarder
+          </button>
+        </section>
+      </section>
     </form>
   );
 };

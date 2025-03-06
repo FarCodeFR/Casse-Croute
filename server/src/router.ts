@@ -83,7 +83,12 @@ router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/user/verify", authActions.verifyToken, authActions.isLogged);
 
 router.use("/api/recette", authActions.verifyToken);
-router.post("/api/recette", recetteActions.add);
+router.post(
+  "/api/recette",
+  validate.createRecipeValidate,
+  validate.validation,
+  recetteActions.add,
+);
 router.put("/api/recette/:id", recetteActions.edit);
 router.delete("/api/recette/:id", recetteActions.del);
 
@@ -109,6 +114,15 @@ router.get(
   "/api/user/profile",
   authActions.verifyToken,
   userActions.getProfile,
+);
+
+// Route pour modifier le profil de l'utilisateur
+
+router.put(
+  "/api/user/:id",
+  validate.modifyProfil,
+  validate.validation,
+  userActions.editProfil,
 );
 
 /* ************************************************************************* */
