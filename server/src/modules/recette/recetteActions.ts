@@ -14,8 +14,8 @@ const browse: RequestHandler = async (req, res, next) => {
 
 const browseSeason: RequestHandler = async (req, res) => {
   try {
-    const ingredient = await recetteRepository.seasonReadAll();
-    res.json(ingredient);
+    const recipes = await recetteRepository.seasonReadAll();
+    res.json(recipes);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur serveur.");

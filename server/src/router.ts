@@ -28,13 +28,15 @@ router.get("/api/user/:id/recipes", userActions.browseRecipesUser);
 //Add user data
 router.post(
   "/api/users",
+  validate.registerValidate,
+  validate.validation,
   userActions.verified,
   userActions.hashPassword,
   userActions.add,
 );
 
 //Login
-router.post("/api/users/login", authActions.login);
+router.post("/api/users/login", validate.loginValidate, authActions.login);
 
 // addition of a file - this allows an upload to be placed in the public folder, and is renamed, adding the date in miliseconds to the filename
 const storage = multer.diskStorage({
@@ -58,13 +60,13 @@ router.post(
 // Define casseCroute-related routes
 import ingToRecActions from "./modules/ingToRec/ingToRecActions";
 import ingredientActions from "./modules/ingredient/ingredientActions";
+import validate from "./modules/middleware/validate";
 import recetteActions from "./modules/recette/recetteActions";
 import stepActions from "./modules/steps/stepActions";
 
 // Routes pour les ingrédients
 router.get("/api/ingredient", ingredientActions.browse);
 router.get("/api/ingredients-season", ingredientActions.browseSeason);
-router.post("/api/ingredient", ingredientActions.add);
 
 // Routes liées aux recettes
 router.get("/api/recettes", recetteActions.browse);
@@ -81,7 +83,12 @@ router.get("/api/ingredientsAdded", ingToRecActions.browse);
 router.post("/api/user/verify", authActions.verifyToken, authActions.isLogged);
 
 router.use("/api/recette", authActions.verifyToken);
-router.post("/api/recette", recetteActions.add);
+router.post(
+  "/api/recette",
+  validate.createRecipeValidate,
+  validate.validation,
+  recetteActions.add,
+);
 router.put("/api/recette/:id", recetteActions.edit);
 router.delete("/api/recette/:id", recetteActions.del);
 
@@ -107,6 +114,15 @@ router.get(
   "/api/user/profile",
   authActions.verifyToken,
   userActions.getProfile,
+);
+
+// Route pour modifier le profil de l'utilisateur
+
+router.put(
+  "/api/user/:id",
+  validate.modifyProfil,
+  validate.validation,
+  userActions.editProfil,
 );
 
 /* ************************************************************************* */

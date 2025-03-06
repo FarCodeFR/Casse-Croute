@@ -12,7 +12,8 @@ function SeeProfile({ user }: { user: userData }) {
           />
 
           <figcaption>
-            <h2>{user.pseudo || user.email}</h2>
+            <h2>{user.pseudo}</h2>
+            <h2>{user.email}</h2>
           </figcaption>
         </figure>
 

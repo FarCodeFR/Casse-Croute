@@ -89,6 +89,26 @@ const edit: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+const editProfil: RequestHandler = async (req, res, next) => {
+  try {
+    const user = {
+      id: Number(req.params.id),
+      pseudo: req.body.pseudo,
+      email: req.body.email,
+      mot_de_passe: req.body.mot_de_passe,
+    };
+    const affectedRows = await userRepository.updateProfil(user);
+    if (affectedRows === 0) {
+      res.status(404).json({
+        error: "Erreur lors de la mise à jour du profil.",
+      });
+    } else {
+      res.status(204).json({ error: "Profil mis à jour avec succès 🎉" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 const destroy: RequestHandler = async (req, res, next) => {
   try {
@@ -135,11 +155,18 @@ const hashPassword: RequestHandler = async (req, res, next) => {
 const verified: RequestHandler = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const existe = await userRepository.verifiedEmail(email);
-    if (existe) {
+    const { pseudo } = req.body;
+    const existeEmail = await userRepository.verifiedEmail(email);
+    const existePseudo = await userRepository.verifiedPseudo(pseudo);
+    if (existeEmail) {
       res.status(409).send("Email déjà utilisé");
       return;
     }
+    if (existePseudo) {
+      res.status(408).send("Identifiant déja utilisé");
+      return;
+    }
+
     next();
   } catch (err) {
     console.error(err);
@@ -165,4 +192,5 @@ export default {
   destroy,
   getProfile,
   browseRecipesUser,
+  editProfil,
 };

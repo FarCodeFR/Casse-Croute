@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import type { LoginFormProps } from "../types/LoginData";
-import type { userDataTypes } from "../types/UserData";
+import type { userDataTypes } from "../../types/UserData";
+import "./form.css";
 
-function CreateAccount({ toggleForm }: LoginFormProps) {
+function Register() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
@@ -12,6 +12,14 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
     password: "",
     passwordConfirm: "",
   });
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
 
   const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,13 +31,17 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     const { email, pseudo, password, passwordConfirm } = userData;
     if (password !== passwordConfirm) {
       toast.error("Les mots de passe ne correspondent pas");
     } else if (!email || !pseudo || !password || !passwordConfirm) {
       toast.error("Veuillez remplir tous les champs");
-    } else if (password.length < 8) {
-      toast.error("Le mot de passe doit contenir au moins 8 caractères");
+    } else if (!passwordRegex.test(password)) {
+      toast.error(
+        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
+      );
+      return;
     } else {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/users`,
@@ -46,13 +58,18 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
         navigate("/login");
       } else if (response.status === 409) {
         toast.error("Email déjà utilisé");
+      } else if (response.status === 408) {
+        toast.error("Identifiant déja utilisé");
       } else {
         toast.error("Erreur lors de l'inscription 🤦‍♀️");
       }
     }
   }
   return (
-    <form className="container-form-auth" onSubmit={handleSubmit}>
+    <form
+      className={`container-form-auth ${isVisible ? "visible" : ""}`}
+      onSubmit={handleSubmit}
+    >
       <h1>Rejoignez la communauté Casse-croûte !</h1>
       <section>
         <label aria-label="Mail" htmlFor="email" className="login-label">
@@ -129,17 +146,18 @@ function CreateAccount({ toggleForm }: LoginFormProps) {
           S'inscrire
         </button>
         <p>Ou</p>
-        <button
-          type="button"
-          aria-label="Se connecter"
-          className="registerHere"
-          onClick={toggleForm}
-        >
-          Se connecter
-        </button>
+        <NavLink to="/login">
+          <button
+            type="button"
+            aria-label="Se connecter"
+            className="registerHere"
+          >
+            Se connecter
+          </button>
+        </NavLink>
       </section>
     </form>
   );
 }
 
-export default CreateAccount;
+export default Register;

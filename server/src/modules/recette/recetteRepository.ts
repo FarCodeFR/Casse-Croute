@@ -29,7 +29,7 @@ LEFT JOIN utilisateur u ON r.utilisateur_id = u.id;`,
   async seasonReadAll() {
     const currentSeason = getSeason();
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM recette WHERE saison = ? ORDER BY description ASC LIMIT 6",
+      "SELECT * FROM recette WHERE saison = ? ORDER BY titre ASC LIMIT 6",
       [currentSeason],
     );
     return rows;

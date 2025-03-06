@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/delete.users.css";
+import { toast } from "react-toastify";
 import type { DeleteUserProps } from "../types/UserData";
 
 function DeleteUsers({ handleVisibility, selectUser }: DeleteUserProps) {
@@ -7,7 +8,7 @@ function DeleteUsers({ handleVisibility, selectUser }: DeleteUserProps) {
   const handleClick = () => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
-      return alert("Accès refusé : droits insuffisants.");
+      return toast.warning("Accès refusé : droits insuffisants.");
     }
     fetch(`${import.meta.env.VITE_API_URL}/api/users/${selectUser.id}`, {
       method: "DELETE",
@@ -17,12 +18,12 @@ function DeleteUsers({ handleVisibility, selectUser }: DeleteUserProps) {
       },
     }).then((response) => {
       if (response.status === 204) {
-        alert("Utilisateur supprimé avec succès 🎉");
+        toast.success("Utilisateur supprimé avec succès 🎉");
         navigation("/dashboard-admin");
       } else if (response.status === 403) {
-        alert("Accès refusé : droits insuffisants.");
+        toast.error("Accès refusé : droits insuffisants.");
       } else {
-        alert("Erreur lors de la supression");
+        toast.error("Erreur lors de la supression");
       }
     });
   };

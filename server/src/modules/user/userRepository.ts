@@ -32,6 +32,14 @@ class userRepository {
     return rows[0] || null;
   }
 
+  async updateProfil(user: User) {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE utilisateur SET pseudo = ?, email = ? WHERE id = ?",
+      [user.pseudo, user.email, user.id],
+    );
+    return result.affectedRows;
+  }
+
   async updateAdmin(user: User) {
     const [result] = await databaseClient.query<Result>(
       "update utilisateur set est_admin = ? WHERE id = ?",
@@ -97,6 +105,13 @@ class userRepository {
     const [rows] = await databaseClient.query<Rows>(
       "select * from utilisateur where email = ?",
       [email],
+    );
+    return rows[0] as User;
+  }
+  async verifiedPseudo(pseudo: string) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM utilisateur where pseudo = ?",
+      [pseudo],
     );
     return rows[0] as User;
   }

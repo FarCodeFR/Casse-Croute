@@ -198,11 +198,13 @@ function AddRecipe() {
       titre,
       description,
       temps_id,
+      image_url,
       difficulte_id,
       type_id,
       preparation,
     } = recipeData;
     if (
+      !image_url ||
       !titre ||
       !description ||
       !temps_id ||
@@ -225,7 +227,6 @@ function AddRecipe() {
           body: JSON.stringify(recipeData),
         },
       );
-
       if (recipeResponse.ok) {
         // Start of the if block
         toast.success("Recette crée ! 👨‍🍳");
@@ -277,7 +278,7 @@ function AddRecipe() {
               toast.success("Etapes de préparation ajoutées ! 🥦🔪");
               navigate(`/recipe/${recipeDataFromServer}`);
             } else {
-              toast.error("pas reussi");
+              toast.error("Erreur");
             }
           } catch {
             toast.error("Erreur ajout etapes de preparation");
@@ -312,6 +313,13 @@ function AddRecipe() {
   return (
     <section className="add-recipe-main">
       <div className="create-recipe-form">
+        <label htmlFor="Image">Image:</label>
+        <input
+          type="text"
+          aria-label="Image"
+          name="image_url"
+          onChange={handleInputRecipe}
+        />
         <label htmlFor="titre">Titre:</label>
         <input
           required
@@ -394,7 +402,13 @@ function AddRecipe() {
                 value="X"
               />
               <figure>
-                <img src={ingredient.icone_categorie} alt={ingredient.nom} />
+                <img
+                  src={
+                    ingredient.icone_categorie ||
+                    "/assets/images/ingredients/divers.png"
+                  }
+                  alt={ingredient.nom}
+                />
                 <figcaption>
                   {ingredient.quantite}
                   <select
