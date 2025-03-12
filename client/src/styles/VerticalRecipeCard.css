@@ -38,7 +38,7 @@
 }
 
 .title {
-  color: var(--quaternary-color);
+  color: var(--primary-color);
   margin: 8px 0;
   height: 45px;
 }

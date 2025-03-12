@@ -90,6 +90,7 @@ class userRepository {
     // Return the ID of the newly created user
     return result.insertId;
   }
+
   async getUserByEmail(email: string) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(

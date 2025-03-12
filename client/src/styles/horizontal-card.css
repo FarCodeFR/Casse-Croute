@@ -20,9 +20,8 @@
     border-radius: 0px 80% 80% 0px / 25px 100% 100% 25px;
   }
   & article {
-    font-family: var();
+    font-family: var(--font-secondary);
     width: 50%;
-    height: 100%;
     padding: 5px;
   }
 }

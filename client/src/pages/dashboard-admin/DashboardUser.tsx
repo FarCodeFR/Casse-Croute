@@ -11,7 +11,7 @@ function DashBoardUser() {
   const [users, setUsers] = useState<userData[]>([]);
   const [selectUser, setSelectUser] = useState<userData | null>(null);
   const [recipes, setRecipes] = useState<RecipeCardHorizontal[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [visibleDeleteUser, setvisibleDeleteUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modifyRecipe, setModifyRecipe] = useState(false);
   const [deleteRecipe, setDeleteRecipe] = useState(false);
@@ -33,7 +33,7 @@ function DashBoardUser() {
 
   const handleVisibility = () => {
     if (selectUser) {
-      return setVisible(!visible);
+      return setvisibleDeleteUser(!visibleDeleteUser);
     }
     toast.warn("Veuillez selectionner un utilisateur");
   };
@@ -72,7 +72,7 @@ function DashBoardUser() {
   const recipeUserDelete = (recetteId: number | undefined) => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
-      return alert("Accès refusé : droits insuffisants.");
+      return toast.error("Accès refusé : droits insuffisants.");
     }
     fetch(`${import.meta.env.VITE_API_URL}/api/recette/${recetteId}`, {
       method: "DELETE",
@@ -82,14 +82,14 @@ function DashBoardUser() {
       },
     }).then((response) => {
       if (response.ok) {
-        alert("Recette supprimé avec succès 🎉");
+        toast.success("Recette supprimé avec succès 🎉");
         setRecipes((prevRecipes) =>
           prevRecipes.filter((recette) => recette.recette_id !== recetteId),
         );
       } else if (response.status === 403) {
-        alert("Accès refusé : droits insuffisants.");
+        toast.error("Accès refusé : droits insuffisants.");
       } else {
-        alert("Erreur lors de la supression");
+        toast.error("Erreur lors de la supression");
       }
     });
   };
@@ -181,9 +181,9 @@ function DashBoardUser() {
           >
             Supprimer le compte
           </button>
-          {visible && <div className="overlay-user-delete">.</div>}
+          {visibleDeleteUser && <div className="overlay-user-delete">.</div>}
 
-          {visible && selectUser && (
+          {visibleDeleteUser && selectUser && (
             <DeleteUsers
               selectUser={selectUser}
               handleVisibility={handleVisibility}

@@ -1,12 +1,24 @@
+import { useEffect, useState } from "react";
 import "./legal-notices.css";
 
 function LegalNotices() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  }, []);
   return (
     <>
-      <header className="container-title-notices">
+      <header
+        className={`container-title-notices ${isVisible ? "visible" : ""}`}
+      >
         <h1>Mentions Légales</h1>
       </header>
-      <article className="container-text-notices">
+      <article
+        className={`container-text-notices ${isVisible ? "visible" : ""}`}
+      >
         <h2>
           MENTIONS LÉGALES DU SITE https://www.cassecroute.fr
           <span>

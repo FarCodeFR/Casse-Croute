@@ -4,6 +4,9 @@ import { body, validationResult } from "express-validator";
 const loginValidate = [
   body("email", "Le champ email ne peut pas être vide").not().isEmpty(),
   body("email", "Email invalide").isEmail(),
+  body("password", "Le champs mot de passe ne peut pas être vide")
+    .not()
+    .isEmpty(),
   body(
     "password",
     "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
@@ -29,7 +32,7 @@ const createRecipeValidate = [
     .isEmpty(),
 ];
 
-const modifyProfil = [
+const modifyProfilValidate = [
   body("email", "Le champ email ne peut pas être vide").not().isEmpty(),
   body("email", "Email invalide").isEmail(),
   body("pseudo", "Identifiant invalide").not().isEmpty(),
@@ -39,6 +42,9 @@ const registerValidate = [
   body("email", "Le champ email ne peut pas être vide").not().isEmpty(),
   body("email", "Email invalide").isEmail(),
   body("pseudo", "Identifiant invalide").not().isEmpty(),
+  body("password", "Le champs mot de passe ne peut pas être vide")
+    .not()
+    .isEmpty(),
   body(
     "password",
     "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
@@ -56,7 +62,7 @@ const validation: RequestHandler = (req, res, next) => {
 };
 export default {
   validation,
-  modifyProfil,
+  modifyProfilValidate,
   createRecipeValidate,
   registerValidate,
   loginValidate,

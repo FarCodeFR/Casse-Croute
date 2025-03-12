@@ -1,7 +1,7 @@
 .container-form-auth {
   display: block;
   align-content: center;
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   opacity: 0;
   width: 70%;
   min-height: 51vh;

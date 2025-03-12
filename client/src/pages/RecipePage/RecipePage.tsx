@@ -6,20 +6,11 @@ import type { RecipeI } from "../../types/RecipeValues";
 
 function RecipePage() {
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [selectedTime, setSelectedTime] = useState("Temps");
   const [selectedDifficulty, setSelectedDifficulty] = useState("Difficulté");
   const [selectedType, setSelectedType] = useState("Type");
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -63,6 +54,13 @@ function RecipePage() {
     return matchesTime && matchesDifficulty && matchesType;
   });
 
+  const recipeCards = document.querySelectorAll(".link-recipe");
+  recipeCards.forEach((recipeCard, index) => {
+    setTimeout(() => {
+      recipeCard.classList.add("view");
+    }, 100 * index);
+  });
+
   if (isLoading) {
     return <div>Chargement en cours...</div>;
   }
@@ -97,10 +95,7 @@ function RecipePage() {
           <option value="boisson">Boisson</option>
         </select>
       </div>
-
-      <div
-        className={`main-page-recipe-container ${isVisible ? "active" : ""}`}
-      >
+      <div className="main-page-recipe-container">
         {filteredRecipes.map((recipe) => (
           <Link
             to={`/recipe/${recipe.id}`}

@@ -120,7 +120,7 @@ router.get(
 
 router.put(
   "/api/user/:id",
-  validate.modifyProfil,
+  validate.modifyProfilValidate,
   validate.validation,
   userActions.editProfil,
 );

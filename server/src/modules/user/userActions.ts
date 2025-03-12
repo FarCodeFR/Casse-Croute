@@ -152,6 +152,7 @@ const hashPassword: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+
 const verified: RequestHandler = async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -166,7 +167,6 @@ const verified: RequestHandler = async (req, res, next) => {
       res.status(408).send("Identifiant déja utilisé");
       return;
     }
-
     next();
   } catch (err) {
     console.error(err);
