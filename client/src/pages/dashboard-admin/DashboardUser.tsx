@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DeleteUsers from "../../components/DeleteUsers";
 import UserScroll from "../../components/ScrollUser";
 import type { userData } from "../../types/UserData";
@@ -101,15 +101,14 @@ function DashBoardUser() {
     if (!token) {
       return toast.warn("Accès refusé : droits insuffisants.");
     }
-    const updatedUser = { selectUser, est_admin: !selectUser.est_admin };
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/api/users/${selectUser.id}`, {
       method: "put",
       headers: {
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ est_admin: updatedUser.est_admin }),
+      body: JSON.stringify({ est_admin: !selectUser.est_admin }),
     })
       .then((response) => {
         if (response.status === 204) {
@@ -129,7 +128,6 @@ function DashBoardUser() {
         const reloadUser = data.find((user) => user.id === selectUser.id);
         if (reloadUser) setSelectUser(reloadUser);
       });
-
     setLoading(false);
   };
 
@@ -227,7 +225,7 @@ function DashBoardUser() {
         <figure>
           {recipes.map((el, index) => {
             return (
-              <>
+              <React.Fragment key={el.recette_id}>
                 {modifyRecipe ? (
                   <NavLink
                     key={`${el.recette_id}-${index}`}
@@ -275,7 +273,7 @@ function DashBoardUser() {
                     />
                   </NavLink>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </figure>

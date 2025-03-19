@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useAuth from "../../pages/context/useAuth";
 
 function ProtectedRoutes({ children }: { children: ReactNode }) {
@@ -9,7 +10,10 @@ function ProtectedRoutes({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isLogged) {
-      navigate("/");
+      navigate("/login");
+      toast.warning(
+        "Vous devez vous conneter pour accéder à la création de recette",
+      );
     }
   });
 

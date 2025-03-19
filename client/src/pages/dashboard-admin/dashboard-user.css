@@ -55,6 +55,7 @@
   & ul {
     padding: 0 0 0 0;
     width: 90%;
+    list-style: none;
   }
   & ul > li {
     margin: 10px 0 auto;

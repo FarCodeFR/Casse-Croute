@@ -23,7 +23,7 @@ export interface userData {
 }
 
 export type UserScrollI = {
-  users: userData[];
+  users: userData[id];
   setSelectUser: (user: userData) => void;
   searchUser: string;
 };

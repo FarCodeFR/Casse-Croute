@@ -4,7 +4,7 @@ import { body, validationResult } from "express-validator";
 const loginValidate = [
   body("email", "Le champ email ne peut pas être vide").not().isEmpty(),
   body("email", "Email invalide").isEmail(),
-  body("password", "Le champs mot de passe ne peut pas être vide")
+  body("password", "Le champ mot de passe ne peut pas être vide")
     .not()
     .isEmpty(),
   body(
@@ -42,7 +42,7 @@ const registerValidate = [
   body("email", "Le champ email ne peut pas être vide").not().isEmpty(),
   body("email", "Email invalide").isEmail(),
   body("pseudo", "Identifiant invalide").not().isEmpty(),
-  body("password", "Le champs mot de passe ne peut pas être vide")
+  body("password", "Le champ mot de passe ne peut pas être vide")
     .not()
     .isEmpty(),
   body(

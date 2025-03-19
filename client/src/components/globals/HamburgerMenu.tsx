@@ -14,6 +14,7 @@ function HamburgerMenu() {
     setIsLogged(false);
     setIsAdmin(0);
     navigate("/");
+    setOpen(false);
   };
 
   return (
@@ -29,7 +30,7 @@ function HamburgerMenu() {
               <NavLink to="/recipe-page">Catalogue</NavLink>
             </li>
             <li>
-              {isLogged && <NavLink to="/create-recipe">Create Recipe</NavLink>}
+              <NavLink to="/create-recipe">Création de recette</NavLink>
             </li>
             <li>
               <NavLink to="/legal-notices">Mentions légales</NavLink>

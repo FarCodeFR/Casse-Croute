@@ -54,12 +54,15 @@ function RecipePage() {
     return matchesTime && matchesDifficulty && matchesType;
   });
 
-  const recipeCards = document.querySelectorAll(".link-recipe");
-  recipeCards.forEach((recipeCard, index) => {
-    setTimeout(() => {
-      recipeCard.classList.add("view");
-    }, 100 * index);
-  });
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const recipeCards = document.querySelectorAll(".link-recipe");
+    recipeCards.forEach((recipeCard, index) => {
+      setTimeout(() => {
+        recipeCard.classList.add("view");
+      }, 100 * index);
+    });
+  }, [filteredRecipes]);
 
   if (isLoading) {
     return <div>Chargement en cours...</div>;

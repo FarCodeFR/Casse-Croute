@@ -32,6 +32,7 @@ function Register() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    const emailRegex = /^\S+@\S+\.\S+$/;
     const { email, pseudo, password, passwordConfirm } = userData;
     if (password !== passwordConfirm) {
       toast.error("Les mots de passe ne correspondent pas");
@@ -41,6 +42,8 @@ function Register() {
       toast.error(
         "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
       );
+    } else if (!emailRegex.test(email)) {
+      toast.error("Votre adresse mail n'est pas valide");
       return;
     } else {
       const response = await fetch(

@@ -94,7 +94,6 @@ const routes = [
   },
   {
     path: "/dashboard-admin",
-
     element: (
       <ProtectedRoutesAdmin>
         <DashboardAdmin />

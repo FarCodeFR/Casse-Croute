@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useAuth from "../../pages/context/useAuth";
 
 function ProtectedRoutesAdmin({ children }: { children: ReactNode }) {
@@ -10,6 +11,7 @@ function ProtectedRoutesAdmin({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isAdmin) {
       navigate("/");
+      toast.warning("Vous n'avez pas les droits suffisants !");
     }
   });
 

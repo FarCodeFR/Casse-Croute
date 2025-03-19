@@ -7,6 +7,7 @@ function AddIngredient({ onDataUpdate }: ChildFormProps) {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const token = localStorage.getItem("jwtToken");
 
   const toggleVisible = () => {
     setVisible(true);
@@ -23,6 +24,7 @@ function AddIngredient({ onDataUpdate }: ChildFormProps) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })

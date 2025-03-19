@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Header />
-      <ToastContainer autoClose={1500} />
+      <ToastContainer autoClose={2000} />
       <main>
         <Outlet />
       </main>

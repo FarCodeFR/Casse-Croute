@@ -39,7 +39,7 @@ LEFT JOIN utilisateur u ON r.utilisateur_id = u.id;`,
 
   async userRecipes() {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM recette JOIN utilisateur WHERE utilisateur.id",
+      "SELECT * FROM recette JOIN utilisateur ON recette.utilisateur_id = utilisateur.id",
     );
     return rows;
   }
