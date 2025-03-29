@@ -115,7 +115,6 @@ router.get(
   authActions.verifyToken,
   userActions.getProfile,
 );
-
 // Route pour modifier le profil de l'utilisateur
 
 router.put(

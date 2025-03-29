@@ -6,6 +6,7 @@ export interface userDataTypes {
   currentPassword?: string;
   password?: string;
   passwordConfirm?: string;
+  photo_profil: string;
 }
 
 export interface OutletContext {
@@ -34,13 +35,20 @@ export interface DeleteUserProps {
 }
 
 export interface AuthContextType {
-  isAdmin: number;
+  // isAdmin: number;
   isLogged: boolean;
+  user: userData | null;
+  setUser: React.Dispatch<React.SetStateAction<userData | null>>;
   setIsLogged: (value: boolean) => void;
-  setIsAdmin: (value: number) => void;
+  // setIsAdmin: (value: number) => void;
   checkLogin: () => Promise<void>;
 }
 
 export interface UserPropsI extends userDataTypes {
   setUserData?: (userData: object | undefined) => void;
+}
+
+export interface PictureProfilType {
+  pictureChange: (photo_profil: string) => void;
+  selectPicture: string;
 }

@@ -7,7 +7,7 @@ function SeeProfile({ user }: { user: userData }) {
       <article className="profile">
         <figure>
           <img
-            src={user.photo_profil || "/assets/images/profil.png"}
+            src={user.photo_profil || "/assets/images/profil-images/profil.png"}
             alt="Avatar de profil"
           />
 

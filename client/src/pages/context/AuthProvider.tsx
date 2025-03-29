@@ -1,14 +1,55 @@
 import { type ReactNode, createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import type { AuthContextType } from "../../types/UserData";
+import type { AuthContextType, userData } from "../../types/UserData";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAdmin, setIsAdmin] = useState(0);
+  // const [isAdmin, setIsAdmin] = useState(0);
   const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<userData | null>(null);
+
+  // Profil context
+  useEffect(() => {
+    {
+      isLogged;
+      const userProfil = async () => {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) {
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/user/profile`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (!response.ok) {
+            toast.error("Erreur lors de la récupération du profil");
+          }
+
+          const data: userData = await response.json();
+          setUser(data);
+        } catch (err) {
+          toast.error("Impossible de charger le profil.");
+        } finally {
+        }
+      };
+
+      userProfil();
+    }
+  }, [isLogged]);
+
+  //  Login verification
 
   useEffect(() => {
     checkLogin();
@@ -19,8 +60,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (!token) {
       setIsLogged(false);
-      setIsAdmin(0);
       setLoading(false);
+      setUser(null);
       return;
     }
 
@@ -34,18 +75,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           },
         },
       );
-
       if (response.ok) {
         const data = await response.json();
         setIsLogged(true);
-        setIsAdmin(data.isAdmin === 1 ? 1 : 0);
-        localStorage.setItem(
-          "isAdmin",
-          (data.isAdmin === 1 ? 1 : 0).toString(),
-        );
+        setUser(data);
+        // setIsAdmin(data.isAdmin === 1 ? 1 : 0);
+        // localStorage.setItem(
+        //   "isAdmin",
+        //   (data.isAdmin === 1 ? 1 : 0).toString(),
+        // );
       } else {
         setIsLogged(false);
-        setIsAdmin(0);
+        setUser(null);
         localStorage.removeItem("jwtToken");
         localStorage.removeItem("isAdmin");
         toast.error("Connexion expirée. Veuillez vous reconnecter.");
@@ -53,7 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error(err);
       setIsLogged(false);
-      setIsAdmin(0);
+      setUser(null);
       toast.error("Une erreur s'est produite, veuillez réessayer.");
     } finally {
       setLoading(false);
@@ -66,7 +107,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLogged, isAdmin, checkLogin, setIsLogged, setIsAdmin }}
+      value={{
+        isLogged,
+        user,
+        checkLogin,
+        setIsLogged,
+        setUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

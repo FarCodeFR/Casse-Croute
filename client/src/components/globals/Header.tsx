@@ -1,13 +1,12 @@
 import "../../styles/Header.css";
 import "../../styles/Global.css";
-// import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../pages/context/useAuth";
 import SearchBar from "../SearchFilter";
 import HamburgerMenu from "./HamburgerMenu";
 
 function Header() {
-  const { isLogged, isAdmin } = useAuth();
+  const { isLogged, user } = useAuth();
 
   return (
     <header>
@@ -29,19 +28,27 @@ function Header() {
             {isLogged ? (
               <NavLink
                 className={
-                  isAdmin === 1
+                  user?.est_admin === 1
                     ? "isLogged-header-admin"
                     : "isLogged-header-true"
                 }
-                to={isAdmin === 1 ? "/dashboard-admin" : "/view-profile"}
+                to={
+                  user?.est_admin === 1 ? "/dashboard-admin" : "/view-profile"
+                }
               >
                 <img
                   src={
-                    isAdmin === 1
+                    user?.est_admin === 1
                       ? "/assets/images/admin.png"
-                      : "/assets/images/profil.png"
+                      : user
+                        ? user.photo_profil
+                        : "/assets/images/profil-images/profil.png"
                   }
-                  alt={isAdmin === 1 ? "Profil Admin" : "Profil utilisateur"}
+                  alt={
+                    user?.est_admin === 1
+                      ? "Profil Admin"
+                      : "Profil utilisateur"
+                  }
                 />
               </NavLink>
             ) : (

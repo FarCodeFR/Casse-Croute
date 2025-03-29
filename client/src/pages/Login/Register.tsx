@@ -11,6 +11,7 @@ function Register() {
     pseudo: "",
     password: "",
     passwordConfirm: "",
+    photo_profil: "",
   });
 
   const [isVisible, setIsVisible] = useState(false);

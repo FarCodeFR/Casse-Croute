@@ -3,11 +3,15 @@ import "../styles/modify-profil.css";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { OutletContext } from "../types/UserData";
+import PictureProfil from "./PictureProfil";
 
 const ModifyProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useOutletContext<OutletContext>();
+  const [selectPicture, setSelectPicture] = useState(
+    user.photo_profil || "/assets/images/profil-images/profil.png",
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -17,12 +21,18 @@ const ModifyProfile = () => {
 
   // function
 
-  const handleInputUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputUserData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setUser({
       ...user,
       [name]: value,
     });
+  };
+
+  const handlePictureChange = (photo_profil: string) => {
+    setSelectPicture(photo_profil);
   };
 
   // function to modify profil
@@ -39,9 +49,23 @@ const ModifyProfile = () => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ pseudo: user.pseudo, email: user.email }),
+      body: JSON.stringify({
+        pseudo: user.pseudo,
+        email: user.email,
+        photo_profil: selectPicture,
+      }),
     }).then((response) => {
       if (response.status === 204) {
+        setUser((prevent) =>
+          prevent
+            ? {
+                ...prevent,
+                email: user.email,
+                pseudo: user.pseudo,
+                photo_profil: selectPicture,
+              }
+            : null,
+        );
         toast.success("Profil mis à jour avec succès 🎉");
       } else if (response.status === 401) {
         toast.warn("Accès refusé");
@@ -52,16 +76,15 @@ const ModifyProfile = () => {
       return navigate("/view-profile");
     });
   };
-
   return (
     <form
       className={`container-form-auth ${isVisible ? "visible" : ""}`}
       onSubmit={handleSubmit}
     >
-      <picture>
-        <img src="/assets/images/profil.png" alt="Avatar" />
-      </picture>
-
+      <PictureProfil
+        pictureChange={handlePictureChange}
+        selectPicture={selectPicture}
+      />
       <section>
         <label aria-label="Email" htmlFor="email" className="login-label">
           Email

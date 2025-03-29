@@ -6,15 +6,15 @@ import useAuth from "../../pages/context/useAuth";
 function ProtectedRoutesAdmin({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
-  const { isAdmin } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (user?.est_admin === 0) {
       navigate("/");
       toast.warning("Vous n'avez pas les droits suffisants !");
     }
   });
 
-  return isAdmin ? children : null;
+  return user?.est_admin ? children : null;
 }
 export default ProtectedRoutesAdmin;

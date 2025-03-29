@@ -29,6 +29,8 @@ const login: RequestHandler = async (req, res, next) => {
         id: user.id,
         email: user.email,
         isAdmin: user.est_admin,
+        pseudo: user.pseudo,
+        photo_profil: user.photo_profil,
       };
       // Make sure to define the APP_SECRET in your .env file
       const secretKey = process.env.APP_SECRET;
@@ -38,7 +40,13 @@ const login: RequestHandler = async (req, res, next) => {
       }
       // Sign the token with the payload, secret key, and expiration time - the signing is the last element to add to the token.
       const token = sign(payload, secretKey, { expiresIn: "1h" });
-      res.json({ token, user: user.email, isAdmin: user.est_admin });
+      res.json({
+        token,
+        user: user.email,
+        isAdmin: user.est_admin,
+        pseudo: user.pseudo,
+        photo_profil: user.photo_profil,
+      });
       return;
     }
     if (!isValid) {
@@ -82,12 +90,14 @@ const verifyToken: RequestHandler = (req, res, next) => {
 };
 
 const isLogged: RequestHandler = (req, res) => {
-  if (res.locals.decodedToken) {
-    const { isAdmin } = res.locals.decodedToken;
-    res.status(200).json({ message: "Vous êtes connecté", isAdmin });
-    return;
+  if (!res.locals.decodedToken) {
+    res.sendStatus(403);
   }
+  res.status(200).json({
+    message: "Vous êtes connecté",
+  });
   res.sendStatus(403);
+  return;
 };
 
 const isAdmin: RequestHandler = (req, res) => {

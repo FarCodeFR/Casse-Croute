@@ -6,7 +6,7 @@ import useAuth from "../context/useAuth";
 import "./form.css";
 
 export function LoginForm() {
-  const { setIsLogged, setIsAdmin } = useAuth();
+  const { setIsLogged, setUser } = useAuth();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -62,12 +62,10 @@ export function LoginForm() {
 
       if (data.token) {
         localStorage.setItem("jwtToken", data.token);
-        localStorage.setItem("isAdmin", data.isAdmin);
-
         toast.success("Connexion réussie !");
         setIsLogged(true);
-        setIsAdmin(data.isAdmin);
-        navigate(data.isAdmin ? "/dashboard-admin" : "/view-profile");
+        setUser(data.isAdmin);
+        navigate(data.isAdmin === 1 ? "/dashboard-admin" : "/view-profile");
       } else {
         toast.error(
           "Email ou mot de passe non-reconnu. Veuillez réessayer ou vous inscrire.",

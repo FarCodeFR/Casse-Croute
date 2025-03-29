@@ -130,7 +130,6 @@ function DashBoardUser() {
       });
     setLoading(false);
   };
-
   return (
     <>
       <section
@@ -159,7 +158,9 @@ function DashBoardUser() {
                 src={
                   selectUser.photo_profil
                     ? selectUser.photo_profil
-                    : "/assets/images/profil.png"
+                    : selectUser.est_admin === 0
+                      ? "/assets/images/profil-images/profil.png"
+                      : "/assets/images/admin.png"
                 }
                 alt="Une illustration de profile"
               />

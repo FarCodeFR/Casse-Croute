@@ -96,6 +96,7 @@ const editProfil: RequestHandler = async (req, res, next) => {
       pseudo: req.body.pseudo,
       email: req.body.email,
       mot_de_passe: req.body.mot_de_passe,
+      photo_profil: req.body.photo_profil,
     };
     const affectedRows = await userRepository.updateProfil(user);
     if (affectedRows === 0) {

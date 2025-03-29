@@ -29,13 +29,16 @@ class userRepository {
       "SELECT id, pseudo, email, photo_profil, est_admin FROM utilisateur WHERE id = ?",
       [id],
     );
-    return rows[0] || null;
+    if (!rows || rows.length === 0) {
+      return null;
+    }
+    return rows[0];
   }
 
   async updateProfil(user: User) {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE utilisateur SET pseudo = ?, email = ? WHERE id = ?",
-      [user.pseudo, user.email, user.id],
+      "UPDATE utilisateur SET pseudo = ?, email = ?, photo_profil = ? WHERE id = ?",
+      [user.pseudo, user.email, user.photo_profil, user.id],
     );
     return result.affectedRows;
   }
