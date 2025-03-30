@@ -2,14 +2,14 @@ import VerticalRecipeCard from "./VerticalRecipeCard";
 import "../styles/recipes-season.css";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import type { RecipeI } from "../types/RecipeValues";
+import type { RecipeII } from "../types/RecipeValues";
 
 function RecipesSeason() {
-  const [recette, setRecette] = useState([] as RecipeI[]);
+  const [recette, setRecette] = useState([] as RecipeII[]);
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/recette-saison`)
       .then((response) => response.json())
-      .then((data: RecipeI[]) => {
+      .then((data: RecipeII[]) => {
         setRecette(data);
       });
   }, []);
@@ -26,9 +26,9 @@ function RecipesSeason() {
                 <VerticalRecipeCard
                   id={el.id}
                   titre={el.titre}
-                  temps_id={el.temps_id}
-                  difficulte_id={el.difficulte_id}
-                  type_id={el.type_id}
+                  temps_preparation={el.temps_preparation}
+                  difficulte={el.difficulte}
+                  type_recette={el.type_recette}
                   description={el.description}
                   image_url={el.image_url}
                 />

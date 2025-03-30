@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import VerticalRecipeCard from "../../components/VerticalRecipeCard";
 import "./RecipePage.css";
 import { Link } from "react-router-dom";
-import type { RecipeI } from "../../types/RecipeValues";
+import type { RecipeII } from "../../types/RecipeValues";
 
 function RecipePage() {
-  const [recipes, setRecipes] = useState<RecipeI[]>([]);
+  const [recipes, setRecipes] = useState<RecipeII[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedTime, setSelectedTime] = useState("Temps");
   const [selectedDifficulty, setSelectedDifficulty] = useState("Difficulté");
   const [selectedType, setSelectedType] = useState("Type");
+  const [filteredRecipes, setFilteredRecipes] = useState<RecipeII[]>([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,16 +44,23 @@ function RecipePage() {
     setSelectedType(e.target.value);
   }
 
-  const filteredRecipes = recipes.filter((recipe: RecipeI) => {
-    const matchesTime =
-      selectedTime === "Temps" || recipe.temps_id === selectedTime;
-    const matchesDifficulty =
-      selectedDifficulty === "Difficulté" ||
-      recipe.difficulte_id === selectedDifficulty;
-    const matchesType =
-      selectedType === "Type" || recipe.type_id === selectedType;
-    return matchesTime && matchesDifficulty && matchesType;
-  });
+  useEffect(() => {
+    if (recipes && recipes.length > 0) {
+      const filtered = recipes.filter((recipe: RecipeII) => {
+        const matchesTime =
+          selectedTime === "Temps" || recipe.temps_preparation === selectedTime;
+        const matchesDifficulty =
+          selectedDifficulty === "Difficulté" ||
+          recipe.difficulte === selectedDifficulty;
+        const matchesType =
+          selectedType === "Type" || recipe.type_recette === selectedType;
+        return matchesTime && matchesDifficulty && matchesType;
+      });
+      setFilteredRecipes(filtered);
+    } else {
+      setFilteredRecipes([]);
+    }
+  }, [recipes, selectedTime, selectedDifficulty, selectedType]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -77,25 +85,25 @@ function RecipePage() {
       <div className="main-page-recipe-filter-container">
         <select onChange={handleTimeSelect}>
           <option value="Temps">Temps</option>
-          <option value="court">Court</option>
-          <option value="moyen">Moyen</option>
-          <option value="long">Long</option>
+          <option value="Court">Court</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Long">Long</option>
         </select>
 
         <select onChange={handleDifficultySelect}>
           <option value="Difficulté">Difficulté</option>
-          <option value="facile">Facile</option>
-          <option value="moyen">Moyen</option>
-          <option value="difficile">Difficile</option>
+          <option value="Facile">Facile</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Difficile">Difficile</option>
         </select>
 
         <select onChange={handleTypeSelect}>
           <option value="Type">Type</option>
-          <option value="entrée">Entrée</option>
-          <option value="plat">Plat</option>
-          <option value="dessert">Dessert</option>
-          <option value="accompagnement">Accompagnement</option>
-          <option value="boisson">Boisson</option>
+          <option value="Entrée">Entrée</option>
+          <option value="Plat">Plat</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Accompagnement">Accompagnement</option>
+          <option value="Boisson">Boisson</option>
         </select>
       </div>
       <div className="main-page-recipe-container">
@@ -109,9 +117,9 @@ function RecipePage() {
               id={recipe.id}
               image_url={recipe.image_url}
               titre={recipe.titre}
-              temps_id={recipe.temps_id}
-              difficulte_id={recipe.difficulte_id}
-              type_id={recipe.type_id}
+              temps_preparation={recipe.temps_preparation}
+              difficulte={recipe.difficulte}
+              type_recette={recipe.type_recette}
               description={recipe.description}
             />
           </Link>

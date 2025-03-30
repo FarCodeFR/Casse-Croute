@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
-import type { RecipeI } from "../types/RecipeValues";
+import type { RecipeII } from "../types/RecipeValues";
 import "../styles/SearchFilter.css";
 import { NavLink } from "react-router-dom";
 
 function SearchFilter() {
   const [letters, setLetters] = useState("");
-  const [recipes, setRecipes] = useState<RecipeI[]>([]);
+  const [recipes, setRecipes] = useState<RecipeII[]>([]);
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -51,7 +51,7 @@ function SearchFilter() {
       <section className="results-section">
         {filteredArray && filteredArray.length > 0 ? (
           <div className="results">
-            {filteredArray.map((recipe: RecipeI) => (
+            {filteredArray.map((recipe: RecipeII) => (
               <div key={recipe.id} className="recipe-results">
                 <NavLink to={`/recipe/${recipe.id}`}>{recipe.titre}</NavLink>
               </div>

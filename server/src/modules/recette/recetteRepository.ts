@@ -16,7 +16,7 @@ class RecetteRepository {
     r.saison,
     tr.nom AS type_recette,
     d.nom AS difficulte,
-    CONCAT(tp.heure, 'h ', tp.minute, 'min') AS temps_preparation,
+    CONCAT(tp.heure, 'h', tp.minute, 'min') AS temps_preparation,
     u.pseudo AS auteur
 FROM recette r
 LEFT JOIN type_recette tr ON r.type_id = tr.id
@@ -29,7 +29,7 @@ LEFT JOIN utilisateur u ON r.utilisateur_id = u.id;`,
   async seasonReadAll() {
     const currentSeason = getSeason();
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM recette WHERE saison = ? ORDER BY titre ASC LIMIT 6",
+      `SELECT r.id, r.titre, r.description, r.date_publication, r.image_url, r.saison, tr.nom AS type_recette, d.nom AS difficulte, CONCAT(tp.heure, 'h', tp.minute, 'min') AS temps_preparation FROM recette r LEFT JOIN type_recette tr ON r.type_id = tr.id LEFT JOIN difficulte d ON r.difficulte_id = d.id LEFT JOIN temps_preparation tp ON r.temps_id = tp.id WHERE r.saison = ? ORDER BY r.titre ASC LIMIT 6`,
       [currentSeason],
     );
     return rows;
@@ -46,7 +46,22 @@ LEFT JOIN utilisateur u ON r.utilisateur_id = u.id;`,
 
   async lastReadFour() {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM recette ORDER BY date_publication DESC LIMIT 4",
+      `SELECT 
+        r.id, 
+        r.titre, 
+        r.description, 
+        r.date_publication, 
+        r.image_url, 
+        r.saison, 
+        tr.nom AS type_recette, 
+        d.nom AS difficulte, 
+        CONCAT(tp.heure, 'h', tp.minute, 'min') AS temps_preparation 
+    FROM recette r 
+    LEFT JOIN type_recette tr ON r.type_id = tr.id 
+    LEFT JOIN difficulte d ON r.difficulte_id = d.id 
+    LEFT JOIN temps_preparation tp ON r.temps_id = tp.id 
+    ORDER BY date_publication DESC 
+    LIMIT 4`,
     );
     return rows;
   }

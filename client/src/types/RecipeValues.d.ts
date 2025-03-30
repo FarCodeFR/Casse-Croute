@@ -1,9 +1,9 @@
-export interface RecipeI {
+export interface RecipeII {
   id: number;
   titre: string;
-  temps_id: string;
-  type_id: string;
-  difficulte_id: string;
+  temps_preparation: string;
+  type_recette: string;
+  difficulte: string;
   description: string;
   image_url: string;
 }
@@ -26,7 +26,7 @@ export interface ingredientI {
 }
 
 export type RecipesScroll = {
-  recipes: RecipeI[];
+  recipes: RecipeII[];
   setSelectRecipe: Dispatch<SetStateAction<boolean>>;
   searchRecipe: string;
 };

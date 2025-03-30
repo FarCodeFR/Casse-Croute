@@ -48,8 +48,8 @@
   padding: 0px 10px 0 15px;
   box-sizing: border-box;
   background-color: var(--primary-color);
-  /* Principal */
   & ul {
+    list-style: none;
     padding: 0 0 0 0;
     width: 90%;
   }

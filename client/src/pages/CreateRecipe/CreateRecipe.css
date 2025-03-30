@@ -1,8 +1,17 @@
 /* create recipe form */
 .add-recipe-main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 36px;
+  & figure {
+    width: 60%;
+    margin: 10% auto;
+    padding-top: 20%;
+    & article {
+      margin: 0% auto;
+    }
+  }
 }
 
 .create-recipe-form > input:first-of-type {
@@ -217,6 +226,7 @@ input[type="range"]::-webkit-slider-thumb {
 @media (max-width: 576px) {
   .create-recipe-form {
     width: 80%;
+    margin: 0 auto;
   }
   .create-recipe-form > section {
     flex-wrap: nowrap;

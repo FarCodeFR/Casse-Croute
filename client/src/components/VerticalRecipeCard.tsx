@@ -1,22 +1,30 @@
 import "../styles/VerticalRecipeCard.css";
-import type { RecipeI } from "../types/RecipeValues";
+import type { RecipeII } from "../types/RecipeValues";
 
 function VerticalRecipeCard({
   titre,
-  temps_id,
-  difficulte_id,
-  type_id,
+  temps_preparation,
+  difficulte,
+  type_recette,
   description,
   image_url,
-}: RecipeI) {
+}: RecipeII) {
   return (
     <article className="recipe-container">
       <div className="img-container">
-        <img className="circular-img" src={image_url} alt={titre} />
+        {image_url ? (
+          <img className="circular-img" src={image_url} alt={titre} />
+        ) : (
+          <img src="assets/images/divers/default-image.png" alt="par default" />
+        )}
       </div>
       <section className="text-container">
         <h1 className="title">{titre}</h1>
-        <p className="description">{description}</p>
+        {description ? (
+          <p className="description">{description}</p>
+        ) : (
+          <p className="description">. . . . . . . . . .</p>
+        )}
 
         <ul>
           <li>
@@ -27,7 +35,7 @@ function VerticalRecipeCard({
                 alt="logo horloge"
               />
             </div>
-            <p>{temps_id}</p>
+            {temps_preparation ? <p>{temps_preparation}</p> : <p>10min</p>}
           </li>
           <li>
             <div className="circle">
@@ -37,7 +45,7 @@ function VerticalRecipeCard({
                 alt="logo indiquant un niveau de difficulté"
               />{" "}
             </div>
-            <p>{difficulte_id}</p>
+            {difficulte ? <p>{difficulte}</p> : <p>Facile</p>}
           </li>
           <li>
             <div className="circle">
@@ -48,7 +56,7 @@ function VerticalRecipeCard({
                 alt="logo d'un poulet cuit"
               />
             </div>
-            <p>{type_id}</p>
+            {type_recette ? <p>{type_recette}</p> : <p>Entrée</p>}
           </li>
         </ul>
       </section>

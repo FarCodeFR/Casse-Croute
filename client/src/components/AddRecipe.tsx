@@ -1,6 +1,5 @@
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../pages/CreateRecipe/CreateRecipe.css";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +10,11 @@ import type {
   RecipeData,
 } from "../types/AddRecipe";
 import AddIngredient from "./AddIngredient";
+import VerticalRecipeCard from "./VerticalRecipeCard";
 
 function AddRecipe() {
   const token = localStorage.getItem("jwtToken");
+  // const [viewRecipeChange, setViewRecipeChange] = useState();
   //declaration of states
   const [recipeData, setRecipeData] = useState<RecipeData>({
     titre: "",
@@ -312,6 +313,17 @@ function AddRecipe() {
 
   return (
     <section className="add-recipe-main">
+      <figure>
+        <VerticalRecipeCard
+          id={0}
+          titre={""}
+          image_url={""}
+          description={""}
+          type_recette=""
+          difficulte=""
+          temps_preparation=""
+        />
+      </figure>
       <div className="create-recipe-form">
         <label htmlFor="Image">Image:</label>
         <input

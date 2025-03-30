@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import ScrollRecipes from "../../components/ScrollRecipes";
 import VerticalRecipeCard from "../../components/VerticalRecipeCard";
-import type { RecipeI } from "../../types/RecipeValues";
+import type { RecipeII } from "../../types/RecipeValues";
 import "./dashboard-recipes.css";
 import { toast } from "react-toastify";
 import Recipe from "../recipe/Recipe";
 
 function DashboardRecipes() {
-  const [recipes, setRecipes] = useState<RecipeI[]>([]);
-  const [selectRecipe, setSelectRecipe] = useState<RecipeI | null>(null);
+  const [recipes, setRecipes] = useState<RecipeII[]>([]);
+  const [selectRecipe, setSelectRecipe] = useState<RecipeII | null>(null);
   const [searchRecipe, setSearchRecipe] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
@@ -21,7 +21,7 @@ function DashboardRecipes() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/recettes`)
       .then((response) => response.json())
-      .then((data: RecipeI[]) => {
+      .then((data: RecipeII[]) => {
         const filteredData = data.filter((recipe) => recipe.titre);
         setRecipes(filteredData);
       })
@@ -56,9 +56,9 @@ function DashboardRecipes() {
           <VerticalRecipeCard
             id={selectRecipe.id}
             titre={selectRecipe.titre}
-            temps_id={selectRecipe.temps_id}
-            difficulte_id={selectRecipe.difficulte_id}
-            type_id={selectRecipe.temps_id}
+            temps_preparation={selectRecipe.temps_preparation}
+            difficulte={selectRecipe.difficulte}
+            type_recette={selectRecipe.type_recette}
             description={selectRecipe.description}
             image_url={selectRecipe.image_url}
           />
