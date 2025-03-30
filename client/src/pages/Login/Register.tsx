@@ -6,6 +6,7 @@ import "./form.css";
 
 function Register() {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
   const [userData, setUserData] = useState<userDataTypes>({
     email: "",
     pseudo: "",
@@ -14,7 +15,16 @@ function Register() {
     photo_profil: "",
   });
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState({
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setPasswordVisible({
+      ...passwordVisible,
+      showPassword: !passwordVisible.showPassword,
+    });
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -76,26 +86,28 @@ function Register() {
     >
       <h1>Rejoignez la communauté Casse-croûte !</h1>
       <section>
-        <label aria-label="Mail" htmlFor="email" className="login-label">
+        <label aria-label="email" htmlFor="email" className="login-label">
           Email:
         </label>
         <input
           type="email"
-          aria-label="Mail"
+          aria-label="email"
+          id="email"
           name="email"
           placeholder="thomas-42@email.fr"
           onChange={handleInputUserData}
         />
         <label
-          aria-label="Identifiant"
-          htmlFor="identifiant"
+          aria-label="identifiant"
+          htmlFor="pseudo"
           className="login-label"
         >
           Identifiant:
         </label>
         <input
           type="text"
-          aria-label="Identifiant"
+          aria-label="identifiant"
+          id="identifiant"
           name="pseudo"
           placeholder="Lecuisinierdu49"
           required
@@ -103,44 +115,84 @@ function Register() {
         />
 
         <label
-          aria-label="Mot de passe"
+          aria-label="mot de passe"
           htmlFor="password"
           className="login-label"
         >
           Mot de passe:
         </label>
-        <input
-          type="password"
-          aria-label="Mot de passe"
-          name="password"
-          placeholder="***********"
-          onChange={handleInputUserData}
-        />
-
+        <div className="password-container">
+          <input
+            type={passwordVisible.showPassword ? "text" : "password"}
+            aria-label="mot de passe"
+            id="password"
+            name="password"
+            placeholder="***********"
+            onChange={handleInputUserData}
+          />
+          <button
+            className="show-password"
+            type="button"
+            onClick={handleClickShowPassword}
+          >
+            {passwordVisible.showPassword ? (
+              <img
+                src="assets/images/divers/visible.png"
+                alt="mots de passe visible"
+              />
+            ) : (
+              <img
+                src="assets/images/divers/cacher.png"
+                alt="mots de passe caché"
+              />
+            )}
+          </button>
+        </div>
         <label
-          aria-label="Confirme Mot de passe"
+          aria-label="confirme Mot de passe"
           htmlFor="passwordConfirm"
           className="login-label"
         >
           Confirmer le mot de passe:
           {userData.password === userData.passwordConfirm ? "✅" : "❌"}
         </label>
-        <input
-          type="password"
-          aria-label="Confirme Mot de passe"
-          name="passwordConfirm"
-          placeholder="***********"
-          onChange={handleInputUserData}
-        />
+        <div className="password-container">
+          <input
+            type={passwordVisible.showPassword ? "text" : "password"}
+            aria-label="confirme Mot de passe"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            placeholder="***********"
+            onChange={handleInputUserData}
+          />
+          <button
+            className="show-password"
+            type="button"
+            onClick={handleClickShowPassword}
+          >
+            {passwordVisible.showPassword ? (
+              <img
+                src="assets/images/divers/visible.png"
+                alt="mots de passe visible"
+              />
+            ) : (
+              <img
+                src="assets/images/divers/cacher.png"
+                alt="mots de passe caché"
+              />
+            )}
+          </button>
+        </div>
       </section>
       <section className="legal-notices">
         <input
-          aria-label="Mentiosn légales"
+          aria-label="mentiosn légales"
           type="checkbox"
+          id="legal-notices"
           name="legal-notices"
           required
         />
-        <label aria-label="Mentions légales" htmlFor="legal-notice">
+        <label aria-label="mentions légales" htmlFor="legal-notices">
           Veuillez cocher la case pour accepter&nbsp;
           <Link to="/legal-notices">les mentions légales.</Link>
         </label>

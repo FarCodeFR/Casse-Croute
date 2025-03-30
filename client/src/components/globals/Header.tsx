@@ -40,7 +40,7 @@ function Header() {
                   src={
                     user?.est_admin === 1
                       ? "/assets/images/admin.png"
-                      : user
+                      : user?.photo_profil
                         ? user.photo_profil
                         : "/assets/images/profil-images/profil.png"
                   }

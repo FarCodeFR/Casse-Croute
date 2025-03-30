@@ -9,6 +9,16 @@ export function LoginForm() {
   const { setIsLogged, setUser } = useAuth();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState({
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setPasswordVisible({
+      ...passwordVisible,
+      showPassword: !passwordVisible.showPassword,
+    });
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -84,27 +94,48 @@ export function LoginForm() {
     >
       <h1>Heureux de vous revoir !</h1>
       <section>
-        <label aria-label="Mail" htmlFor="email">
+        <label aria-label="email" htmlFor="email">
           Email:
         </label>
         <input
+          id="email"
           name="email"
           placeholder="thomas-42@email.fr"
           onChange={handleInputLogin}
-          aria-label="Mail"
+          aria-label="email"
           required
         />
-        <label aria-label="Mot de passe" htmlFor="password">
+        <label aria-label="mot de passe" htmlFor="password">
           Mot de passe:
         </label>
-        <input
-          name="password"
-          type="password"
-          placeholder="***********"
-          onChange={handleInputLogin}
-          aria-label="mot de passe"
-          required
-        />
+        <div className="password-container">
+          <input
+            id="password"
+            name="password"
+            type={passwordVisible.showPassword ? "text" : "password"}
+            placeholder="***********"
+            onChange={handleInputLogin}
+            aria-label="mot de passe"
+            required
+          />
+          <button
+            className="show-password"
+            type="button"
+            onClick={handleClickShowPassword}
+          >
+            {passwordVisible.showPassword ? (
+              <img
+                src="assets/images/divers/visible.png"
+                alt="mots de passe visible"
+              />
+            ) : (
+              <img
+                src="assets/images/divers/cacher.png"
+                alt="mots de passe caché"
+              />
+            )}
+          </button>
+        </div>
       </section>
       <section>
         <button type="submit" aria-label="Se connecter">

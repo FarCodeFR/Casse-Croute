@@ -79,11 +79,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const data = await response.json();
         setIsLogged(true);
         setUser(data);
-        // setIsAdmin(data.isAdmin === 1 ? 1 : 0);
-        // localStorage.setItem(
-        //   "isAdmin",
-        //   (data.isAdmin === 1 ? 1 : 0).toString(),
-        // );
       } else {
         setIsLogged(false);
         setUser(null);
