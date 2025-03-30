@@ -74,7 +74,9 @@ const RecipePrepa: React.FC<RecipePrepaProps> = ({
           {difficulties.map((el) => (
             <div
               key={el.id}
-              className={el.id === difficulte.toLowerCase() ? "active" : ""}
+              className={
+                difficulte && el.id === difficulte.toLowerCase() ? "active" : ""
+              }
             >
               <img src={el.image} alt={el.label} />
               <span>{el.label}</span>
@@ -89,7 +91,11 @@ const RecipePrepa: React.FC<RecipePrepaProps> = ({
           {recipeTypes.map((el) => (
             <div
               key={el.id}
-              className={el.id === typeRecette?.toLowerCase() ? "active" : ""}
+              className={
+                typeRecette && el.id === typeRecette.toLowerCase()
+                  ? "active"
+                  : ""
+              }
             >
               <img src={el.image} alt={el.label} />
               <span>{el.label}</span>

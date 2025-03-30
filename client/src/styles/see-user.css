@@ -21,6 +21,8 @@
 
 .profile figure {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 12px;
   margin: 0;
@@ -62,4 +64,10 @@
   color: var(--secondary-color-3);
   text-align: center;
   margin-top: 3px;
+}
+
+@media screen and (min-width: 440px) {
+  .profile > figure {
+    justify-content: space-evenly;
+  }
 }

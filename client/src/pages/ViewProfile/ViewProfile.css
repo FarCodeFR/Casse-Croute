@@ -42,7 +42,9 @@
 .inactive-background-modify {
   color: white;
 }
-
+.profile-container {
+  max-width: 90%;
+}
 @media screen and (min-width: 440px) {
   .view-profile {
     height: 100%;
@@ -50,5 +52,10 @@
   .view-profile > nav > section {
     width: 50%;
     height: 50px;
+  }
+  .profile-container {
+    max-width: 40%;
+    margin-top: 5%;
+    margin-bottom: 0;
   }
 }
