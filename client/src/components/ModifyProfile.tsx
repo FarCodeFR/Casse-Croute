@@ -81,12 +81,12 @@ const ModifyProfile = () => {
       className={`container-form-auth ${isVisible ? "visible" : ""}`}
       onSubmit={handleSubmit}
     >
-      <PictureProfil
-        pictureChange={handlePictureChange}
-        selectPicture={selectPicture}
-      />
       <section>
-        <label aria-label="Email" htmlFor="email" className="login-label">
+        <PictureProfil
+          pictureChange={handlePictureChange}
+          selectPicture={selectPicture}
+        />
+        <label aria-label="email" htmlFor="email" className="login-label">
           Email
         </label>
         <input
@@ -97,7 +97,7 @@ const ModifyProfile = () => {
           onChange={handleInputUserData}
         />
         <label
-          aria-label="Identifiant"
+          aria-label="identifiant"
           htmlFor="identifiant"
           className="login-label"
         >
@@ -105,13 +105,13 @@ const ModifyProfile = () => {
         </label>
         <input
           type="text"
-          aria-label="Identifiant"
+          aria-label="identifiant"
           name="pseudo"
           placeholder={user.pseudo}
           onChange={handleInputUserData}
         />
         <section className="save-button">
-          <button type="submit" aria-label="Sauvegarde">
+          <button type="submit" aria-label="sauvegarder">
             Sauvegarder
           </button>
         </section>

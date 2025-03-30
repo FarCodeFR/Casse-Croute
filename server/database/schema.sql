@@ -73,7 +73,8 @@ CREATE TABLE avis (
     id INT PRIMARY KEY AUTO_INCREMENT,
     recette_id INT NOT NULL,
     utilisateur_id INT NOT NULL,
-    commentaire VARCHAR(100),
+    note TINYINT NOT NULL CHECK (note BETWEEN 1 AND 5),
+    commentaire VARCHAR(500),
     date_avis DATE NOT NULL,
     FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE,
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id) ON DELETE CASCADE
@@ -418,8 +419,8 @@ VALUES
 
 
 -- Table avis
-INSERT INTO avis (recette_id, utilisateur_id, commentaire, date_avis)
+INSERT INTO avis (recette_id, utilisateur_id, note, commentaire, date_avis)
 VALUES
-(1, 2,  "Excellente soupe, très réconfortante.", "2025-01-16"),
-(2, 1, "Salade fraîche et délicieuse.", "2025-06-16");
+(1, 2, 5, "Excellente soupe, très réconfortante.", "2025-01-16"),
+(2, 1, 4, "Salade fraîche et délicieuse.", "2025-06-16");
 

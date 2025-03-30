@@ -31,9 +31,9 @@ function PictureProfil({ selectPicture, pictureChange }: PictureProfilType) {
     pictureChange(newPicture);
   };
   return (
-    <>
+    <section className="container-picture-profil">
       <img src={isPicture} alt="photo_profil" />
-      <label htmlFor="photo_profil">Changer votre photo de profil</label>
+      <label htmlFor="photo_profil">Photo de profil</label>
       <select
         name="photo_profil"
         onChange={handlePictureChange}
@@ -47,7 +47,7 @@ function PictureProfil({ selectPicture, pictureChange }: PictureProfilType) {
           );
         })}
       </select>
-    </>
+    </section>
   );
 }
 
