@@ -4,14 +4,7 @@ Une application web fullstack de **consultation et gestion de recettes**, dével
 
 🌐 **Démo live** : [casse-croute.vercel.app](https://casse-croute.vercel.app)
 
----
-
-## 📱 Aperçu
-
-<p align="center">
-  <!-- Remplace par une vraie capture d'écran de l'app -->
-  <img src="./client/public/screenshot.png" alt="Aperçu de l'application" width="700"/>
-</p>
+> ⚠️ **Note** : La base de données n'est pas déployée actuellement, la démo en ligne est donc non fonctionnelle. Pour tester l'application, veuillez l'installer en local en suivant les instructions ci-dessous.
 
 ---
 
